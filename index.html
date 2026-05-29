@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚡ Gojo-Relay I/O</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --purple: #9b59ff;
+    --purple-dark: #6c2ff0;
+    --purple-glow: rgba(155,89,255,0.35);
+    --bg: #080810;
+    --surface: #0f0f1e;
+    --surface2: #161628;
+    --border: rgba(155,89,255,0.2);
+    --text: #e8e8ff;
+    --muted: #6b6b99;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Space Mono', monospace;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Background grid */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(155,89,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(155,89,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 40px 20px 60px;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 40px;
+    animation: fadeDown 0.6s ease;
+  }
+
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(28px, 7vw, 42px);
+    font-weight: 800;
+    background: linear-gradient(135deg, #fff 0%, var(--purple) 60%, #c084fc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -1px;
+    line-height: 1.1;
+  }
+
+  .tagline {
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+
+  /* Timer section */
+  .timer-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+    animation: fadeUp 0.6s ease 0.1s both;
+  }
+
+  .timer-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+
+  .timer-display {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .timer-value {
+    font-family: 'Syne', sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--purple);
+    text-shadow: 0 0 20px var(--purple-glow);
+    letter-spacing: -1px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .timer-bar-wrap {
+    flex: 1;
+    height: 4px;
+    background: var(--surface2);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .timer-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--purple-dark), var(--purple));
+    border-radius: 2px;
+    transition: width 1s linear;
+    width: 100%;
+  }
+
+  .timer-bar.warning { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+  .timer-bar.critical { background: linear-gradient(90deg, #ef4444, #f87171); }
+
+  .time-info {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+  }
+
+  .time-info span {
+    font-size: 10px;
+    color: var(--muted);
+  }
+
+  /* Status */
+  .status-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    animation: fadeUp 0.6s ease 0.2s both;
+  }
+
+  .status-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 8px #22c55e;
+    animation: pulse 2s infinite;
+  }
+
+  .dot.pointed { background: var(--purple); box-shadow: 0 0 8px var(--purple); }
+
+  /* Config section */
+  .config-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    animation: fadeUp 0.6s ease 0.3s both;
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface2);
+  }
+
+  .section-title {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .copy-btn {
+    background: var(--purple-dark);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: all 0.2s;
+  }
+
+  .copy-btn:hover { background: var(--purple); box-shadow: 0 0 12px var(--purple-glow); }
+  .copy-btn.copied { background: #22c55e; }
+
+  .config-link {
+    display: block;
+    padding: 16px 20px;
+    font-size: 11px;
+    color: var(--purple);
+    word-break: break-all;
+    line-height: 1.6;
+    background: var(--bg);
+  }
+
+  /* Details grid */
+  .details-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    animation: fadeUp 0.6s ease 0.4s both;
+  }
+
+  .detail-row {
+    display: grid;
+    grid-template-columns: 110px 1fr auto;
+    align-items: center;
+    padding: 12px 20px;
+    border-bottom: 1px solid rgba(155,89,255,0.08);
+    gap: 12px;
+  }
+
+  .detail-row:last-child { border-bottom: none; }
+
+  .detail-key {
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .detail-val {
+    font-size: 12px;
+    color: var(--text);
+    word-break: break-all;
+  }
+
+  .detail-copy {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .detail-copy:hover { border-color: var(--purple); color: var(--purple); }
+  .detail-copy.copied { border-color: #22c55e; color: #22c55e; }
+
+  /* Loading */
+  .loading {
+    text-align: center;
+    padding: 40px;
+    color: var(--muted);
+    font-size: 12px;
+    letter-spacing: 2px;
+  }
+
+  .spinner {
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--border);
+    border-top-color: var(--purple);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 12px;
+  }
+
+  /* Animations */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* Expired state */
+  .expired-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(8,8,16,0.92);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+
+  .expired-overlay.show { display: flex; }
+
+  .expired-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 32px;
+    font-weight: 800;
+    color: #ef4444;
+    text-shadow: 0 0 20px rgba(239,68,68,0.5);
+  }
+
+  .expired-sub {
+    color: var(--muted);
+    font-size: 12px;
+    letter-spacing: 2px;
+  }
+</style>
+</head>
+<body>
+
+<div class="expired-overlay" id="expiredOverlay">
+  <div class="expired-title">⚠ SESSION EXPIRED</div>
+  <div class="expired-sub">DEPLOY A NEW INSTANCE TO CONTINUE</div>
+</div>
+
+<div class="container">
+
+  <div class="header">
+    <div class="logo">⚡ Gojo-Relay I/O ⚡</div>
+    <div class="tagline">VLESS · WebSocket · Cloud Run</div>
+  </div>
+
+  <div class="timer-section">
+    <div class="timer-label">⏱ Session Countdown</div>
+    <div class="timer-display">
+      <div class="timer-value" id="timerVal">05:15:00</div>
+      <div class="timer-bar-wrap">
+        <div class="timer-bar" id="timerBar"></div>
+      </div>
+    </div>
+    <div class="time-info">
+      <span id="deployedAt">Deployed: --:--:--</span>
+      <span id="expiresAt">Expires: --:--:--</span>
+    </div>
+  </div>
+
+  <div class="status-row" id="statusRow">
+    <div class="status-badge">
+      <div class="dot" id="statusDot"></div>
+      <span id="statusText">LOADING...</span>
+    </div>
+    <div class="status-badge" id="chainBadge" style="display:none">
+      <div class="dot pointed"></div>
+      <span>CHAINED</span>
+    </div>
+  </div>
+
+  <div id="mainContent">
+    <div class="loading">
+      <div class="spinner"></div>
+      FETCHING CONFIG...
+    </div>
+  </div>
+
+</div>
+
+<script>
+// =========================
+// TIMER
+// =========================
+const DURATION = 5 * 3600 + 15 * 60; // 5h15m in seconds
+const startKey = 'gojo_relay_start';
+
+let startTime = localStorage.getItem(startKey);
+if (!startTime) {
+  startTime = Date.now();
+  localStorage.setItem(startKey, startTime);
+}
+startTime = parseInt(startTime);
+
+const deployedDate = new Date(startTime);
+const expiresDate = new Date(startTime + DURATION * 1000);
+
+document.getElementById('deployedAt').textContent =
+  'Deployed: ' + deployedDate.toLocaleTimeString();
+document.getElementById('expiresAt').textContent =
+  'Expires: ' + expiresDate.toLocaleTimeString();
+
+function updateTimer() {
+  const elapsed = Math.floor((Date.now() - startTime) / 1000);
+  const remaining = Math.max(0, DURATION - elapsed);
+
+  const h = Math.floor(remaining / 3600);
+  const m = Math.floor((remaining % 3600) / 60);
+  const s = remaining % 60;
+
+  document.getElementById('timerVal').textContent =
+    String(h).padStart(2,'0') + ':' +
+    String(m).padStart(2,'0') + ':' +
+    String(s).padStart(2,'0');
+
+  const pct = (remaining / DURATION) * 100;
+  const bar = document.getElementById('timerBar');
+  bar.style.width = pct + '%';
+  bar.className = 'timer-bar' +
+    (pct < 15 ? ' critical' : pct < 30 ? ' warning' : '');
+
+  if (remaining === 0) {
+    document.getElementById('expiredOverlay').classList.add('show');
+  }
+}
+
+updateTimer();
+setInterval(updateTimer, 1000);
+
+// =========================
+// LOAD CONFIG FROM RUNTIME
+// =========================
+async function loadConfig() {
+  try {
+    const res = await fetch('/runtime.json');
+    const data = await res.json();
+
+    const host = window.location.host;
+    const uuid = data.uuid;
+    const path = data.path;
+    const pointed = data.pointed;
+
+    // Build vless link
+    const vlessLink = `vless://${uuid}@${host}:443?encryption=none&security=tls&type=ws&host=${host}&path=${encodeURIComponent(path)}#Gojo-Relay`;
+
+    // Status
+    document.getElementById('statusText').textContent = 'ONLINE';
+    document.getElementById('statusDot').style.background = '#22c55e';
+    document.getElementById('statusDot').style.boxShadow = '0 0 8px #22c55e';
+
+    if (pointed) {
+      document.getElementById('chainBadge').style.display = 'flex';
+    }
+
+    // Render content
+    document.getElementById('mainContent').innerHTML = `
+      <div class="config-section">
+        <div class="section-header">
+          <span class="section-title">⚡ VLESS Config Link</span>
+          <button class="copy-btn" onclick="copyText('${vlessLink}', this)">COPY</button>
+        </div>
+        <span class="config-link" id="vlessLink">${vlessLink}</span>
+      </div>
+
+      <div class="details-section">
+        <div class="section-header">
+          <span class="section-title">Connection Details</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-key">Address</span>
+          <span class="detail-val">${host}</span>
+          <button class="detail-copy" onclick="copyText('${host}', this)">COPY</button>
+        </div>
+        <div class="detail-row">
+          <span class="detail-key">Port</span>
+          <span class="detail-val">443</span>
+          <button class="detail-copy" onclick="copyText('443', this)">COPY</button>
+        </div>
+        <div class="detail-row">
+          <span class="detail-key">UUID</span>
+          <span class="detail-val">${uuid}</span>
+          <button class="detail-copy" onclick="copyText('${uuid}', this)">COPY</button>
+        </div>
+        <div class="detail-row">
+          <span class="detail-key">Path</span>
+          <span class="detail-val">${path}</span>
+          <button class="detail-copy" onclick="copyText('${path}', this)">COPY</button>
+        </div>
+        <div class="detail-row">
+          <span class="detail-key">Transport</span>
+          <span class="detail-val">WebSocket</span>
+          <button class="detail-copy" onclick="copyText('ws', this)">COPY</button>
+        </div>
+        <div class="detail-row">
+          <span class="detail-key">Security</span>
+          <span class="detail-val">TLS</span>
+          <button class="detail-copy" onclick="copyText('tls', this)">COPY</button>
+        </div>
+        <div class="detail-row">
+          <span class="detail-key">Network</span>
+          <span class="detail-val">ws</span>
+          <button class="detail-copy" onclick="copyText('ws', this)">COPY</button>
+        </div>
+      </div>
+    `;
+
+  } catch(e) {
+    document.getElementById('mainContent').innerHTML = `
+      <div class="loading">
+        <div class="spinner"></div>
+        CONNECTING...
+      </div>
+    `;
+    setTimeout(loadConfig, 2000);
+  }
+}
+
+function copyText(text, btn) {
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = 'COPIED!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = orig;
+      btn.classList.remove('copied');
+    }, 1500);
+  });
+}
+
+loadConfig();
+</script>
+</body>
+</html>
