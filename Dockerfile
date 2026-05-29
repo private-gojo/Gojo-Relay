@@ -10,7 +10,7 @@ RUN apk add --no-cache \
 COPY config.json /etc/xray/config.json
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY supervisord.conf /etc/supervisord.conf
-COPY index.html /usr/share/nginx/html/index.html
+COPY index.html /var/lib/nginx/html/index.html
 COPY entrypoint.sh /entrypoint.sh
 
 # Permissions
