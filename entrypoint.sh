@@ -12,8 +12,7 @@ CONFIG="/etc/xray/config.json"
 # =========================
 
 if [ -z "$GOJO_UUID" ]; then
-  GOJO_UUID=$(cat /proc/sys/kernel/random/uuid 2>/dev/null || \
-    cat /dev/urandom | tr -dc 'a-f0-9' | head -c 32 | \
+  GOJO_UUID=$(cat /dev/urandom | tr -dc 'a-f0-9' | head -c 32 | \
     sed 's/\(.\{8\}\)\(.\{4\}\)\(.\{4\}\)\(.\{4\}\)\(.\{12\}\)/\1-\2-\3-\4-\5/')
 fi
 
@@ -48,37 +47,56 @@ if [ -n "$GOJO_IP" ]; then
   GOJO_PASSWORD=${GOJO_PASSWORD:-""}
   GOJO_PROTO=${GOJO_PROTO:-"trojan"}
   GOJO_PROTO_PATH=${GOJO_PROTO_PATH:-"/"}
+  GOJO_SS_METHOD=${GOJO_SS_METHOD:-"chacha20-ietf-poly1305"}
 
+  # Inject common placeholders
   sed -i "s|GOJO_IP_PLACEHOLDER|${GOJO_IP}|g" "$CONFIG"
-  sed -i "s|GOJO_PORT_PLACEHOLDER|${GOJO_PORT}|g" "$CONFIG"
+  sed -i "s|\"GOJO_PORT_PLACEHOLDER\"|${GOJO_PORT}|g" "$CONFIG"
   sed -i "s|GOJO_PASSWORD_PLACEHOLDER|${GOJO_PASSWORD}|g" "$CONFIG"
   sed -i "s|GOJO_PROTO_PATH_PLACEHOLDER|${GOJO_PROTO_PATH}|g" "$CONFIG"
+  sed -i "s|GOJO_SS_METHOD_PLACEHOLDER|${GOJO_SS_METHOD}|g" "$CONFIG"
 
-  # Set routing to use chain-out
-  sed -i 's|"outboundTag": "direct"|"outboundTag": "chain-out"|g' "$CONFIG"
+  # Determine which chain tag to use
+  case "$GOJO_PROTO" in
+    vmess)  CHAIN_TAG="chain-vmess" ;;
+    vless)  CHAIN_TAG="chain-vless" ;;
+    ss)     CHAIN_TAG="chain-ss" ;;
+    *)      CHAIN_TAG="chain-trojan" ;;
+  esac
 
-else
-  # Remove chain-out outbound block — direct mode
-  # Keep only direct + block outbounds via python inline
+  # Remove unused chain outbounds — keep only selected
   python3 -c "
-import json, sys
+import json
 with open('${CONFIG}') as f:
   c = json.load(f)
-c['outbounds'] = [o for o in c['outbounds'] if o['tag'] != 'chain-out']
+keep = ['direct', 'block', '${CHAIN_TAG}']
+c['outbounds'] = [o for o in c['outbounds'] if o['tag'] in keep]
+# Set routing to use selected chain
+for rule in c.get('routing', {}).get('rules', []):
+  if rule.get('outboundTag') == 'direct':
+    rule['outboundTag'] = '${CHAIN_TAG}'
+# Set default outbound to chain
+c['outbounds'] = sorted(c['outbounds'], key=lambda x: 0 if x['tag'] == '${CHAIN_TAG}' else 1)
+with open('${CONFIG}', 'w') as f:
+  json.dump(c, f, indent=2)
+"
+
+else
+  # Direct mode — tanggalin lahat ng chain outbounds
+  python3 -c "
+import json
+with open('${CONFIG}') as f:
+  c = json.load(f)
+c['outbounds'] = [o for o in c['outbounds'] if o['tag'] in ['direct', 'block']]
 with open('${CONFIG}', 'w') as f:
   json.dump(c, f, indent=2)
 "
 fi
 
 # =========================
-# EXPORT FOR LANDING PAGE
+# RUNTIME JSON PARA SA LANDING PAGE
 # =========================
 
-export GOJO_UUID
-export GOJO_FULL_PATH
-export GOJO_IP
-
-# Save to file para mabasa ng nginx/index.html
 cat > /etc/xray/runtime.json <<EOF
 {
   "uuid": "${GOJO_UUID}",
