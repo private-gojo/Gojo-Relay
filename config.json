@@ -52,13 +52,93 @@
       "protocol": "blackhole"
     },
     {
-      "tag": "chain-out",
+      "tag": "chain-trojan",
       "protocol": "trojan",
       "settings": {
         "servers": [
           {
             "address": "GOJO_IP_PLACEHOLDER",
             "port": "GOJO_PORT_PLACEHOLDER",
+            "password": "GOJO_PASSWORD_PLACEHOLDER"
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": false
+        },
+        "wsSettings": {
+          "path": "GOJO_PROTO_PATH_PLACEHOLDER"
+        }
+      }
+    },
+    {
+      "tag": "chain-vmess",
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "GOJO_IP_PLACEHOLDER",
+            "port": "GOJO_PORT_PLACEHOLDER",
+            "users": [
+              {
+                "id": "GOJO_PASSWORD_PLACEHOLDER",
+                "alterId": 0
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": false
+        },
+        "wsSettings": {
+          "path": "GOJO_PROTO_PATH_PLACEHOLDER"
+        }
+      }
+    },
+    {
+      "tag": "chain-vless",
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "GOJO_IP_PLACEHOLDER",
+            "port": "GOJO_PORT_PLACEHOLDER",
+            "users": [
+              {
+                "id": "GOJO_PASSWORD_PLACEHOLDER",
+                "encryption": "none"
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": false
+        },
+        "wsSettings": {
+          "path": "GOJO_PROTO_PATH_PLACEHOLDER"
+        }
+      }
+    },
+    {
+      "tag": "chain-ss",
+      "protocol": "shadowsocks",
+      "settings": {
+        "servers": [
+          {
+            "address": "GOJO_IP_PLACEHOLDER",
+            "port": "GOJO_PORT_PLACEHOLDER",
+            "method": "GOJO_SS_METHOD_PLACEHOLDER",
             "password": "GOJO_PASSWORD_PLACEHOLDER"
           }
         ]
