@@ -58,7 +58,7 @@
         "servers": [
           {
             "address": "GOJO_IP_PLACEHOLDER",
-            "port": GOJO_PORT_PLACEHOLDER,
+            "port": "GOJO_PORT_PLACEHOLDER",
             "password": "GOJO_PASSWORD_PLACEHOLDER"
           }
         ]
