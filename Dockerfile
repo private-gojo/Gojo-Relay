@@ -1,12 +1,10 @@
 FROM teddysun/xray:latest
 
 # Install nginx + supervisord + python3
-RUN apt-get update -qq && \
-    apt-get install -y --no-install-recommends \
+RUN apk add --no-cache \
     nginx \
     supervisor \
-    python3 \
-    && rm -rf /var/lib/apt/lists/*
+    python3
 
 # Copy configs
 COPY config.json /etc/xray/config.json
