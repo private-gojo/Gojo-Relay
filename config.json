@@ -1,0 +1,97 @@
+{
+  "log": {
+    "loglevel": "warning",
+    "access": "none",
+    "error": "none"
+  },
+  "inbounds": [
+    {
+      "tag": "vless-ws-in",
+      "port": 10001,
+      "listen": "0.0.0.0",
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "GOJO_UUID_PLACEHOLDER",
+            "level": 0
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "wsSettings": {
+          "path": "GOJO_PATH_PLACEHOLDER",
+          "heartbeatPeriod": 0
+        },
+        "sockopt": {
+          "tcpFastOpen": true,
+          "tcpNoDelay": true,
+          "tcpKeepAliveInterval": 15,
+          "tcpKeepAliveIdle": 60,
+          "tcpUserTimeout": 3000
+        }
+      },
+      "sniffing": {
+        "enabled": false
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "tag": "direct",
+      "protocol": "freedom",
+      "settings": {
+        "domainStrategy": "AsIs"
+      }
+    },
+    {
+      "tag": "block",
+      "protocol": "blackhole"
+    },
+    {
+      "tag": "chain-out",
+      "protocol": "trojan",
+      "settings": {
+        "servers": [
+          {
+            "address": "GOJO_IP_PLACEHOLDER",
+            "port": GOJO_PORT_PLACEHOLDER,
+            "password": "GOJO_PASSWORD_PLACEHOLDER"
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": false
+        },
+        "wsSettings": {
+          "path": "GOJO_PROTO_PATH_PLACEHOLDER"
+        }
+      }
+    }
+  ],
+  "routing": {
+    "domainStrategy": "AsIs",
+    "rules": []
+  },
+  "policy": {
+    "levels": {
+      "0": {
+        "handshake": 4,
+        "connIdle": 43200,
+        "uplinkOnly": 0,
+        "downlinkOnly": 1,
+        "bufferSize": 131072
+      }
+    },
+    "system": {
+      "statsInboundUplink": false,
+      "statsInboundDownlink": false
+    }
+  }
+}
