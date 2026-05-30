@@ -75,6 +75,7 @@ with open('${CONFIG}') as f:
 keep = ['direct', 'block', '${CHAIN_TAG}']
 c['outbounds'] = [o for o in c['outbounds'] if o['tag'] in keep]
 c['outbounds'] = sorted(c['outbounds'], key=lambda x: 0 if x['tag'] == '${CHAIN_TAG}' else 1)
+c['routing']['rules'] = [{'type': 'field', 'network': 'tcp,udp', 'outboundTag': '${CHAIN_TAG}'}]
 with open('${CONFIG}', 'w') as f:
   json.dump(c, f, indent=2)
 "
