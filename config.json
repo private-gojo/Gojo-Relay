@@ -28,10 +28,10 @@
         },
         "sockopt": {
           "tcpFastOpen": true,
-          "tcpNoDelay": true,
           "tcpKeepAliveInterval": 15,
           "tcpKeepAliveIdle": 60,
-          "tcpUserTimeout": 3000
+          "tcpUserTimeout": 10000,
+          "tcpcongestion": "bbr"
         }
       },
       "sniffing": {
@@ -71,6 +71,13 @@
         },
         "wsSettings": {
           "path": "GOJO_PROTO_PATH_PLACEHOLDER"
+        },
+        "sockopt": {
+          "tcpFastOpen": true,
+          "tcpKeepAliveInterval": 15,
+          "tcpKeepAliveIdle": 60,
+          "tcpUserTimeout": 10000,
+          "tcpcongestion": "bbr"
         }
       }
     },
@@ -99,6 +106,13 @@
         },
         "wsSettings": {
           "path": "GOJO_PROTO_PATH_PLACEHOLDER"
+        },
+        "sockopt": {
+          "tcpFastOpen": true,
+          "tcpKeepAliveInterval": 15,
+          "tcpKeepAliveIdle": 60,
+          "tcpUserTimeout": 10000,
+          "tcpcongestion": "bbr"
         }
       }
     },
@@ -127,6 +141,13 @@
         },
         "wsSettings": {
           "path": "GOJO_PROTO_PATH_PLACEHOLDER"
+        },
+        "sockopt": {
+          "tcpFastOpen": true,
+          "tcpKeepAliveInterval": 15,
+          "tcpKeepAliveIdle": 60,
+          "tcpUserTimeout": 10000,
+          "tcpcongestion": "bbr"
         }
       }
     },
@@ -151,6 +172,13 @@
         },
         "wsSettings": {
           "path": "GOJO_PROTO_PATH_PLACEHOLDER"
+        },
+        "sockopt": {
+          "tcpFastOpen": true,
+          "tcpKeepAliveInterval": 15,
+          "tcpKeepAliveIdle": 60,
+          "tcpUserTimeout": 10000,
+          "tcpcongestion": "bbr"
         }
       }
     }
@@ -163,7 +191,7 @@
     "levels": {
       "0": {
         "handshake": 4,
-        "connIdle": 43200,
+        "connIdle": 300,
         "uplinkOnly": 0,
         "downlinkOnly": 1,
         "bufferSize": 131072
