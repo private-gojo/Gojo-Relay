@@ -7,6 +7,14 @@
 CONFIG="/etc/xray/config.json"
 
 # =========================
+# GET CLOUD RUN IP FIRST (before Xray/chain)
+# =========================
+
+set +e
+SERVER_IP=$(curl -s --max-time 5 ifconfig.me || curl -s --max-time 5 api.ipify.org || echo "")
+set -e
+
+# =========================
 # GENERATE UUID IF EMPTY
 # Fix: SIGPIPE issue sa Alpine — gamitin /proc o python3
 # =========================
@@ -99,7 +107,8 @@ cat > /etc/xray/runtime.json <<EOF
 {
   "uuid": "${GOJO_UUID}",
   "path": "${GOJO_FULL_PATH}",
-  "pointed": $([ -n "$GOJO_IP" ] && echo "true" || echo "false")
+  "pointed": $([ -n "$GOJO_IP" ] && echo "true" || echo "false"),
+  "server_ip": "${SERVER_IP}"
 }
 EOF
 
