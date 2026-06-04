@@ -7,11 +7,15 @@
 CONFIG="/etc/xray/config.json"
 
 # =========================
-# GET CLOUD RUN IP FIRST (before Xray/chain)
+# GET CLOUD RUN IP FIRST (via metadata + fallback)
 # =========================
 
 set +e
-SERVER_IP=$(curl -s --max-time 5 ifconfig.me || curl -s --max-time 5 api.ipify.org || echo "")
+SERVER_IP=$(curl -s --max-time 3 -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/network-interfaces/0/access-configs/0/external-ip" 2>/dev/null)
+
+if [ -z "$SERVER_IP" ]; then
+  SERVER_IP=$(curl -s --max-time 5 ifconfig.me || curl -s --max-time 5 api.ipify.org || echo "")
+fi
 set -e
 
 # =========================
