@@ -32,6 +32,7 @@
           "tcpKeepAliveIdle": 60,
           "tcpUserTimeout": 10000,
           "tcpcongestion": "bbr"
+          "tcpMaxSeg": 1440
         }
       },
       "sniffing": {
