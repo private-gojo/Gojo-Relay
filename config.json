@@ -31,7 +31,7 @@
           "tcpKeepAliveInterval": 15,
           "tcpKeepAliveIdle": 60,
           "tcpUserTimeout": 10000,
-          "tcpcongestion": "bbr"
+          "tcpcongestion": "bbr",
           "tcpMaxSeg": 1440
         }
       },
