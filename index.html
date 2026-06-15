@@ -7,163 +7,98 @@
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&family=Orbitron:wght@600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#06060f;--bg2:#0a0a18;--surf:#0e0e1e;--surf2:#121228;
-  --bord:rgba(139,92,246,0.18);--bord2:rgba(139,92,246,0.35);
+  --bg:#06060f;--bg2:#0a0a18;--surf:rgba(14,14,30,0.25);--surf2:rgba(18,18,40,0.4);
+  --bord:rgba(139,92,246,0.22);--bord2:rgba(139,92,246,0.38);
   --purple:#8b5cf6;--purple2:#7c3aed;--violet:#a78bfa;
-  --cyan:#06b6d4;--gold:#f59e0b;--green:#22c55e;--blue:#3b82f6;--red:#ef4444;
-  --text:#e2e8f0;--muted:#64748b;
-  --glow-p:rgba(139,92,246,0.4);--glow-c:rgba(6,182,212,0.4);
-  --glow-g:rgba(34,197,94,0.4);--glow-gold:rgba(245,158,11,0.4);
+  --cyan:#06b6d4;--gold:#f59e0b;--orange:#f97316;--deeporange:#ea580c;
+  --green:#22c55e;--red:#ef4444;
+  --text:#e2e8f0;--muted:#94a3b8;
+  --glow-p:rgba(139,92,246,0.5);--glow-c:rgba(6,182,212,0.5);
+  --glow-g:rgba(34,197,94,0.5);--glow-gold:rgba(245,158,11,0.5);
+  --glow-flame:rgba(249,115,22,0.6);
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{
-  background:var(--bg);color:var(--text);
-  font-family:'Rajdhani',sans-serif;
-  overflow-x:hidden;overflow-y:auto;
-  -webkit-tap-highlight-color:transparent;
-  -webkit-user-select:none;user-select:none;
-}
+html,body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;overflow-x:hidden;overflow-y:auto;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
 body{min-height:100vh;min-height:100dvh}
 
-.gojo-bg{
-  position:absolute;inset:0;
-  background:url('https://i.pinimg.com/1200x/5a/9f/59/5a9f5940c06a48183539b9b736f42d0a.jpg') center/cover no-repeat;
-  animation:kenBurns 5s ease-in-out infinite alternate;
-  z-index:0;
-}
+.gojo-bg{position:absolute;inset:0;background:url('https://i.pinimg.com/1200x/5a/9f/59/5a9f5940c06a48183539b9b736f42d0a.jpg') center/cover no-repeat;animation:kenBurns 5s ease-in-out infinite alternate;z-index:0}
 @keyframes kenBurns{0%{transform:scale(1)}100%{transform:scale(1.06)}}
-.gojo-overlay{
-  position:absolute;inset:0;
-  background:linear-gradient(180deg,rgba(6,6,15,.82) 0%,rgba(6,6,15,.78) 50%,rgba(6,6,15,.88) 100%);
-  z-index:1;
-}
-.gojo-tint{
-  position:absolute;inset:0;
-  background:radial-gradient(ellipse at 50% 30%,rgba(139,92,246,.12),transparent 60%),
-             radial-gradient(ellipse at 20% 70%,rgba(6,182,212,.06),transparent 50%);
-  z-index:2;
-}
+.gojo-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,6,15,.68) 0%,rgba(6,6,15,.62) 50%,rgba(6,6,15,.72) 100%);z-index:1}
+.gojo-tint{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(249,115,22,.08),transparent 60%),radial-gradient(ellipse at 20% 70%,rgba(245,158,11,.05),transparent 50%);z-index:2}
 
-.gateway-overlay{
-  position:fixed;inset:0;z-index:1000;
-  display:flex;align-items:center;justify-content:center;
-  transition:opacity .8s ease-out, filter .8s ease-out;
-}
-.gateway-overlay.fade-out{opacity:0;filter:blur(8px);pointer-events:none;transition:opacity .8s ease-out, filter .8s ease-out}
+.gateway-overlay{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;transition:opacity .5s ease-out,filter .5s ease-out}
+.gateway-overlay.fade-out{opacity:0;filter:blur(8px);pointer-events:none}
 .gateway-overlay.hidden{display:none}
 
 .landing-particles{position:absolute;inset:0;overflow:hidden;z-index:3}
-.landing-particle{
-  position:absolute;border-radius:50%;
-  animation:floatUp 5s infinite ease-in;opacity:0;
-}
-@keyframes floatUp{
-  0%{transform:translateY(110vh) scale(0);opacity:0}
-  8%{opacity:.6}75%{opacity:.2}
-  100%{transform:translateY(-20vh) scale(1.6);opacity:0}
-}
+.landing-particle{position:absolute;border-radius:50%;animation:floatUp 5s infinite ease-in;opacity:0}
+@keyframes floatUp{0%{transform:translateY(110vh) scale(0);opacity:0}8%{opacity:.6}75%{opacity:.2}100%{transform:translateY(-20vh) scale(1.6);opacity:0}}
 .landing-center{position:relative;z-index:4;text-align:center;padding:24px}
-.landing-star{
-  font-size:clamp(40px,10vw,64px);
-  filter:drop-shadow(0 0 25px rgba(139,92,246,.6));
-  animation:pulseStar 2.5s ease-in-out infinite;
-}
-@keyframes pulseStar{
-  0%,100%{transform:scale(1);filter:drop-shadow(0 0 25px rgba(139,92,246,.6))}
-  50%{transform:scale(1.06);filter:drop-shadow(0 0 40px rgba(139,92,246,.9))}
-}
-.landing-title{
-  font-family:'Orbitron',sans-serif;
-  font-size:clamp(24px,7vw,38px);font-weight:900;
-  background:linear-gradient(135deg,#a78bfa,#8b5cf6,#06b6d4,#8b5cf6,#a78bfa);
-  background-size:300% 300%;
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  background-clip:text;
-  animation:shimmer 5s ease-in-out infinite;
-  margin:12px 0 4px;
-}
-@keyframes shimmer{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
-.landing-sub{
-  font-size:clamp(11px,3vw,14px);color:var(--muted);
-  letter-spacing:3px;text-transform:uppercase;margin-bottom:28px;opacity:.8;
-}
-.landing-play-btn{
-  display:inline-flex;align-items:center;gap:10px;
-  background:rgba(139,92,246,.12);border:2px solid rgba(139,92,246,.4);
-  color:var(--violet);padding:14px 32px;border-radius:32px;
-  font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;
-  letter-spacing:3px;cursor:pointer;transition:all .4s ease;
-  box-shadow:0 0 25px rgba(139,92,246,.2);
-}
-.landing-play-btn:hover{background:rgba(139,92,246,.22);box-shadow:0 0 40px rgba(139,92,246,.45);transform:scale(1.04)}
-.landing-play-btn:active{transform:scale(.96);transition:all .1s ease}
+.landing-star{font-size:clamp(40px,10vw,64px);filter:drop-shadow(0 0 25px rgba(245,158,11,.35));animation:pulseStar 3s ease-in-out infinite}
+@keyframes pulseStar{0%,100%{transform:scale(1);filter:drop-shadow(0 0 25px rgba(245,158,11,.35))}50%{transform:scale(1.04);filter:drop-shadow(0 0 35px rgba(249,115,22,.55),0 0 50px rgba(255,255,255,.15))}}
+.landing-title{font-family:'Orbitron',sans-serif;font-size:clamp(24px,7vw,38px);font-weight:900;background:linear-gradient(110deg,#f59e0b 0%,#8b5cf6 15%,#ffffff 28%,#22c55e 40%,#f59e0b 52%,#06b6d4 65%,#ec4899 78%,#fbbf24 100%);background-size:250% 250%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:landingShimmer 6s ease-in-out infinite;margin:12px 0 4px}
+@keyframes landingShimmer{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.landing-sub{font-size:clamp(11px,3vw,14px);letter-spacing:3px;text-transform:uppercase;margin-bottom:28px;background:linear-gradient(110deg,#06b6d4 0%,#8b5cf6 25%,#ec4899 50%,#ffffff 70%,#22c55e 100%);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:landingSubShimmer 5s ease-in-out infinite;text-shadow:none}
+@keyframes landingSubShimmer{0%,100%{background-position:0% center}50%{background-position:200% center}}
+.landing-play-btn{display:inline-flex;align-items:center;gap:10px;background:rgba(249,115,22,.08);border:2px solid rgba(249,115,22,.35);color:#fbbf24;padding:14px 32px;border-radius:32px;font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;letter-spacing:3px;cursor:pointer;transition:all .4s ease;box-shadow:0 0 30px rgba(249,115,22,.15);animation:playPulse 1.5s ease-in-out infinite}
+.landing-play-btn:hover{background:rgba(249,115,22,.18);border-color:rgba(249,115,22,.6);color:#ffffff;box-shadow:0 0 50px rgba(249,115,22,.5),0 0 80px rgba(245,158,11,.25);transform:scale(1.06)}
+.landing-play-btn:active{transform:scale(.94);box-shadow:0 0 60px rgba(249,115,22,.7)}
+@keyframes playPulse{0%,100%{box-shadow:0 0 25px rgba(249,115,22,.12);border-color:rgba(249,115,22,.3)}50%{box-shadow:0 0 45px rgba(249,115,22,.5);border-color:rgba(249,115,22,.5)}}
 
-.loading-bg{position:absolute;inset:0;background:rgba(6,6,15,.94);z-index:1}
 .loading-center{position:relative;z-index:4;text-align:center;padding:24px;max-width:440px;width:100%}
-.loading-title{
-  font-family:'Orbitron',sans-serif;font-size:clamp(16px,4.5vw,24px);font-weight:900;
-  color:var(--violet);text-shadow:0 0 25px var(--glow-p);margin-bottom:4px;
-  animation:fadeInDown .6s ease-out;
-}
+.loading-title{font-family:'Orbitron',sans-serif;font-size:clamp(16px,4.5vw,24px);font-weight:900;background:linear-gradient(110deg,#f59e0b 0%,#8b5cf6 15%,#ffffff 28%,#22c55e 40%,#f59e0b 52%,#06b6d4 65%,#ec4899 78%,#fbbf24 100%);background-size:250% 250%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-shadow:none;margin-bottom:4px;animation:fadeInDown .6s ease-out,loadingTitleShimmer 6s ease-in-out 1s infinite}
+@keyframes loadingTitleShimmer{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
 @keyframes fadeInDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
-.loading-sub{
-  font-size:10px;color:var(--muted);letter-spacing:3px;text-transform:uppercase;margin-bottom:24px;
-  animation:fadeInDown .6s ease-out .2s both;
-}
-.loading-phase{
-  font-family:'Share Tech Mono',monospace;font-size:13px;color:var(--purple);
-  letter-spacing:2px;margin-bottom:20px;min-height:20px;
-}
+.loading-sub{font-size:10px;letter-spacing:3px;text-transform:uppercase;margin-bottom:24px;background:linear-gradient(110deg,#06b6d4 0%,#8b5cf6 25%,#ec4899 50%,#ffffff 70%,#22c55e 100%);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-shadow:none;animation:fadeInDown .6s ease-out .2s both,loadingSubShimmer 5s ease-in-out 1.5s infinite}
+@keyframes loadingSubShimmer{0%,100%{background-position:0% center}50%{background-position:200% center}}
+.loading-phase{font-family:'Share Tech Mono',monospace;font-size:14px;letter-spacing:2px;margin-bottom:20px;min-height:20px;color:#22c55e;animation:phaseColorShift 5s ease-in-out infinite}
+@keyframes phaseColorShift{0%,100%{color:#22c55e;text-shadow:0 0 8px rgba(34,197,94,0.4)}20%{color:#ffffff;text-shadow:0 0 10px rgba(255,255,255,0.6)}40%{color:#fbbf24;text-shadow:0 0 10px rgba(251,191,36,0.5)}60%{color:#8b5cf6;text-shadow:0 0 10px rgba(139,92,246,0.5)}80%{color:#06b6d4;text-shadow:0 0 10px rgba(6,182,212,0.5)}}
 .loading-phase .letter{display:inline-block;opacity:0;animation:letterFadeIn .3s ease-out forwards}
 @keyframes letterFadeIn{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:translateY(0)}}
 .loading-phase .dot{display:inline-block;opacity:0;animation:dotAppear .5s ease-out forwards}
-@keyframes dotAppear{from{opacity:0}to{opacity:1}}
-.boot-lines{text-align:left;margin-bottom:16px;min-height:120px}
-.boot-line{
-  font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);
-  padding:4px 0;display:flex;align-items:center;gap:8px;opacity:0;
-  animation:lineFadeIn .5s ease-out forwards;
-}
+.loading-phase .dot:nth-child(1){color:#ef4444;text-shadow:0 0 10px rgba(239,68,68,0.9),0 0 20px rgba(239,68,68,0.5)}
+.loading-phase .dot:nth-child(2){color:#f97316;text-shadow:0 0 10px rgba(249,115,22,0.9),0 0 20px rgba(249,115,22,0.5)}
+.loading-phase .dot:nth-child(3){color:#fbbf24;text-shadow:0 0 12px rgba(251,191,36,1),0 0 24px rgba(251,191,36,0.6)}
+@keyframes dotAppear{from{opacity:0}to{opacity:1}} .boot-lines{text-align:left;margin-bottom:16px;min-height:110px}
+.boot-line{font-family:'Share Tech Mono',monospace;font-size:10px;color:#fbbf24;padding:4px 0;display:flex;align-items:center;gap:8px;opacity:0;animation:lineFadeIn .5s ease-out forwards}
 @keyframes lineFadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-.boot-line .check{color:var(--green);text-shadow:0 0 4px var(--glow-g)}
-.boot-line .pending{color:var(--gold);text-shadow:0 0 4px var(--glow-gold)}
-.boot-line.done{color:var(--muted);opacity:.65}
-.boot-line.done .check{color:var(--green);opacity:.65}
-.loading-bar-outer{height:5px;background:var(--surf2);border-radius:3px;overflow:hidden;margin-bottom:16px;border:1px solid var(--bord)}
-.loading-bar-inner{
-  height:100%;background:linear-gradient(90deg,var(--purple2),var(--purple),var(--cyan));
-  border-radius:3px;transition:width .5s ease-out;box-shadow:0 0 12px var(--glow-p);
-}
-.loading-complete{
-  font-family:'Orbitron',sans-serif;font-size:clamp(12px,3.5vw,16px);font-weight:900;
-  color:var(--green);text-shadow:0 0 15px var(--glow-g);opacity:0;transition:opacity .4s ease;margin-bottom:8px;
-}
+.boot-line:nth-child(1){color:#8b5cf6;text-shadow:0 0 8px rgba(139,92,246,0.5),0 0 16px rgba(139,92,246,0.2)}
+.boot-line:nth-child(2){color:#ef4444;text-shadow:0 0 8px rgba(239,68,68,0.6),0 0 16px rgba(239,68,68,0.3)}
+.boot-line:nth-child(3){color:#f97316;text-shadow:0 0 8px rgba(249,115,22,0.6),0 0 16px rgba(251,191,36,0.3)}
+.boot-line:nth-child(4){color:#f59e0b;text-shadow:0 0 8px rgba(245,158,11,0.5),0 0 16px rgba(239,68,68,0.3)}
+.boot-line:nth-child(5){color:#22c55e;text-shadow:0 0 8px rgba(34,197,94,0.5),0 0 16px rgba(255,255,255,0.3)}
+.boot-line .check{color:#22c55e;text-shadow:0 0 10px rgba(34,197,94,0.7),0 0 20px rgba(34,197,94,0.4);animation:glowFlicker 2s ease-in-out infinite}
+.boot-line .neutral{color:#f59e0b;text-shadow:0 0 6px rgba(245,158,11,0.5)}
+@keyframes glowFlicker{0%,100%{text-shadow:0 0 10px rgba(34,197,94,0.7)}50%{text-shadow:0 0 22px rgba(34,197,94,1),0 0 35px rgba(34,197,94,0.5)}}
+
+.circle-progress-wrap{position:relative;width:90px;height:90px;margin:0 auto 16px}
+.circle-progress-svg{transform:rotate(-90deg);width:100%;height:100%}
+.circle-progress-bg{fill:none;stroke:#1a1a2e;stroke-width:4}
+.circle-progress-fill{fill:none;stroke:url(#flameGrad);stroke-width:5;stroke-linecap:round;stroke-dasharray:251;stroke-dashoffset:251;transition:stroke-dashoffset .5s ease-out;filter:drop-shadow(0 0 8px var(--glow-flame))}
+.circle-progress-text{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-size:18px;font-weight:900;color:var(--gold);text-shadow:0 0 12px var(--glow-gold)}
+.loading-complete{font-family:'Orbitron',sans-serif;font-size:clamp(12px,3.5vw,16px);font-weight:900;color:var(--green);text-shadow:0 0 20px var(--glow-g);opacity:0;transition:opacity .4s ease;margin-bottom:8px}
 .loading-complete.show{opacity:1}
-.loading-ready{
-  font-family:'Orbitron',sans-serif;font-size:clamp(14px,4vw,18px);font-weight:900;
-  color:var(--cyan);text-shadow:0 0 25px var(--glow-c);opacity:0;transition:opacity .6s ease;
-}
+.loading-ready{font-family:'Orbitron',sans-serif;font-size:clamp(14px,4vw,18px);font-weight:900;color:var(--gold);text-shadow:0 0 30px var(--glow-flame);opacity:0;transition:opacity .6s ease}
 .loading-ready.show{opacity:1;animation:pulseReady 1s ease-in-out infinite}
-@keyframes pulseReady{
-  0%,100%{text-shadow:0 0 25px var(--glow-c);transform:scale(1)}
-  50%{text-shadow:0 0 50px var(--glow-c),0 0 70px rgba(6,182,212,.5);transform:scale(1.03)}
-}
+@keyframes pulseReady{0%,100%{text-shadow:0 0 30px var(--glow-flame);transform:scale(1)}50%{text-shadow:0 0 60px var(--glow-flame),0 0 90px rgba(249,115,22,.5);transform:scale(1.03)}}
 
 .gateway-center{position:relative;z-index:4;text-align:center;padding:24px;max-width:440px;width:100%}
-.gateway-icon{font-size:clamp(36px,8vw,52px);margin-bottom:10px;filter:drop-shadow(0 0 18px rgba(139,92,246,.5));animation:pulseStar 2.5s ease-in-out infinite}
-.gateway-title{font-family:'Orbitron',sans-serif;font-size:clamp(12px,3vw,15px);font-weight:800;color:var(--violet);text-shadow:0 0 18px var(--glow-p);margin-bottom:4px}
-.gateway-sub{font-size:10px;color:var(--muted);letter-spacing:2px;margin-bottom:8px}
-.gateway-progress{font-size:9px;color:var(--muted);letter-spacing:1px;margin-bottom:16px}
-.question-card{background:var(--surf);border:1px solid var(--bord2);border-radius:14px;padding:18px;box-shadow:0 0 25px rgba(139,92,246,.1);margin-bottom:14px;animation:fadeInDown .5s ease-out}
+.gateway-icon{font-size:clamp(36px,8vw,52px);margin-bottom:10px;filter:drop-shadow(0 0 18px rgba(245,158,11,.5));animation:pulseStar 2.5s ease-in-out infinite}
+.gateway-title{font-family:'Orbitron',sans-serif;font-size:clamp(12px,3vw,15px);font-weight:800;background:linear-gradient(110deg,#f59e0b 0%,#8b5cf6 15%,#ffffff 28%,#22c55e 40%,#f59e0b 52%,#06b6d4 65%,#ec4899 78%,#fbbf24 100%);background-size:250% 250%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:gatewayTitleShimmer 6s ease-in-out infinite;margin-bottom:4px;text-shadow:none}
+@keyframes gatewayTitleShimmer{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.gateway-sub{font-size:10px;letter-spacing:2px;margin-bottom:8px;background:linear-gradient(110deg,#06b6d4 0%,#8b5cf6 25%,#ec4899 50%,#ffffff 70%,#22c55e 100%);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:gatewaySubShimmer 5s ease-in-out infinite;text-shadow:none}
+@keyframes gatewaySubShimmer{0%,100%{background-position:0% center}50%{background-position:200% center}}
+.gateway-progress{font-size:9px;letter-spacing:1px;margin-bottom:16px;color:#fbbf24;text-shadow:0 0 6px rgba(251,191,36,0.4)}
+.question-card{background:var(--surf);border:1px solid var(--bord2);border-radius:14px;padding:18px;box-shadow:0 0 25px rgba(249,115,22,.1);margin-bottom:14px;animation:fadeInDown .5s ease-out}
 .question-text{font-size:13px;font-weight:600;color:var(--text);margin-bottom:16px;line-height:1.6}
 .answer-grid{display:flex;flex-direction:column;gap:8px}
 .answer-btn{background:var(--surf2);border:1px solid var(--bord);color:var(--text);padding:11px 14px;border-radius:10px;font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:600;cursor:pointer;text-align:left;transition:all .25s ease;display:flex;align-items:center;gap:10px}
-.answer-btn:hover{background:rgba(139,92,246,.1);border-color:var(--purple);transform:translateX(3px)}
-.answer-btn.selected{background:rgba(139,92,246,.18);border-color:var(--purple);color:var(--violet);box-shadow:0 0 16px var(--glow-p);transform:translateX(3px)}
+.answer-btn:hover{background:rgba(249,115,22,.1);border-color:var(--orange);transform:translateX(3px);box-shadow:0 0 12px var(--glow-flame)}
+.answer-btn.selected{background:rgba(249,115,22,.18);border-color:var(--orange);color:var(--gold);box-shadow:0 0 16px var(--glow-flame)}
 .answer-btn.correct-flash{background:rgba(34,197,94,.15);border-color:var(--green);color:var(--green);box-shadow:0 0 20px var(--glow-g)}
-.answer-btn.wrong-flash{background:rgba(239,68,68,.12);border-color:var(--red);color:var(--red);box-shadow:0 0 16px rgba(239,68,68,.3);animation:shake .5s ease}
+.answer-btn.wrong-flash{background:rgba(239,68,68,.12);border-color:var(--red);color:var(--red);animation:shake .5s ease}
 @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
-.answer-btn .ans-letter{width:26px;height:26px;border-radius:50%;background:var(--purple2);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.answer-btn .ans-letter{width:26px;height:26px;border-radius:50%;background:var(--orange);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
 .gateway-feedback{margin-top:14px;text-align:center;animation:fadeInDown .4s ease-out}
 .gateway-feedback .feedback-icon{font-size:36px;margin-bottom:4px}
 .gateway-feedback .feedback-title{font-size:13px;font-weight:700;margin-bottom:2px}
@@ -172,58 +107,49 @@ body{min-height:100vh;min-height:100dvh}
 .gateway-feedback .feedback-title.brutal{color:var(--red);text-shadow:0 0 10px rgba(239,68,68,.4)}
 .gateway-feedback .feedback-msg{font-size:10px;color:var(--muted);line-height:1.5}
 
-.verified-overlay{position:fixed;inset:0;z-index:999;background:rgba(6,6,15,.96);display:flex;align-items:center;justify-content:center;text-align:center;opacity:0;pointer-events:none;transition:opacity .8s ease}
+.verified-overlay{position:fixed;inset:0;z-index:999;background:rgba(6,6,15,.96);display:flex;align-items:center;justify-content:center;text-align:center;opacity:0;pointer-events:none;transition:opacity .5s ease}
 .verified-overlay.show{opacity:1;pointer-events:auto}
-.verified-star{font-size:clamp(48px,12vw,72px);filter:drop-shadow(0 0 35px rgba(139,92,246,.7));animation:pulseStar 1.2s ease-in-out infinite}
-.verified-title{font-family:'Orbitron',sans-serif;font-size:clamp(18px,5vw,28px);font-weight:900;color:var(--violet);text-shadow:0 0 30px var(--glow-p);margin:12px 0 8px}
-.verified-sub{font-size:12px;color:var(--muted);letter-spacing:2px}
-.verified-quote{font-size:11px;color:var(--gold);margin-top:8px;font-style:italic;letter-spacing:1px}
+.verified-star{font-size:clamp(48px,12vw,72px);filter:drop-shadow(0 0 40px rgba(220,38,38,.8)) drop-shadow(0 0 80px rgba(249,115,22,.5));animation:flamePulseVerified .8s ease-in-out infinite}
+@keyframes flamePulseVerified{0%,100%{transform:scale(1);filter:drop-shadow(0 0 30px rgba(220,38,38,.8)) drop-shadow(0 0 60px rgba(249,115,22,.4))}25%{transform:scale(1.05);filter:drop-shadow(0 0 40px rgba(239,68,68,.9)) drop-shadow(0 0 80px rgba(245,158,11,.5))}50%{transform:scale(1.1);filter:drop-shadow(0 0 50px rgba(255,255,255,1)) drop-shadow(0 0 100px rgba(254,240,138,.7))}75%{transform:scale(1.05);filter:drop-shadow(0 0 40px rgba(249,115,22,.9)) drop-shadow(0 0 80px rgba(245,158,11,.5))}}
+.verified-title{font-family:'Orbitron',sans-serif;font-size:clamp(18px,5vw,28px);font-weight:900;background:linear-gradient(110deg,#dc2626 0%,#f97316 15%,#f59e0b 28%,#fbbf24 40%,#ffffff 52%,#fef08a 65%,#ef4444 78%,#dc2626 100%);background-size:250% 250%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:verifiedTitleShimmer 4s ease-in-out infinite;margin:12px 0 8px;text-shadow:none}
+@keyframes verifiedTitleShimmer{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.verified-sub{font-size:12px;letter-spacing:2px;background:linear-gradient(110deg,#f97316 0%,#f59e0b 25%,#fb923c 50%,#ffffff 70%,#fb7185 100%);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:verifiedSubShimmer 5s ease-in-out infinite;text-shadow:none}
+@keyframes verifiedSubShimmer{0%,100%{background-position:0% center}50%{background-position:200% center}}
+.verified-quote{font-size:11px;margin-top:8px;font-style:italic;letter-spacing:1px;color:#fef08a;text-shadow:0 0 10px rgba(254,240,138,0.6),0 0 20px rgba(245,158,11,0.3)}
+#flameCanvas{position:fixed;inset:0;z-index:998;pointer-events:none;display:none}
 
-#main-app{opacity:0;transition:opacity .8s ease}
+#main-app{opacity:0;transition:opacity .8s ease;position:relative}
 #main-app.visible{opacity:1}
+#main-app .dash-bg{position:fixed;inset:0;z-index:0}
+#main-app .dash-overlay{position:fixed;inset:0;z-index:0}
 
-.hdr{background:var(--bg2);border-bottom:1px solid var(--bord);padding:10px 10px 0;position:sticky;top:0;z-index:80}
+.hdr{background:var(--bg2);border-bottom:1px solid var(--bord);padding:10px 10px 6px;position:sticky;top:0;z-index:80}
 .hdr-top{display:flex;align-items:center;justify-content:center;margin-bottom:6px;gap:8px;flex-direction:column}
-.hdr-title{font-family:'Orbitron',sans-serif;font-size:clamp(17px,4.5vw,24px);font-weight:900;text-align:center;letter-spacing:-0.5px}
-.hdr-subtitle{
-  font-size:8px;text-align:center;letter-spacing:.5px;
-  display:flex;align-items:center;justify-content:center;
-  gap:4px;flex-wrap:nowrap;white-space:nowrap;
-}
-.hdr-subtitle span{white-space:nowrap}
-.hdr-subtitle .cyan{color:var(--cyan)}.hdr-subtitle .gold{color:var(--gold)}
-.hdr-subtitle .white{color:rgba(255,255,255,.7)}
-.hdr-subtitle .infinity-icon{font-size:11px;background:linear-gradient(135deg,#8b5cf6,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.bolt{color:var(--gold);filter:drop-shadow(0 0 8px var(--gold))}
-.name{color:white;text-shadow:0 0 20px rgba(255,255,255,0.1)}
-.io{color:var(--violet);text-shadow:0 0 12px var(--glow-p)}
+.hdr-title{font-family:'Orbitron',sans-serif;font-size:clamp(17px,4.5vw,24px);font-weight:900;text-align:center;letter-spacing:-0.5px;background:linear-gradient(135deg,#8b5cf6,#a78bfa,#ec4899,#f97316,#fbbf24,#06b6d4,#f59e0b,#ffffff,#f59e0b,#06b6d4,#fbbf24,#f97316,#ec4899,#a78bfa,#8b5cf6);background-size:300% 300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:titleShimmer 4s ease-in-out infinite}
+@keyframes titleShimmer{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.hdr-subtitle{font-size:8px;text-align:center;letter-spacing:.5px;display:flex;align-items:center;justify-content:center;gap:4px;flex-wrap:nowrap;white-space:nowrap}
+.hdr-subtitle .shimmer-text{display:inline-block;background:linear-gradient(90deg,#ffffff 0%,#06b6d4 10%,#f59e0b 20%,#ec4899 30%,#ffffff 40%,#8b5cf6 50%,#fbbf24 60%,#ec4899 70%,#ffffff 80%,#f97316 90%,#06b6d4 100%);background-size:300% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:subShimmer 5s ease-in-out infinite}
+@keyframes subShimmer{0%{background-position:0% center}25%{background-position:100% center}50%{background-position:200% center}75%{background-position:100% center}100%{background-position:0% center}}
+.bolt{color:var(--gold);filter:drop-shadow(0 0 8px var(--gold));-webkit-text-fill-color:var(--gold);background:none}
+.name{-webkit-text-fill-color:transparent;background:linear-gradient(135deg,#8b5cf6,#f97316,#06b6d4,#f59e0b,#8b5cf6);background-size:300% 300%;-webkit-background-clip:text;background-clip:text;animation:titleShimmer 4s ease-in-out infinite}
+.io{-webkit-text-fill-color:transparent;background:linear-gradient(135deg,#8b5cf6,#f97316,#06b6d4,#f59e0b,#8b5cf6);background-size:300% 300%;-webkit-background-clip:text;background-clip:text;animation:titleShimmer 4s ease-in-out infinite}
 
-.tabs{display:flex}
-.tab{flex:1;padding:8px 2px;text-align:center;cursor:pointer;color:var(--muted);font-size:10px;font-weight:700;letter-spacing:.3px;border-bottom:2px solid transparent;transition:all .25s ease;display:flex;flex-direction:column;align-items:center;gap:2px}
-.tab:hover{color:var(--text)}
-.tab.on{color:var(--purple);border-bottom-color:var(--purple);text-shadow:0 0 8px var(--glow-p)}
-.tab-ic{font-size:13px}
-
-.content{padding:8px;padding-bottom:96px}
-.pane{display:none}.pane.on{display:block}
-
+.content{padding:8px;padding-bottom:120px;position:relative;z-index:1}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
-.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
 
-.card{background:var(--surf);border:1px solid var(--bord);border-radius:12px;padding:11px;box-shadow:0 0 0 1px rgba(139,92,246,0.05),inset 0 1px 0 rgba(255,255,255,0.02);transition:box-shadow .4s ease}
-.card:hover{box-shadow:0 0 18px rgba(139,92,246,0.14)}
-.clabel{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;display:flex;align-items:center;gap:4px}
+.card{background:rgba(14,14,30,0.25);border:1px solid var(--bord);border-radius:12px;padding:11px;box-shadow:0 0 0 1px rgba(139,92,246,0.05);transition:box-shadow .4s ease}
+.card:hover{box-shadow:0 0 18px rgba(249,115,22,0.14)}
+.clabel{font-size:9px;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;justify-content:center;gap:4px;font-weight:700;background:linear-gradient(135deg,#4285F4,#60a5fa,#ec4899,#EA4335,#fbbf24,#FBBC05,#34A853,#34d399,#ffffff,#34d399,#34A853,#FBBC05,#fbbf24,#EA4335,#ec4899,#4285F4);background-size:300% 300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 5s ease-in-out infinite}
+@keyframes shimmer{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
 
-.st-row{display:flex;align-items:center;gap:6px;font-size:11px;margin-bottom:3px}
-.st-flag-name{font-size:14px;font-weight:700;color:var(--text)}
-.gcr-txt{background:linear-gradient(135deg,#4285F4,#EA4335,#FBBC05,#34A853);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:700;font-size:11px}
+.st-row{display:flex;align-items:center;gap:6px;font-size:11px;margin-bottom:3px;color:var(--text);width:100%;overflow:hidden;white-space:nowrap}
+.st-value{font-weight:600;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;display:inline-block;vertical-align:middle}
 .ping-exc{color:var(--green);font-weight:700;font-size:11px;text-shadow:0 0 6px var(--glow-g)}
 .ping-good{color:var(--gold);font-weight:700;font-size:11px;text-shadow:0 0 6px var(--glow-gold)}
 .ping-poor{color:var(--red);font-weight:700;font-size:11px}
 .ping-ms{color:var(--muted);font-family:'Share Tech Mono',monospace;font-size:10px}
-.ip-txt{color:var(--muted);font-size:10px;font-family:'Share Tech Mono',monospace}
 
-.st-badges{display:flex;align-items:center;gap:6px;margin:6px 0}
+.st-badges{display:flex;align-items:center;gap:6px;margin:6px 0;justify-content:center}
 .sbadge{display:flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.5px}
 .sdot{width:5px;height:5px;border-radius:50%;animation:blink 2s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
@@ -232,116 +158,78 @@ body{min-height:100vh;min-height:100dvh}
 .sbadge.chained{background:rgba(245,158,11,.08);color:var(--gold);border:1px solid rgba(245,158,11,.25);box-shadow:0 0 8px rgba(245,158,11,.15)}
 .sbadge.chained .sdot{background:var(--gold);box-shadow:0 0 5px var(--gold)}
 
-.chain-sec{display:none;margin-top:8px;padding-top:8px;border-top:1px solid var(--bord)}
-.chain-sec.show{display:block}
-.chain-row{display:flex;align-items:center;gap:6px;margin-bottom:3px}
+.session-card{transition:all .4s ease;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.dash-timer-container{position:relative;width:140px;height:140px;margin:10px auto}
+.dash-timer-svg{transform:rotate(-90deg);width:100%;height:100%}
+.dash-timer-bg{fill:none;stroke:rgba(255,255,255,0.04);stroke-width:4}
+.dash-timer-fill{fill:none;stroke:url(#dashTimerGrad);stroke-width:5;stroke-linecap:round;stroke-dasharray:377;stroke-dashoffset:377;transition:stroke-dashoffset 1s linear;filter:drop-shadow(0 0 6px var(--glow-flame))}
+.dash-timer-content{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10px}
+.dash-timer-label{font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+.dash-timer-main{font-family:'Orbitron',sans-serif;font-size:16px;font-weight:700;color:var(--gold);text-shadow:0 0 10px var(--glow-flame);margin:2px 0;letter-spacing:0.5px}
+.dash-timer-main.warn{color:var(--orange);text-shadow:0 0 10px var(--glow-flame)}
+.dash-timer-main.crit{color:var(--red);text-shadow:0 0 10px rgba(239,68,68,0.5)}
+.dash-timer-sub{font-size:8px;color:var(--muted)}
+.dash-timer-sub.glow{color:var(--gold);text-shadow:0 0 6px var(--glow-gold)}
 
-.session-timer-card{transition:all .4s ease}
-.session-timer-card .env-label{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;display:flex;align-items:center;gap:4px;margin-bottom:4px}
-.session-timer-card .env-label.cloud{color:var(--cyan);text-shadow:0 0 6px var(--glow-c)}
-.session-timer-card .env-label.qwik{color:var(--gold);text-shadow:0 0 6px var(--glow-gold)}
-.session-timer-card .created-text{font-size:9px;color:var(--muted);margin-bottom:2px}
-.session-timer-card .deploy-status{font-size:11px;font-weight:700;margin-bottom:6px}
-.session-timer-card .deploy-status.temp{color:var(--gold)}
-.session-timer-card .deploy-status.unlimited{color:var(--green);text-shadow:0 0 8px var(--glow-g)}
-.session-timer-card .main-display{font-family:'Orbitron',sans-serif;font-size:20px;font-weight:700;color:var(--purple);text-shadow:0 0 14px var(--glow-p);letter-spacing:1px;background:var(--surf2);padding:2px 8px;border-radius:6px;border:1px solid rgba(139,92,246,.25);box-shadow:0 0 10px rgba(139,92,246,.15);margin:6px 0;text-align:center;transition:all .5s ease}
-.session-timer-card .main-display.warn{color:var(--gold);text-shadow:0 0 14px var(--glow-gold);border-color:rgba(245,158,11,.25);box-shadow:0 0 10px rgba(245,158,11,.15)}
-.session-timer-card .main-display.crit{color:var(--red);text-shadow:0 0 14px rgba(239,68,68,.4);border-color:rgba(239,68,68,.25);box-shadow:0 0 10px rgba(239,68,68,.15)}
-.session-timer-card .main-display.infinity-icon{font-size:28px;font-weight:900;background:transparent;border:none;box-shadow:none;padding:4px 0;color:var(--violet);text-shadow:0 0 15px var(--glow-p);filter:drop-shadow(0 0 8px rgba(139,92,246,.5))}
-.session-timer-card .sub-text{font-size:9px;color:var(--muted);margin-top:2px}
-.session-timer-card .sub-text.glow{color:var(--violet);text-shadow:0 0 8px var(--glow-p)}
-.session-timer-card .sbar{height:2px;background:var(--surf2);border-radius:1px;overflow:hidden;margin:4px 0}
-.session-timer-card .sbar-f{height:100%;background:linear-gradient(90deg,var(--purple2),var(--purple));box-shadow:0 0 6px var(--glow-p);border-radius:1px;transition:width 1s linear}
-.session-timer-card .unlimited-void{font-size:9px;color:var(--muted);letter-spacing:1px;margin-top:2px}
-
-.route-vless-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
-.flabel{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--purple);font-weight:700;margin-bottom:3px;display:flex;align-items:center;gap:3px;text-shadow:0 0 8px var(--glow-p)}
+.route-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+.flabel{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:3px;display:flex;align-items:center;gap:3px;text-shadow:0 0 8px var(--glow-gold)}
 .fsub{font-size:9px;color:var(--muted);margin-bottom:5px}
 .sel-row{display:flex;align-items:center;gap:5px;margin-bottom:8px}
 .sw{position:relative;flex:1}
 .ss{width:100%;background:var(--bg);border:1px solid var(--bord);color:var(--text);padding:6px 20px 6px 8px;border-radius:8px;font-family:'Share Tech Mono',monospace;font-size:9px;appearance:none;cursor:pointer;outline:none;transition:border-color .25s ease}
-.ss:focus{border-color:var(--purple);box-shadow:0 0 8px var(--glow-p)}
+.ss:focus{border-color:var(--orange);box-shadow:0 0 8px var(--glow-flame)}
 .sa{position:absolute;right:6px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none;font-size:8px}
-.cbtn{background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.3);color:var(--violet);padding:5px 8px;border-radius:8px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:10px;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:3px;transition:all .25s ease;flex-shrink:0;box-shadow:0 0 6px rgba(139,92,246,.1)}
-.cbtn:hover{background:rgba(139,92,246,.2);box-shadow:0 0 12px var(--glow-p)}
+.cbtn{background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.3);color:var(--gold);padding:5px 8px;border-radius:8px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:10px;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:3px;transition:all .25s ease;flex-shrink:0}
+.cbtn:hover{background:rgba(249,115,22,.2);box-shadow:0 0 12px var(--glow-flame)}
 .ci{width:100%;background:var(--bg);border:1px solid var(--bord);color:var(--text);padding:5px 8px;border-radius:7px;font-family:'Share Tech Mono',monospace;font-size:9px;outline:none;margin-top:4px;transition:border-color .25s ease;display:none}
-.ci:focus{border-color:var(--cyan);box-shadow:0 0 6px var(--glow-c)}
-.ci::placeholder{color:var(--muted)}
-.ping-btn{width:100%;background:transparent;border:1px solid var(--green);color:var(--green);padding:8px;border-radius:8px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;letter-spacing:.5px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;transition:all .25s ease;margin-top:4px;box-shadow:0 0 8px rgba(34,197,94,.1);text-shadow:0 0 6px var(--glow-g)}
+.ping-container{display:flex;justify-content:center;width:100%;margin-top:4px}
+.ping-btn{width:auto;min-width:140px;max-width:180px;background:transparent;border:1px solid var(--green);color:var(--green);padding:7px 16px;border-radius:8px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;transition:all .25s ease;box-shadow:0 0 8px rgba(34,197,94,.1)}
 .ping-btn:hover{background:rgba(34,197,94,.08);box-shadow:0 0 18px rgba(34,197,94,.25)}
-.ping-res{display:none;align-items:center;gap:6px;margin-top:5px;padding:5px 8px;background:var(--bg);border:1px solid var(--bord);border-radius:7px;font-size:11px}
-.pv{font-family:'Share Tech Mono',monospace;font-size:13px;font-weight:700;color:var(--gold);text-shadow:0 0 6px var(--glow-gold)}
-.pr{font-size:10px;font-weight:700;letter-spacing:.5px}
-.pt{font-size:9px;color:var(--muted);margin-left:auto}
-.vlabel{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--purple);font-weight:700;margin-bottom:2px;display:flex;align-items:center;gap:4px;text-shadow:0 0 8px var(--glow-p)}
+.ping-result{text-align:center;font-size:11px;font-weight:700;margin-top:5px}
+.vlabel{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:2px;display:flex;align-items:center;gap:4px;text-shadow:0 0 8px var(--glow-gold)}
 .vsub{font-size:9px;color:var(--muted);margin-bottom:7px}
-.vbox{background:var(--bg);border:1px solid var(--bord);border-radius:8px;padding:7px 9px;margin-bottom:8px;box-shadow:inset 0 0 8px rgba(139,92,246,.05)}
-.vtxt{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--muted);word-break:break-all;line-height:1.4;transition:color .3s ease;user-select:text}
-.vtxt.rev{color:var(--violet);text-shadow:0 0 6px rgba(167,139,250,.3);font-size:8px}
+.vbox{background:var(--bg);border:1px solid var(--bord);border-radius:8px;padding:7px 9px;margin-bottom:8px}
+.vtxt{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--muted);word-break:break-all;line-height:1.4;transition:color .3s ease}
+.vtxt.rev{color:var(--gold);text-shadow:0 0 6px rgba(245,158,11,.3);font-size:8px}
 .vbtn-row{display:flex;gap:5px;margin-bottom:8px}
 .vbtn{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;padding:7px 4px;border-radius:8px;border:none;cursor:pointer;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:10px;letter-spacing:.3px;transition:all .25s ease}
-.vbtn svg{width:12px;height:12px;flex-shrink:0}
-.vbtn-show{background:rgba(139,92,246,.1);color:var(--violet);border:1px solid rgba(139,92,246,.25);box-shadow:0 0 6px rgba(139,92,246,.1)}
-.vbtn-show:hover{background:rgba(139,92,246,.2);box-shadow:0 0 12px var(--glow-p)}
-.vbtn-copy{background:var(--green);color:#fff;box-shadow:0 0 8px rgba(34,197,94,.25)}
-.vbtn-copy:hover{background:#16a34a;box-shadow:0 0 18px rgba(34,197,94,.4)}
-.vbtn-qr{background:rgba(6,182,212,.1);color:var(--cyan);border:1px solid rgba(6,182,212,.2);box-shadow:0 0 6px rgba(6,182,212,.1)}
+.vbtn-show{background:rgba(249,115,22,.1);color:var(--gold);border:1px solid rgba(249,115,22,.25)}
+.vbtn-show:hover{background:rgba(249,115,22,.2);box-shadow:0 0 12px var(--glow-flame)}
+.vbtn-copy{background:var(--green);color:#fff}.vbtn-copy:hover{background:#16a34a;box-shadow:0 0 14px rgba(34,197,94,.4)}
+.vbtn-qr{background:rgba(6,182,212,.1);color:var(--cyan);border:1px solid rgba(6,182,212,.2)}
 .vbtn-qr:hover{background:rgba(6,182,212,.2);box-shadow:0 0 12px var(--glow-c)}
 
-.feat-card{display:flex;flex-direction:column;align-items:center;text-align:center;padding:8px 4px}
-.feat-ic{font-size:14px;margin-bottom:2px}.feat-title{font-size:10px;font-weight:700}.feat-sub{font-size:8px;color:var(--muted);margin-top:1px}
-.f-unlim .feat-title{color:var(--purple);text-shadow:0 0 6px var(--glow-p)}
-.f-speed .feat-title{color:var(--gold);text-shadow:0 0 6px var(--glow-gold)}
-.f-secure .feat-title{color:var(--green);text-shadow:0 0 6px var(--glow-g)}
+.feat-card{display:flex;align-items:center;text-align:center;gap:0}
+.feat-item{flex:1;padding:8px 4px;border-right:1px solid var(--bord)}
+.feat-item:last-child{border-right:none}
+.feat-ic{font-size:14px;margin-bottom:2px}.feat-title{font-size:10px;font-weight:700}.feat-sub{font-size:8px;color:var(--muted)}
 
-.upcoming{background:var(--surf);border:1px solid rgba(139,92,246,.2);border-radius:12px;padding:14px;margin-bottom:8px;box-shadow:0 0 20px rgba(139,92,246,.07);display:flex;align-items:center;gap:12px;position:relative;overflow:hidden}
-.upcoming::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(139,92,246,.06) 0%,transparent 60%);pointer-events:none}
-.upcoming-icon{font-size:32px;flex-shrink:0;filter:drop-shadow(0 0 8px var(--glow-p))}
-.upcoming-text{flex:1}
-.upcoming-title{font-size:14px;font-weight:700;color:var(--purple);text-shadow:0 0 8px var(--glow-p);margin-bottom:3px;display:flex;align-items:center;gap:5px}
-.upcoming-desc{font-size:10px;color:var(--muted);line-height:1.4}
-.upcoming-btn{background:rgba(139,92,246,.15);border:1px solid rgba(139,92,246,.3);color:var(--violet);padding:6px 12px;border-radius:20px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:10px;letter-spacing:.5px;white-space:nowrap;box-shadow:0 0 8px rgba(139,92,246,.15)}
+.info-drawer-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:150;display:none}
+.info-drawer-overlay.show{display:block}
+.info-drawer{position:fixed;top:0;right:0;width:280px;max-width:85vw;height:100vh;background:rgba(14,14,30,0.85);border-left:1px solid var(--bord2);z-index:151;transform:translateX(100%);transition:transform .3s ease;padding:20px;overflow-y:auto}
+.info-drawer.show{transform:translateX(0)}
+.info-drawer-title{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;color:var(--gold);margin-bottom:16px;text-align:center}
+.info-drawer-section{font-size:11px;font-weight:700;color:var(--gold);padding:8px 0;cursor:pointer;border-bottom:1px solid var(--bord);display:flex;justify-content:space-between;align-items:center}
+.info-drawer-section:hover{color:var(--orange)}
+.info-drawer-item{font-size:10px;color:var(--muted);padding:6px 0 6px 16px;cursor:pointer;display:none;border-bottom:1px solid rgba(255,255,255,.03)}
+.info-drawer-item.open{display:block}
+.info-drawer-item:hover{color:var(--text)}
 
-.music-player{
-  position:fixed;bottom:80px;right:12px;z-index:90;
-  background:var(--surf);border:1px solid var(--bord2);
-  border-radius:12px;padding:8px 10px;
-  box-shadow:0 0 22px rgba(139,92,246,.18);
-  display:none;align-items:center;gap:6px;
-  cursor:grab;min-width:170px;max-width:220px;
-}
+.info-btn{position:fixed;bottom:20px;left:16px;z-index:140;width:38px;height:38px;border-radius:50%;background:rgba(14,14,30,0.5);border:1px solid rgba(249,115,22,.3);color:var(--gold);font-size:16px;cursor:pointer;display:none;align-items:center;justify-content:center;box-shadow:0 0 12px rgba(249,115,22,.15);transition:all .25s ease}
+.info-btn:hover{box-shadow:0 0 18px rgba(249,115,22,.3);transform:scale(1.06)}
+.info-btn:active{transform:scale(.94)}
+
+.music-player{position:fixed;bottom:85px;right:12px;z-index:90;background:rgba(14,14,30,0.5);border:1px solid var(--bord2);border-radius:12px;padding:8px 10px;box-shadow:0 0 22px rgba(249,115,22,.18);display:none;align-items:center;gap:6px;cursor:grab;min-width:170px;max-width:220px}
 .music-player.visible{display:flex;animation:fadeInUp .4s ease-out}
 @keyframes fadeInUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 .music-player:active{cursor:grabbing}
-.music-player .music-btn{
-  background:transparent;border:1px solid var(--bord);
-  color:var(--text);width:26px;height:26px;border-radius:6px;
-  cursor:pointer;font-size:11px;display:flex;align-items:center;
-  justify-content:center;transition:all .25s ease;flex-shrink:0;
-}
-.music-player .music-btn:hover{border-color:var(--purple);color:var(--violet);box-shadow:0 0 8px var(--glow-p)}
-.music-player .music-btn:active{transform:scale(.92)}
-.music-player .music-btn.play-btn{
-  background:rgba(139,92,246,.15);border:1px solid rgba(139,92,246,.3);
-  color:var(--violet);width:32px;height:32px;border-radius:50%;font-size:15px;
-}
-.music-player .music-btn.play-btn:hover{background:rgba(139,92,246,.25);box-shadow:0 0 14px var(--glow-p)}
-.music-player .music-btn.close-btn{color:var(--muted);font-size:10px;border:none;width:20px;height:20px}
-.music-player .music-btn.close-btn:hover{color:var(--red);background:rgba(239,68,68,.1)}
-.music-player .music-info{display:flex;flex-direction:column;gap:0;flex:1;min-width:0}
-.music-player .music-title{font-size:9px;color:var(--text);font-weight:600;letter-spacing:.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.music-player .music-artist{font-size:7px;color:var(--muted);letter-spacing:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.music-mini-icon{
-  position:fixed;bottom:80px;right:12px;z-index:90;
-  width:40px;height:40px;border-radius:50%;
-  background:var(--surf);border:1px solid var(--bord2);
-  display:none;align-items:center;justify-content:center;
-  cursor:grab;font-size:18px;color:var(--violet);
-  box-shadow:0 0 12px rgba(139,92,246,.15);
-}
+.music-btn{background:transparent;border:1px solid var(--bord);color:var(--text);width:26px;height:26px;border-radius:6px;cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center;transition:all .25s ease}
+.music-btn:hover{border-color:var(--orange);color:var(--gold);box-shadow:0 0 8px var(--glow-flame)}
+.music-btn.play-btn{background:rgba(249,115,22,.15);border:1px solid rgba(249,115,22,.3);color:var(--gold);width:32px;height:32px;border-radius:50%;font-size:15px}
+.music-btn.close-btn{color:var(--muted);font-size:10px;border:none;width:20px;height:20px}
+.music-btn.close-btn:hover{color:var(--red);background:rgba(239,68,68,.1)}
+.music-mini-icon{position:fixed;bottom:85px;right:12px;z-index:90;width:40px;height:40px;border-radius:50%;background:rgba(14,14,30,0.5);border:1px solid rgba(249,115,22,.25);display:none;align-items:center;justify-content:center;cursor:grab;font-size:18px;color:var(--gold);box-shadow:0 0 12px rgba(249,115,22,.15)}
 .music-mini-icon.show{display:flex}
-.music-mini-icon:hover{box-shadow:0 0 18px rgba(139,92,246,.3);transform:scale(1.06)}
-.music-mini-icon:active{cursor:grabbing}
 
 .footer{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px solid rgba(139,92,246,.12);padding:8px 16px 10px;z-index:50}
 .footer-text-row{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:5px}
@@ -351,7 +239,6 @@ body{min-height:100vh;min-height:100dvh}
 .footer-txt{font-size:8px;letter-spacing:2.5px;text-transform:uppercase;white-space:nowrap}
 .footer-txt .cyan{color:var(--cyan);text-shadow:0 0 4px var(--glow-c)}
 .footer-txt .green{color:var(--green);text-shadow:0 0 4px var(--glow-g)}
-.footer-txt .muted{color:var(--muted)}
 .footer-inf-row{display:flex;align-items:center;justify-content:center;gap:6px}
 .footer-inf-line{width:30px;height:1px;background:linear-gradient(90deg,transparent,var(--gold))}
 .footer-inf-line.r{background:linear-gradient(90deg,var(--gold),transparent)}
@@ -362,388 +249,271 @@ body{min-height:100vh;min-height:100dvh}
 .footer-sep{font-size:8px;color:var(--muted);opacity:.4}
 .footer-copy{font-size:8px;color:rgba(255,255,255,.5);letter-spacing:.5px}
 
-.tech-card{background:var(--surf);border:1px solid var(--bord);border-radius:10px;padding:8px;max-width:260px;box-shadow:0 0 0 1px rgba(139,92,246,0.05)}
-.trow{display:grid;grid-template-columns:65px 1fr;align-items:center;gap:4px;padding:4px 6px;border-bottom:1px solid rgba(139,92,246,.04)}
-.trow:last-child{border-bottom:none}
-.tk{font-size:7px;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
-.tv{font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--text);word-break:break-all;user-select:text}
-
 .modal-bg{display:none;position:fixed;inset:0;background:rgba(6,6,15,.92);z-index:200;align-items:center;justify-content:center}
 .modal-bg.show{display:flex}
-.modal{background:var(--surf);border:1px solid var(--bord2);border-radius:14px;padding:18px;text-align:center;max-width:280px;width:90%;box-shadow:0 0 30px var(--glow-p)}
-.mtitle{font-size:9px;letter-spacing:2px;color:var(--cyan);margin-bottom:12px;font-weight:700;text-shadow:0 0 6px var(--glow-c)}
-.mclose{margin-top:12px;background:var(--surf2);border:1px solid var(--bord);color:var(--muted);padding:6px 16px;border-radius:8px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:11px;letter-spacing:.5px;cursor:pointer;transition:all .25s ease}
-.mclose:hover{border-color:var(--cyan);color:var(--cyan);box-shadow:0 0 8px var(--glow-c)}
-
-#ytPlayerContainer{position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none}
-
-::-webkit-scrollbar{width:3px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:var(--purple2);border-radius:2px}
-
-@media(max-width:360px){
-  .g2{grid-template-columns:1fr}
-  .route-vless-grid{grid-template-columns:1fr}
-  .g3{grid-template-columns:1fr 1fr 1fr}
-  .feat-card{padding:6px 2px}.feat-ic{font-size:12px}.feat-title{font-size:9px}.feat-sub{font-size:7px}
-  .landing-play-btn{padding:12px 24px;font-size:12px}
-  .hdr-subtitle{font-size:7px;gap:3px}
-  .tech-card{max-width:100%}
-  .hdr-title{font-size:15px}
-  .tab{font-size:8px;padding:6px 1px}.tab-ic{font-size:11px}
-  .vbtn{font-size:8px;padding:5px 2px}.vbtn svg{width:10px;height:10px}
-}
+.modal{background:rgba(14,14,30,0.85);border:1px solid var(--bord2);border-radius:14px;padding:18px;text-align:center;max-width:280px;width:90%}
+.mtitle{font-size:9px;letter-spacing:2px;color:var(--cyan);margin-bottom:12px;font-weight:700}
+.mclose{margin-top:12px;background:var(--surf2);border:1px solid var(--bord);color:var(--muted);padding:6px 16px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer}
+#ytPlayerContainer{position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;opacity:0}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--orange);border-radius:2px}
+.blink-eye{display:inline-block;animation:eyeBlink 3s ease-in-out infinite}
+@keyframes eyeBlink{0%,30%,100%{transform:scaleY(1)}5%,10%{transform:scaleY(0.1)}}
+.tease{display:inline-block;animation:teaseAnim 3s ease-in-out infinite}
+@keyframes teaseAnim{0%,33%{transform:translateX(0) rotate(0)}40%{transform:translateX(-3px) rotate(-5deg)}45%{transform:translateX(3px) rotate(5deg)}50%{transform:translateX(0) rotate(0)}100%{transform:translateX(0) rotate(0)}}
+.smile{display:inline-block;animation:smileAnim 3s ease-in-out infinite}
+@keyframes smileAnim{0%,66%{transform:scale(1)}73%{transform:scale(1.25)}80%{transform:scale(1)}100%{transform:scale(1)}}
 </style>
 </head>
 <body>
 
+<svg style="position:absolute;width:0;height:0"><defs><linearGradient id="dashTimerGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#f59e0b"/><stop offset="50%" stop-color="#f97316"/><stop offset="100%" stop-color="#ea580c"/></linearGradient></defs></svg>
+
+<!-- LANDING SCREEN -->
 <div class="gateway-overlay" id="landingScreen">
   <div class="gojo-bg"></div><div class="gojo-overlay"></div><div class="gojo-tint"></div>
   <div class="landing-particles" id="landingParticles"></div>
-  <div class="landing-center">
-    <div class="landing-star">&#9889;</div>
-    <div class="landing-title">GOJO-RELAY I/O</div>
-    <div class="landing-sub">Infinity Network Core</div>
-    <button class="landing-play-btn" id="landingPlayBtn"><span>&#9654;</span> PLAY</button>
-  </div>
+  <div class="landing-center"><div class="landing-star">⚡</div><div class="landing-title">GOJO-RELAY I/O</div><div class="landing-sub">Infinity Network Core</div><button class="landing-play-btn" id="landingPlayBtn"><span>▶</span> PLAY</button></div>
 </div>
 
+<!-- LOADING SCREEN -->
 <div class="gateway-overlay hidden" id="loadingScreen">
   <div class="gojo-bg" style="filter:blur(2px)"></div><div class="gojo-overlay" style="background:rgba(6,6,15,.94)"></div><div class="gojo-tint"></div>
   <div class="landing-particles" id="loadingParticles"></div>
-  <div class="loading-center">
-    <div class="loading-title">&#9889; GOJO-RELAY I/O &#9889;</div>
-    <div class="loading-sub">INFINITY NETWORK CORE</div>
-    <div class="loading-phase" id="loadingPhase"></div>
-    <div class="boot-lines" id="bootLines"></div>
-    <div class="loading-bar-outer"><div class="loading-bar-inner" id="loadingBar" style="width:0%"></div></div>
-    <div class="loading-complete" id="loadingComplete">[OK] 100% Complete</div>
-    <div class="loading-ready" id="loadingReady">&#9889; NETWORK READY &#9889;</div>
-  </div>
+  <div class="loading-center"><div class="loading-title">⚡ GOJO-RELAY I/O ⚡</div><div class="loading-sub">INFINITY NETWORK CORE</div><div class="loading-phase" id="loadingPhase"></div><div class="boot-lines" id="bootLines"></div>
+    <div class="circle-progress-wrap"><svg class="circle-progress-svg" viewBox="0 0 100 100"><defs><linearGradient id="flameGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#f59e0b"/><stop offset="50%" stop-color="#f97316"/><stop offset="100%" stop-color="#ea580c"/></linearGradient></defs><circle class="circle-progress-bg" cx="50" cy="50" r="40"></circle><circle id="circleProgressFill" class="circle-progress-fill" cx="50" cy="50" r="40"></circle></svg><div class="circle-progress-text" id="circlePercent">0%</div></div>
+    <div class="loading-complete" id="loadingComplete">[OK] 100% Complete</div><div class="loading-ready" id="loadingReady">⚡ NETWORK READY ⚡</div></div>
 </div>
 
+<!-- ACCESS GATEWAY -->
 <div class="gateway-overlay hidden" id="accessGateway">
   <div class="gojo-bg" style="filter:blur(4px)"></div><div class="gojo-overlay" style="background:rgba(6,6,15,.9)"></div><div class="gojo-tint"></div>
   <div class="landing-particles" id="gatewayParticles"></div>
-  <div class="gateway-center">
-    <div class="gateway-icon">&#9889;</div>
-    <div class="gateway-title">GOJO-RELAY I/O ACCESS GATEWAY</div>
-    <div class="gateway-sub">&#128293; Only the Strongest May Proceed &#128293;</div>
-    <div class="gateway-progress" id="gatewayProgress">Question 1 of 3</div>
-    <div class="question-card" id="questionCard">
-      <div class="question-text" id="questionText">Loading question...</div>
-      <div class="answer-grid" id="answerGrid"></div>
-    </div>
-    <div class="gateway-feedback" id="gatewayFeedback" style="display:none">
-      <div class="feedback-icon" id="feedbackIcon"></div>
-      <div class="feedback-title" id="feedbackTitle"></div>
-      <div class="feedback-msg" id="feedbackMsg"></div>
-    </div>
-  </div>
+  <div class="gateway-center"><div class="gateway-icon">⚡</div><div class="gateway-title">GOJO-RELAY I/O ACCESS GATEWAY</div><div class="gateway-sub">🔥 Only the Strongest May Proceed 🔥</div><div class="gateway-progress" id="gatewayProgress">Question 1 of 3</div>
+    <div class="question-card" id="questionCard"><div class="question-text" id="questionText">Loading question...</div><div class="answer-grid" id="answerGrid"></div></div>
+    <div class="gateway-feedback" id="gatewayFeedback" style="display:none"><div class="feedback-icon" id="feedbackIcon"></div><div class="feedback-title" id="feedbackTitle"></div><div class="feedback-msg" id="feedbackMsg"></div></div></div>
 </div>
 
-<div class="verified-overlay" id="verifiedOverlay">
-  <div><div class="verified-star">&#9889;</div><div class="verified-title">ACCESS VERIFIED</div><div class="verified-sub">Welcome to GOJO-RELAY I/O Dashboard</div><div class="verified-quote">"Nah, I'd win."</div></div>
-</div>
+<!-- VERIFIED OVERLAY -->
+<div class="verified-overlay" id="verifiedOverlay"><div><div class="verified-star">⚡</div><div class="verified-title">ACCESS VERIFIED</div><div class="verified-sub">Welcome to GOJO-RELAY I/O Dashboard</div><div class="verified-quote">"Nah, I'd win."</div></div></div>
+<canvas id="flameCanvas"></canvas>
 
-<div id="main-app">
-<header class="hdr">
-  <div class="hdr-top">
-    <div class="hdr-title"><span class="bolt">&#9889;</span> <span class="name">Gojo-Relay</span> <span class="io">I/O</span> <span class="bolt">&#9889;</span></div>
-    <div class="hdr-subtitle"><span class="cyan">&#9729;&#65039; Cloud Run Proxy Engine</span><span class="white">&bull;</span><span class="infinity-icon">&#9829;&#65039;</span><span class="white">Infinity Network Core</span><span class="white">&bull;</span><span class="gold">&#9889; The Strongest Proxy Network</span></div>
-  </div>
-  <div class="tabs">
-    <div class="tab on" onclick="goTab('dashboard',this)"><span class="tab-ic">&#127968;</span>Dashboard</div>
-    <div class="tab" onclick="goTab('advanced',this)"><span class="tab-ic">&#9881;</span>Advanced</div>
-    <div class="tab" onclick="goTab('logs',this)"><span class="tab-ic">&#128221;</span>Logs</div>
-    <div class="tab" onclick="goTab('stats',this)"><span class="tab-ic">&#128200;</span>Stats</div>
-    <div class="tab" onclick="goTab('about',this)"><span class="tab-ic">&#8505;</span>About</div>
-  </div>
-</header>
+<!-- DASHBOARD -->
+<div id="main-app"><div class="gojo-bg dash-bg"></div><div class="gojo-overlay dash-overlay"></div>
+<header class="hdr"><div class="hdr-top"><div class="hdr-title"><span class="bolt">⚡</span> <span class="name">Gojo-Relay</span> <span class="io">I/O</span> <span class="bolt">⚡</span></div><div class="hdr-subtitle"><span class="shimmer-text">⛅ Cloud Run Proxy Engine • ♥ Infinity Network Core • ⚡ The Strongest Proxy Network</span></div></div></header>
 
 <div class="content">
-  <div class="pane on" id="tab-dashboard">
-    <div class="g2">
-      <div class="card" id="statusCard">
-        <div class="st-row"><span id="serverFlag">&#127482;&#127480;</span> <span class="st-flag-name" id="serverCountry">United States</span></div>
-        <div class="st-row"><span style="font-size:13px">&#9925;</span><span class="gcr-txt">Cloud Run</span><span style="color:var(--muted);font-size:10px">&bull; <span id="dashRegion">us-central1</span></span></div>
-        <div class="st-row"><span class="ip-txt" id="sIp">⛈️ Core IP: Loading...</span></div>
-        <div class="st-row"><span class="ping-exc" id="pRating">CHECKING...</span><span class="ping-ms" id="pMs"></span></div>
-        <div class="st-badges"><div class="sbadge online"><div class="sdot"></div>ONLINE</div><div class="sbadge chained" id="chainBadge" style="display:none"><div class="sdot"></div>CHAINED</div></div>
-        <div class="chain-sec" id="chainSec">
-          <div class="chain-row"><span id="chainFlag">&#127760;</span> <span class="st-flag-name" id="chainCountry">Exit Node</span></div>
-          <div class="chain-row"><span class="ip-txt" id="chainIp">⚡ Relay IP: Loading...</span></div>
-        </div>
-      </div>
-      <div class="card session-timer-card" id="sessionCard"></div>
-    </div>
-    <div class="route-vless-grid">
-      <div class="card">
-        <div class="clabel" style="color:var(--purple);text-shadow:0 0 6px var(--glow-p)">&#128205; ADDRESS &amp; SNI</div>
-        <div class="flabel">&#127760; Address</div><div class="fsub">Select endpoint target</div>
-        <div class="sel-row"><div class="sw"><select class="ss" id="addrSel" onchange="onAddr()"><option value="firebase-settings.crashlytics.com">Selector</option><optgroup label="Firebase / Android"><option value="fcmregistrations.googleapis.com">fcmregistrations.googleapis.com</option><option value="fcmtoken.googleapis.com">fcmtoken.googleapis.com</option><option value="firebaseinstallations.googleapis.com">firebaseinstallations.googleapis.com</option><option value="firebase.googleapis.com">firebase.googleapis.com</option><option value="firebase-settings.crashlytics.com">firebase-settings.crashlytics.com</option><option value="app-measurement.googleapis.com">app-measurement.googleapis.com</option><option value="device-messaging.googleapis.com">device-messaging.googleapis.com</option><option value="installations.googleapis.com">installations.googleapis.com</option></optgroup><optgroup label="Google Clients"><option value="clients.googleapis.com">clients.googleapis.com</option><option value="clients1.google.com">clients1.google.com</option><option value="clients2.google.com">clients2.google.com</option><option value="android.clients.google.com">android.clients.google.com</option><option value="connectivitycheck.android.com">connectivitycheck.android.com</option><option value="connectivitycheck.gstatic.com">connectivitycheck.gstatic.com</option></optgroup><optgroup label="GStatic / CDN"><option value="www.gstatic.com">www.gstatic.com</option><option value="ssl.gstatic.com">ssl.gstatic.com</option><option value="fonts.googleapis.com">fonts.googleapis.com</option><option value="ajax.googleapis.com">ajax.googleapis.com</option></optgroup><optgroup label="Google Services"><option value="dl.google.com">dl.google.com</option><option value="play.google.com">play.google.com</option><option value="meet.google.com">meet.google.com</option></optgroup><optgroup label="Cloud APIs"><option value="oauth2.googleapis.com">oauth2.googleapis.com</option><option value="run.googleapis.com">run.googleapis.com</option><option value="securetoken.googleapis.com">securetoken.googleapis.com</option><option value="us-central1.googleapis.com">us-central1.googleapis.com</option><optgroup label="More Google APIs">
-  <option value="firebasedynamiclinks.googleapis.com">firebasedynamiclinks.googleapis.com</option>
-  <option value="identitytoolkit.googleapis.com">identitytoolkit.googleapis.com</option>
-  <option value="googleads.googleapis.com">googleads.googleapis.com</option>
-  <option value="safebrowsing.googleapis.com">safebrowsing.googleapis.com</option>
-  <option value="maps.googleapis.com">maps.googleapis.com</option>
-  <option value="cloudfunctions.googleapis.com">cloudfunctions.googleapis.com</option>
-  <option value="monitoring.googleapis.com">monitoring.googleapis.com</option>
-  <option value="storage.googleapis.com">storage.googleapis.com</option>
-</optgroup></optgroup></select><span class="sa">&#9660;</span></div><button class="cbtn" onclick="toggleCI('cAddr')"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Custom</button></div>
-        <input class="ci" id="cAddr" placeholder="custom address" oninput="rebuildLink()">
-        <div class="flabel">&#128737; SNI</div><div class="fsub">Server Name Indication</div>
-        <div class="sel-row"><div class="sw"><select class="ss" id="sniSel" onchange="onSni()"><option value="firebase-settings.crashlytics.com">Selector</option><option value="firebase-settings.crashlytics.com">firebase-settings.crashlytics.com</option><option value="fcmtoken.googleapis.com">fcmtoken.googleapis.com</option><option value="www.maya.ph">www.maya.ph</option><option value="www.mayabank.ph">www.mayabank.ph</option><option value="api.mayabank.ph">api.mayabank.ph</option><option value="api.paymaya.com">api.paymaya.com</option><option value="www.paymaya.com">www.paymaya.com</option><option value="support.maya.ph">support.maya.ph</option><option value="protect.paymaya.com">protect.paymaya.com</option></select><span class="sa">&#9660;</span></div><button class="cbtn" onclick="toggleCI('cSni')"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Custom</button></div>
-        <input class="ci" id="cSni" placeholder="custom SNI" oninput="rebuildLink()">
-        <button class="ping-btn" onclick="runPing()"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Ping Test</button>
-        <div class="ping-res" id="pingRes"><span class="pv" id="pvVal">--</span><span class="pr" id="pvRate" style="color:var(--muted)">ms</span><span class="pt" id="pvTime"></span></div>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:8px">
-        <div class="card" style="flex:1">
-          <div class="vlabel">&#128279; VLESS CONFIG</div><div class="vsub">Connection profile</div>
-          <div class="vbox"><div class="vtxt" id="vtxt">vless://&#8226;&#8226;&#8226;&#8226;-&#8226;&#8226;&#8226;&#8226;-&#8226;&#8226;&#8226;&#8226;-&#8226;&#8226;&#8226;&#8226;-&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;@...</div></div>
-          <div class="vbtn-row">
-            <button class="vbtn vbtn-show" onclick="toggleShow()" id="showBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>Show</button>
-            <button class="vbtn vbtn-copy" onclick="copyConf()" id="copyBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy</button>
-            <button class="vbtn vbtn-qr" onclick="showQR()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="18" y="18" width="3" height="3"/></svg>QR</button>
-          </div>
-        </div>
-        <div class="g3" style="margin-bottom:0">
-          <div class="card feat-card f-unlim"><div class="feat-ic">&#8734;</div><div class="feat-title">Unlimited</div><div class="feat-sub">No data limit</div></div>
-          <div class="card feat-card f-speed"><div class="feat-ic">&#9889;</div><div class="feat-title">High Speed</div><div class="feat-sub">Optimized</div></div>
-          <div class="card feat-card f-secure"><div class="feat-ic">&#128274;</div><div class="feat-title">Encrypted</div><div class="feat-sub">TLS secured</div></div>
-        </div>
-      </div>
-    </div>
-    <div class="upcoming"><div class="upcoming-icon">&#128640;</div><div class="upcoming-text"><div class="upcoming-title">Upcoming Features &#10024;</div><div class="upcoming-desc">SQL logging &bull; Stats dashboard &bull; Multi-protocol support &bull; Custom themes</div></div><div class="upcoming-btn">Coming Soon</div></div>
+  <div class="g2">
+    <div class="card"><div class="clabel">⛅ Google Cloud Run Environment</div>
+      <div class="st-row"><span style="font-size:13px">⛈</span> <span style="font-weight:700;background:linear-gradient(90deg,#22c55e,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Cloud Run: Active</span></div>
+      <div class="st-row"><span style="font-size:13px">🌩</span> <span style="font-weight:700;background:linear-gradient(90deg,#8b5cf6,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent" id="relayStatus">Cloud Relay: Not Active</span></div>
+      <div class="st-row"><span id="pRating" style="font-weight:700"></span><span class="ping-ms" id="pMs"></span></div>
+      <div class="st-row"><span style="font-weight:600;background:linear-gradient(90deg,#22c55e,#f59e0b,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent">🌧 Core: Public</span></div>
+      <div class="st-row" id="relayLabel" style="display:none"><span style="font-weight:600;background:linear-gradient(90deg,#8b5cf6,#06b6d4,#ef4444);-webkit-background-clip:text;-webkit-text-fill-color:transparent">⚡ Relay: None</span></div>
+      <div class="st-badges"><div class="sbadge online"><div class="sdot"></div>ONLINE</div><div class="sbadge chained" id="chainBadge" style="display:none"><div class="sdot"></div>CHAINED</div></div></div>
+    <div class="card"><div class="clabel">🌐 Connection Info</div>
+      <div class="st-row" style="padding-top:15px"><span style="color:var(--cyan)">🌏 Country:</span> <span id="clientFlag" style="display:inline-flex;align-items:center;margin-right:2px">🌐</span> <span class="st-value" id="clientCountry">Loading...</span></div>
+      <div class="st-row"><span style="color:var(--cyan)">📍 Location:</span> <span class="st-value" id="clientCity">Loading...</span></div>
+      <div class="st-row"><span style="color:var(--cyan)">⚡ Your IP:</span> <span class="st-value" id="clientIP" style="color:var(--gold)">Loading...</span></div>
+      <div class="st-row"><span style="color:var(--cyan)"><span class="blink-eye">👀</span> Visitors:</span> <span class="st-value" id="visitCount" style="color:var(--gold);font-weight:700">0</span></div></div>
   </div>
-  <div class="pane" id="tab-advanced"><div class="mpane on" id="mini-technical"><div class="tech-card"><div class="clabel">&#9881; TECHNICAL DETAILS</div><div class="trow"><span class="tk">Address</span><span class="tv" id="tAddr">Loading...</span></div><div class="trow"><span class="tk">Port</span><span class="tv">443</span></div><div class="trow"><span class="tk">SNI</span><span class="tv" id="tSni">Loading...</span></div><div class="trow"><span class="tk">UUID</span><span class="tv" id="tUUID">Loading...</span></div><div class="trow"><span class="tk">Path</span><span class="tv" id="tPath">Loading...</span></div><div class="trow"><span class="tk">Transport</span><span class="tv">WebSocket</span></div><div class="trow"><span class="tk">Security</span><span class="tv">TLS</span></div><div class="trow"><span class="tk">Encryption</span><span class="tv">none</span></div></div></div></div>
-  <div class="pane" id="tab-logs"><div class="card" style="text-align:center;padding:40px 16px"><div style="font-size:28px;margin-bottom:8px">&#128203;</div><div style="font-size:13px;color:var(--muted)">Logs coming soon</div><div style="font-size:10px;color:var(--muted);margin-top:3px;opacity:.6">Requires SQL logging</div></div></div>
-  <div class="pane" id="tab-stats"><div class="card" style="text-align:center;padding:40px 16px"><div style="font-size:28px;margin-bottom:8px">&#128200;</div><div style="font-size:13px;color:var(--muted)">Stats coming soon</div><div style="font-size:10px;color:var(--muted);margin-top:3px;opacity:.6">Requires SQL logging</div></div></div>
-  <div class="pane" id="tab-about"><div class="card"><div class="clabel">&#8505; ABOUT</div><div style="font-size:12px;color:var(--muted);line-height:1.8"><div><span style="color:var(--cyan)">Gojo-Relay I/O</span> — WebSocket Proxy on Google Cloud Run</div><div>Version: <span style="color:var(--text)">Infinity Build</span></div><div>Protocol: <span style="color:var(--text)">Xray Core</span></div><div>Region: <span style="color:var(--text)" id="aboutRegion">us-central1</span></div><div>Session: <span style="color:var(--text)" id="aboutSession">Detecting...</span></div><div style="margin-top:8px;font-size:10px;opacity:.6">Powered by Sato Gojo</div><div style="font-size:10px;opacity:.4">&copy; 2026 All Rights Reserved</div><div style="font-size:9px;opacity:.3;margin-top:2px">Gojo-Relay Infinity Network</div></div></div></div>
+  <div class="card session-card" id="sessionCard"></div>
+  <div class="card"><div class="route-grid">
+      <div><div class="flabel" style="color:#06b6d4;text-shadow:0 0 10px rgba(6,182,212,0.4)">🛰️ Address</div><div class="fsub" style="color:#67e8f9">Frontend masking host</div><div class="sel-row"><div class="sw"><select class="ss" id="addrSel" onchange="onAddr()">
+  <optgroup label="⭐ Recommended">
+    <option value="firebase-settings.crashlytics.com">firebase-settings.crashlytics.com</option>
+    <option value="fcmtoken.googleapis.com">fcmtoken.googleapis.com</option>
+  </optgroup>
+  <optgroup label="Firebase / Android">
+    <option value="fcmregistrations.googleapis.com">fcmregistrations.googleapis.com</option>
+    <option value="firebaseinstallations.googleapis.com">firebaseinstallations.googleapis.com</option>
+    <option value="firebase.googleapis.com">firebase.googleapis.com</option>
+    <option value="app-measurement.googleapis.com">app-measurement.googleapis.com</option>
+    <option value="device-messaging.googleapis.com">device-messaging.googleapis.com</option>
+    <option value="installations.googleapis.com">installations.googleapis.com</option>
+  </optgroup>
+  <optgroup label="Google Clients">
+    <option value="clients.googleapis.com">clients.googleapis.com</option>
+    <option value="clients1.google.com">clients1.google.com</option>
+    <option value="clients2.google.com">clients2.google.com</option>
+    <option value="android.clients.google.com">android.clients.google.com</option>
+    <option value="connectivitycheck.android.com">connectivitycheck.android.com</option>
+    <option value="connectivitycheck.gstatic.com">connectivitycheck.gstatic.com</option>
+  </optgroup>
+  <optgroup label="GStatic / CDN">
+    <option value="www.gstatic.com">www.gstatic.com</option>
+    <option value="ssl.gstatic.com">ssl.gstatic.com</option>
+    <option value="fonts.googleapis.com">fonts.googleapis.com</option>
+    <option value="ajax.googleapis.com">ajax.googleapis.com</option>
+  </optgroup>
+  <optgroup label="Google Services">
+    <option value="dl.google.com">dl.google.com</option>
+    <option value="play.google.com">play.google.com</option>
+    <option value="meet.google.com">meet.google.com</option>
+  </optgroup>
+  <optgroup label="Cloud APIs">
+    <option value="oauth2.googleapis.com">oauth2.googleapis.com</option>
+    <option value="run.googleapis.com">run.googleapis.com</option>
+    <option value="securetoken.googleapis.com">securetoken.googleapis.com</option>
+    <option value="us-central1.googleapis.com">us-central1.googleapis.com</option>
+  </optgroup>
+  <optgroup label="More Google APIs">
+    <option value="firebasedynamiclinks.googleapis.com">firebasedynamiclinks.googleapis.com</option>
+    <option value="identitytoolkit.googleapis.com">identitytoolkit.googleapis.com</option>
+    <option value="googleads.googleapis.com">googleads.googleapis.com</option>
+    <option value="safebrowsing.googleapis.com">safebrowsing.googleapis.com</option>
+    <option value="maps.googleapis.com">maps.googleapis.com</option>
+    <option value="cloudfunctions.googleapis.com">cloudfunctions.googleapis.com</option>
+    <option value="monitoring.googleapis.com">monitoring.googleapis.com</option>
+    <option value="storage.googleapis.com">storage.googleapis.com</option>
+  </optgroup>
+</select><span class="sa">▼</span></div><button class="cbtn" onclick="toggleCI('cAddr')">Custom</button></div><input class="ci" id="cAddr" placeholder="custom address" oninput="rebuildLink()"></div>
+      <div><div class="flabel" style="color:#8b5cf6;text-shadow:0 0 10px rgba(139,92,246,0.4)">🔐 SNI</div><div class="fsub" style="color:#c4b5fd">TLS certificate hostname</div><div class="sel-row"><div class="sw"><select class="ss" id="sniSel" onchange="onSni()">
+  <option value="">None (Direct)</option>
+  <optgroup label="⭐ Recommended">
+    <option value="firebase-settings.crashlytics.com">firebase-settings.crashlytics.com</option>
+    <option value="fcmtoken.googleapis.com">fcmtoken.googleapis.com</option>
+  </optgroup>
+  <optgroup label="Other SNI">
+    <option value="www.maya.ph">www.maya.ph</option>
+    <option value="www.mayabank.ph">www.mayabank.ph</option>
+    <option value="api.mayabank.ph">api.mayabank.ph</option>
+    <option value="api.paymaya.com">api.paymaya.com</option>
+    <option value="www.paymaya.com">www.paymaya.com</option>
+    <option value="support.maya.ph">support.maya.ph</option>
+    <option value="protect.paymaya.com">protect.paymaya.com</option>
+  </optgroup>
+</select><span class="sa">▼</span></div><button class="cbtn" onclick="toggleCI('cSni')">Custom</button></div><input class="ci" id="cSni" placeholder="custom SNI" oninput="rebuildLink()"></div>
+  </div><div class="ping-container"><button class="ping-btn" onclick="runPing()">⚡ Ping Test</button></div><div class="ping-result" id="pingResult" style="color:var(--green)">Ready</div></div>
+  <div class="card" style="text-align:center"><div class="vlabel">🔗 VLESS CONFIG</div><div class="vbox"><div class="vtxt" id="vtxt">vless://⚡<span class="blink-eye">👀</span>⚡•-••••-•<span class="tease">🤪🖕</span>-••••-••<span class="smile">😁🤞</span>••••@...</div></div><div class="vbtn-row"><button class="vbtn vbtn-show" onclick="toggleShow()" id="showBtn">Show</button><button class="vbtn vbtn-copy" onclick="copyConf()" id="copyBtn">Copy</button><button class="vbtn vbtn-qr" onclick="showQR()">QR</button></div></div>
+  <div class="card feat-card"><div class="feat-item"><div class="feat-ic">∞</div><div class="feat-title" style="color:#22c55e;text-shadow:0 0 6px rgba(34,197,94,0.4)">Unlimited</div><div class="feat-sub" style="color:#4ade80">no data limit</div></div><div class="feat-item"><div class="feat-ic">⚡</div><div class="feat-title" style="color:#f59e0b;text-shadow:0 0 6px rgba(245,158,11,0.4)">High Speed</div><div class="feat-sub" style="color:#fbbf24">optimized</div></div><div class="feat-item"><div class="feat-ic">🔒</div><div class="feat-title" style="color:#a78bfa;text-shadow:0 0 6px rgba(167,139,250,0.4)">Encrypted</div><div class="feat-sub" style="color:#c4b5fd">TLS secured</div></div></div>
 </div>
 
-<footer class="footer">
-  <div class="footer-text-row"><div class="footer-dot"></div><div class="footer-line"></div><div class="footer-txt"><span class="cyan">INFINITY SPEED</span> <span class="muted">&bull;</span> <span class="green">LIMITLESS CONNECTION</span></div><div class="footer-line r"></div><div class="footer-dot"></div></div>
-  <div class="footer-inf-row"><div class="footer-inf-dot"></div><div class="footer-inf-line"></div><div class="footer-sym">&#8734;</div><div class="footer-inf-line r"></div><div class="footer-inf-dot"></div></div>
-  <div class="footer-credits"><span class="footer-powered">Powered by Sato Gojo</span><span class="footer-sep">&bull;</span><span class="footer-copy">&copy; 2026 All Rights Reserved</span></div>
-</footer>
+<footer class="footer"><div class="footer-text-row"><div class="footer-dot"></div><div class="footer-line"></div><div class="footer-txt"><span class="cyan">INFINITY SPEED</span> &bull; <span class="green">LIMITLESS CONNECTION</span></div><div class="footer-line r"></div><div class="footer-dot"></div></div><div class="footer-inf-row"><div class="footer-inf-dot"></div><div class="footer-inf-line"></div><div class="footer-sym">∞</div><div class="footer-inf-line r"></div><div class="footer-inf-dot"></div></div><div class="footer-credits"><span class="footer-powered">Powered by Sato Gojo</span><span class="footer-sep">&bull;</span><span class="footer-copy">&copy; 2026 All Rights Reserved</span></div></footer>
 </div>
 
-<div class="music-player" id="musicPlayer">
-  <button class="music-btn" id="musicPrev">&#9664;&#65039;</button>
-  <button class="music-btn play-btn" id="musicPlay">&#127925;</button>
-  <button class="music-btn" id="musicNext">&#9654;&#65039;</button>
-  <div class="music-info"><span class="music-title" id="musicTitle">Track 1</span><span class="music-artist" id="musicArtist">Gojo-Relay OST</span></div>
-  <button class="music-btn close-btn" id="musicClose">&times;</button>
+<button class="info-btn" id="infoBtn" onclick="toggleInfoDrawer()">ⓘ</button>
+<div class="info-drawer-overlay" id="infoOverlay" onclick="toggleInfoDrawer()"></div>
+<div class="info-drawer" id="infoDrawer"><div class="info-drawer-title">ⓘ Info</div>
+  <div class="info-drawer-section" onclick="toggleInfoSection('changelogs')">Changelogs <span id="changelogsArrow">▶</span></div>
+  <div class="info-drawer-item" id="changelogs">
+    <div class="info-drawer-section" onclick="toggleInfoSection('v13')" style="font-size:10px;border:none;padding:4px 0">v1.3 — Flame & Hybrid UI <span id="v13Arrow">▶</span></div>
+    <div class="info-drawer-item" id="v13"><strong>New Features:</strong><br>• Hybrid gradient text effects (landing, loading, gateway, verified)<br>• Flame-themed color combinations (deep red, orange, gold, white hot)<br>• Animated loading dots with flame glow (red → orange → yellow)<br>• Color-coded boot sequence lines (purple, red, flame, yellow-red, green-white)<br>• ACCESS VERIFIED screen with full flame effects<br>• Pulsing star with white hot flash<br><br><strong>Improvements:</strong><br>• Enhanced PLAY button with breathing pulse animation<br>• Shimmering header subtitle (white, cyan, gold, pink, purple)<br>• Colored dashboard labels (Address cyan, SNI purple, Created blue, Expires gold)<br>• Q&A Gateway title/subtitle with hybrid gradients<br>• Timer labels with colored glow effects<br>• Feature cards with matching color accents</div>
+    <div class="info-drawer-section" onclick="toggleInfoSection('v12')" style="font-size:10px;border:none;padding:4px 0">v1.2 — Infinity Build <span id="v12Arrow">▶</span></div>
+    <div class="info-drawer-item" id="v12"><strong>New Features:</strong><br>• Landing screen with PLAY button<br>• Loading animation with boot sequence<br>• Q&A Access Gateway (3 questions, 45-question pool)<br>• Flame particle effect on verified access<br>• Connection Info card (auto-detect flag, country, city, ISP, IP)<br>• Visitor counter<br>• Info drawer with About & License<br>• Floating music player with playlist<br>• Circular progress timer<br><br><strong>Improvements:</strong><br>• Faster loading times (10s total)<br>• Improved ping test display with color-coded status<br>• Transparent card design<br>• Performance and stability improvements</div>
+    <div class="info-drawer-section" onclick="toggleInfoSection('v11')" style="font-size:10px;border:none;padding:4px 0">v1.1 — UI & Features Update <span id="v11Arrow">▶</span></div>
+    <div class="info-drawer-item" id="v11">• Redesigned dashboard layout (mobile-first)<br>• QR code generation for VLESS config<br>• Feature badges (Unlimited, High Speed, Encrypted)<br>• Expanded Address & SNI domain options<br>• Improved footer design with infinity symbol<br>• Copy button with confirmation feedback</div>
+    <div class="info-drawer-section" onclick="toggleInfoSection('v10')" style="font-size:10px;border:none;padding:4px 0">v1.0 — Initial Release <span id="v10Arrow">▶</span></div>
+    <div class="info-drawer-item" id="v10">• Dark theme dashboard with timer<br>• Real-time ping monitoring<br>• VLESS config with Show/Hide toggle<br>• Session countdown timer (5h 15m)<br>• Online/Chained status badges<br>• Ping test via health endpoint<br>• Basic Address & SNI selector<br>• Copy config functionality</div>
+  </div>
+  <div class="info-drawer-section" onclick="toggleInfoSection('about')">About <span id="aboutArrow">▶</span></div>
+  <div class="info-drawer-item" id="about">Gojo-Relay I/O — WebSocket Proxy<br>Google Cloud Run • Xray Core<br>Version: Infinity Build<br>Powered by Sato Gojo<br>&copy; 2026 All Rights Reserved<br>MIT License</div>
 </div>
-<div class="music-mini-icon" id="musicMiniIcon">&#127925;</div>
 
+<div class="music-player" id="musicPlayer"><button class="music-btn" id="musicPrev">◀</button><button class="music-btn play-btn" id="musicPlay">🎵</button><button class="music-btn" id="musicNext">▶</button><div class="music-info"><span id="musicTitle" style="font-size:9px;font-weight:600">Track 1</span><br><span id="musicArtist" style="font-size:7px;color:var(--muted)">Gojo-Relay OST</span></div><button class="music-btn close-btn" id="musicClose">×</button></div>
+<div class="music-mini-icon" id="musicMiniIcon">🎵</div>
 <div id="ytPlayerContainer"></div>
-<div class="modal-bg" id="qrBg" onclick="closeQR()"><div class="modal" onclick="event.stopPropagation()"><div class="mtitle">&#128241; SCAN QR CODE</div><img id="qrImg" width="180" height="180" alt="QR Code" style="display:block;margin:0 auto;border-radius:8px"><br><button class="mclose" onclick="closeQR()">CLOSE</button></div></div>
+<div class="modal-bg" id="qrBg" onclick="closeQR()"><div class="modal" onclick="event.stopPropagation()"><div class="mtitle">📱 SCAN QR CODE</div><img id="qrImg" width="180" height="180" alt="QR" style="display:block;margin:0 auto;border-radius:8px"><br><button class="mclose" onclick="closeQR()">CLOSE</button></div></div>
 
 <script>
 const DUR=5*3600+15*60,SK='gj_s';
-let rt={uuid:'',path:'',pointed:false,server_ip:''},vlink='',revealed=false;
+let rt={uuid:'',path:'',pointed:false},vlink='',revealed=false;
 let curA='firebase-settings.crashlytics.com',curS='firebase-settings.crashlytics.com';
-let detectedRegion='us-central1',pingInterval=null;
+let pingInterval=null;
 
-const questions=[
-  {q:"What does 'No Load' typically mean in VPN context?",a:["No bandwidth limit","No configuration needed","No server load","No encryption"],correct:1},
-  {q:"Which port is commonly used for TLS connections?",a:["80","443","8080","3000"],correct:1},
-  {q:"What protocol does VLESS replace in V2Ray?",a:["VMess","Trojan","Shadowsocks","SOCKS5"],correct:0},
-  {q:"What does SNI stand for?",a:["Server Network Interface","Server Name Indication","Secure Node Integration","System Network Identifier"],correct:1},
-  {q:"What is Google Cloud Run primarily used for?",a:["Database hosting","Containerized apps","DNS management","File storage"],correct:1},
-  {q:"What does WebSocket allow?",a:["One-way data flow","Full-duplex communication","Static file serving","DNS resolution"],correct:1},
-  {q:"What is Gojo's Domain Expansion called?",a:["Infinite Void","Unlimited Void","Eternal Void","Absolute Void"],correct:1},
-  {q:"What does Gojo's Infinity technique do?",a:["Increases speed","Stops anything that touches him","Creates clones","Heals instantly"],correct:1},
-  {q:"Which cloud provider runs this dashboard?",a:["AWS","Azure","Google Cloud","DigitalOcean"],correct:2},
-  {q:"What encryption does VLESS typically use?",a:["AES-256","ChaCha20","None (relies on TLS)","RSA"],correct:2},
-  {q:"What is the default Cloud Run region?",a:["us-east1","us-central1","europe-west1","asia-east1"],correct:1},
-  {q:"What protocol is used for VLESS transport?",a:["TCP","WebSocket","HTTP/2","gRPC"],correct:1},
-  {q:"What does FCM stand for in Firebase?",a:["Firebase Cloud Messaging","Fast Connection Module","Firebase Configuration Manager","Flexible Communication Method"],correct:0},
-  {q:"What is the typical session duration?",a:["1 hour","5 hours 15 minutes","24 hours","Unlimited"],correct:1},
-  {q:"What color represents Gojo's cursed energy?",a:["Red","Blue","Purple","Gold"],correct:2},
-  {q:"What is the purpose of SNI in TLS?",a:["Encrypt data","Identify hostname","Generate certificates","Compress traffic"],correct:1},
-  {q:"What does 'Hollow Purple' combine?",a:["Red + Blue","Blue + Green","Red + Yellow","Purple + White"],correct:0},
-  {q:"Which company developed V2Ray?",a:["Google","Cloudflare","V2Fly","Microsoft"],correct:2},
-  {q:"What happens to idle Cloud Run instances?",a:["Stay alive","Scale to zero","Reboot","Send alert"],correct:1},
-  {q:"Max Cloud Run timeout?",a:["5 min","15 min","60 min","24 hours"],correct:2},
-  {q:"Who says 'Nah, I'd win'?",a:["Itadori","Megumi","Gojo","Sukuna"],correct:2},
-  {q:"What is the WebSocket path?",a:["/ws","/vless","Dynamic from runtime","/proxy"],correct:2},
-  {q:"What does Infinity allow Gojo to do?",a:["Teleport","Manipulate space at atomic level","Read minds","Fly"],correct:1},
-  {q:"Default Cloud Run port?",a:["80","443","8080","3000"],correct:2},
-  {q:"What type is Cloud Run?",a:["IaaS","PaaS","Serverless container","SaaS"],correct:2},
-  {q:"What is Gojo's signature move?",a:["Black Flash","Hollow Purple","Domain Expansion","Six Eyes"],correct:1},
-  {q:"What does VLESS stand for?",a:["Very Light Encryption","V2Ray Less","Verified Less Encryption","V2Ray Light Encryption"],correct:1},
-  {q:"Cloud Run scaling?",a:["Manual only","Auto-scale to zero","Fixed instances","Kubernetes only"],correct:1},
-  {q:"Gojo's Infinity barrier?",a:["Slows time","Stops anything approaching","Reflects attacks","Absorbs energy"],correct:1},
-  {q:"Which DNS is used with Cloud Run?",a:["Cloud DNS","Route 53","Cloudflare","Google Domains"],correct:0},
-  {q:"What is the advantage of WebSocket over HTTP?",a:["Faster initial connection","Full-duplex communication","Better security","Lower latency"],correct:1},
-  {q:"What does CDN stand for?",a:["Content Delivery Network","Cloud Data Node","Central Domain Name","Cached Data Network"],correct:0},
-  {q:"What is latency in networking?",a:["Data size","Time delay","Connection type","Bandwidth limit"],correct:1},
-  {q:"Which Gojo ability allows him to see cursed energy?",a:["Infinity","Six Eyes","Hollow Purple","Domain Expansion"],correct:1},
-  {q:"What is a container in cloud computing?",a:["Virtual machine","Isolated process environment","Storage bucket","Network switch"],correct:1},
-  {q:"What does 'serverless' actually mean?",a:["No servers at all","Servers managed by the provider","Only local servers","No internet needed"],correct:1},
-  {q:"What is the main benefit of Cloud Run?",a:["Free forever","Auto-scaling containers","Unlimited storage","Built-in database"],correct:1},
-  {q:"What is a proxy server?",a:["File storage","Intermediary between client and server","Database engine","Email server"],correct:1},
-  {q:"What does TLS encrypt?",a:["Only passwords","Data in transit","Stored files","DNS queries"],correct:1},
-  {q:"Who is Gojo's best friend?",a:["Itadori","Geto","Megumi","Nanami"],correct:1},
-  {q:"What is the opposite of Infinity in Gojo's technique?",a:["Zero","Void","Blue (attraction)","Red (repulsion)"],correct:2},
-  {q:"What port does DNS typically use?",a:["80","443","53","8080"],correct:2},
-  {q:"What is a reverse proxy?",a:["Client-side proxy","Server-side proxy that forwards requests","VPN tunnel","Firewall"],correct:1},
-  {q:"What happens when Cloud Run scales to zero?",a:["Instance stays alive","Instance shuts down until next request","Data is deleted","Region changes"],correct:1},
-  {q:"What is Gojo's famous line before a fight?",a:["I'll try my best","Nah, I'd win","Let's go","This might be tough"],correct:1}
-];
-
-let gatewayQuestionIndex=0,gatewayQuestions=[],gatewayCorrectCount=0,gatewayWrongCount=0,selectedAnswer=null,usedQuestions=[];
-
-function shuffleArray(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
-function getRandomQuestions(count){
-  const stored=sessionStorage.getItem('gj_used');if(stored)usedQuestions=JSON.parse(stored);
-  const available=questions.filter((_,i)=>!usedQuestions.includes(i));
-  if(available.length<count){usedQuestions=[];sessionStorage.removeItem('gj_used');return shuffleArray(questions).slice(0,count);}
-  const selected=shuffleArray(available).slice(0,count);
-  selected.forEach(q=>{const idx=questions.indexOf(q);if(idx>=0)usedQuestions.push(idx);});
-  sessionStorage.setItem('gj_used',JSON.stringify(usedQuestions));return selected;
-}
-function createParticles(cid,count=22){
-  const c=document.getElementById(cid);if(!c)return;c.innerHTML='';
-  const colors=['rgba(139,92,246,.35)','rgba(6,182,212,.25)','rgba(245,158,11,.18)','rgba(167,139,250,.28)'];
-  for(let i=0;i<count;i++){const p=document.createElement('div');p.className='landing-particle';p.style.left=Math.random()*100+'%';p.style.width=(2+Math.random()*5)+'px';p.style.height=p.style.width;p.style.background=colors[Math.floor(Math.random()*colors.length)];p.style.animationDelay=Math.random()*5+'s';p.style.animationDuration=(3+Math.random()*7)+'s';c.appendChild(p);}
-}
+function createParticles(cid,count=22){const c=document.getElementById(cid);if(!c)return;c.innerHTML='';const colors=['rgba(249,115,22,.35)','rgba(245,158,11,.25)','rgba(234,88,12,.18)','rgba(251,191,36,.28)'];for(let i=0;i<count;i++){const p=document.createElement('div');p.className='landing-particle';p.style.left=Math.random()*100+'%';p.style.width=(2+Math.random()*5)+'px';p.style.height=p.style.width;p.style.background=colors[Math.floor(Math.random()*colors.length)];p.style.animationDelay=Math.random()*5+'s';p.style.animationDuration=(3+Math.random()*7)+'s';c.appendChild(p)}}
 
 const landingScreen=document.getElementById('landingScreen'),loadingScreen=document.getElementById('loadingScreen'),accessGateway=document.getElementById('accessGateway'),verifiedOverlay=document.getElementById('verifiedOverlay'),mainApp=document.getElementById('main-app');
 createParticles('landingParticles',30);
+document.getElementById('landingPlayBtn').addEventListener('click',()=>{landingScreen.classList.add('fade-out');startMusic();setTimeout(()=>{landingScreen.classList.add('hidden');startLoading()},500)});
 
-document.getElementById('landingPlayBtn').addEventListener('click',()=>{
-  landingScreen.classList.add('fade-out');startMusic();
-  setTimeout(()=>{landingScreen.classList.add('hidden');startLoading();},800);
-});
-
-async function detectRegion(){
-  try{const r=await fetch('http://metadata.google.internal/computeMetadata/v1/instance/region',{headers:{'Metadata-Flavor':'Google'}});if(r.ok){const fr=await r.text();detectedRegion=fr.split('/').pop();}}catch(e){detectedRegion='us-central1';}
-  document.getElementById('dashRegion').textContent=detectedRegion;const ae=document.getElementById('aboutRegion');if(ae)ae.textContent=detectedRegion;
-}
-detectRegion();
-
-// Music System
-let ytPlayer,ytReady=false,musicPlaying=false,currentTrack=0,isDragging=false,sX,sY,iL,iT,miniDragging=false;
+let ytPlayer,ytReady=false,musicPlaying=false,currentTrack=0;
 const playlist=[{id:'Wz3fKXSiDZE',title:'Gojo Theme',artist:'Gojo-Relay OST'},{id:'AFr1oMDvM84',title:'Infinity Beats',artist:'Gojo-Relay OST'},{id:'AwyZ3j0xpwc',title:'Hollow Purple',artist:'Gojo-Relay OST'},{id:'eUiM-_dF3eY',title:'Domain Expansion',artist:'Gojo-Relay OST'}];
 const ytScript=document.createElement('script');ytScript.src='https://www.youtube.com/iframe_api';document.head.appendChild(ytScript);
-window.onYouTubeIframeAPIReady=function(){ytPlayer=new YT.Player('ytPlayerContainer',{height:'0',width:'0',videoId:playlist[0].id,playerVars:{autoplay:0,controls:0,loop:0},events:{onReady:()=>{ytReady=true;},onStateChange:(e)=>{if(e.data===YT.PlayerState.ENDED){currentTrack=(currentTrack+1)%playlist.length;if(ytReady)ytPlayer.loadVideoById(playlist[currentTrack].id);updateMusicUI();}}}});};
-function startMusic(){const tp=setInterval(()=>{if(ytReady){clearInterval(tp);ytPlayer.playVideo();musicPlaying=true;updateMusicUI();}},300);}
-function updateMusicUI(){document.getElementById('musicTitle').textContent=playlist[currentTrack].title;document.getElementById('musicArtist').textContent=playlist[currentTrack].artist;}
+window.onYouTubeIframeAPIReady=function(){ytPlayer=new YT.Player('ytPlayerContainer',{height:'0',width:'0',videoId:playlist[0].id,playerVars:{autoplay:0,controls:0,loop:0},events:{onReady:()=>{ytReady=true},onStateChange:(e)=>{if(e.data===YT.PlayerState.ENDED){currentTrack=(currentTrack+1)%playlist.length;if(ytReady)ytPlayer.loadVideoById(playlist[currentTrack].id);updateMusicUI()}}}})};
+function startMusic(){const tp=setInterval(()=>{if(ytReady){clearInterval(tp);ytPlayer.playVideo();musicPlaying=true;updateMusicUI()}},300)}
+function updateMusicUI(){document.getElementById('musicTitle').textContent=playlist[currentTrack].title;document.getElementById('musicArtist').textContent=playlist[currentTrack].artist}
 
-const musicPlayer=document.getElementById('musicPlayer'),musicMiniIcon=document.getElementById('musicMiniIcon'),musicClose=document.getElementById('musicClose'),musicPlayBtn=document.getElementById('musicPlay');
-function showMusicPlayer(){musicPlayer.classList.add('visible');updateMusicUI();}
-musicPlayBtn.addEventListener('click',()=>{if(!ytReady)return;if(musicPlaying){ytPlayer.pauseVideo();musicPlaying=false;musicPlayBtn.innerHTML='&#127925;';}else{ytPlayer.playVideo();musicPlaying=true;musicPlayBtn.innerHTML='&#9208;&#65039;';}});
-musicClose.addEventListener('click',()=>{musicPlayer.classList.remove('visible');musicMiniIcon.classList.add('show');});
-musicMiniIcon.addEventListener('click',()=>{musicMiniIcon.classList.remove('show');musicPlayer.classList.add('visible');});
-document.getElementById('musicPrev').addEventListener('click',()=>{currentTrack=(currentTrack-1+playlist.length)%playlist.length;if(ytReady)ytPlayer.loadVideoById(playlist[currentTrack].id);updateMusicUI();if(!musicPlaying){ytPlayer.playVideo();musicPlaying=true;musicPlayBtn.innerHTML='&#9208;&#65039;';}});
-document.getElementById('musicNext').addEventListener('click',()=>{currentTrack=(currentTrack+1)%playlist.length;if(ytReady)ytPlayer.loadVideoById(playlist[currentTrack].id);updateMusicUI();if(!musicPlaying){ytPlayer.playVideo();musicPlaying=true;musicPlayBtn.innerHTML='&#9208;&#65039;';}});
+const musicPlayer=document.getElementById('musicPlayer'),musicMiniIcon=document.getElementById('musicMiniIcon');
+function showMusicPlayer(){musicPlayer.classList.add('visible');updateMusicUI()}
+document.getElementById('musicPlay').addEventListener('click',()=>{if(!ytReady)return;if(musicPlaying){ytPlayer.pauseVideo();musicPlaying=false;document.getElementById('musicPlay').innerHTML='🎵'}else{ytPlayer.playVideo();musicPlaying=true;document.getElementById('musicPlay').innerHTML='⏸'}});
+document.getElementById('musicPrev').addEventListener('click',()=>{currentTrack=(currentTrack-1+playlist.length)%playlist.length;if(ytReady)ytPlayer.loadVideoById(playlist[currentTrack].id);updateMusicUI()});
+document.getElementById('musicNext').addEventListener('click',()=>{currentTrack=(currentTrack+1)%playlist.length;if(ytReady)ytPlayer.loadVideoById(playlist[currentTrack].id);updateMusicUI()});
+document.getElementById('musicClose').addEventListener('click',()=>{musicPlayer.classList.remove('visible');musicMiniIcon.classList.add('show')});
+musicMiniIcon.addEventListener('click',()=>{musicMiniIcon.classList.remove('show');musicPlayer.classList.add('visible')});
 
-// Drag - Music Player
-musicPlayer.addEventListener('mousedown',(e)=>{if(e.target.closest('button'))return;isDragging=true;sX=e.clientX;sY=e.clientY;const r=musicPlayer.getBoundingClientRect();iL=r.left;iT=r.top;musicPlayer.style.right='auto';musicPlayer.style.bottom='auto';musicPlayer.style.left=iL+'px';musicPlayer.style.top=iT+'px';});
-musicPlayer.addEventListener('touchstart',(e)=>{if(e.target.closest('button'))return;isDragging=true;sX=e.touches[0].clientX;sY=e.touches[0].clientY;const r=musicPlayer.getBoundingClientRect();iL=r.left;iT=r.top;musicPlayer.style.right='auto';musicPlayer.style.bottom='auto';musicPlayer.style.left=iL+'px';musicPlayer.style.top=iT+'px';},{passive:false});
-// Drag - Mini Icon
-musicMiniIcon.addEventListener('mousedown',(e)=>{miniDragging=true;sX=e.clientX;sY=e.clientY;const r=musicMiniIcon.getBoundingClientRect();iL=r.left;iT=r.top;musicMiniIcon.style.right='auto';musicMiniIcon.style.bottom='auto';musicMiniIcon.style.left=iL+'px';musicMiniIcon.style.top=iT+'px';});
-musicMiniIcon.addEventListener('touchstart',(e)=>{miniDragging=true;sX=e.touches[0].clientX;sY=e.touches[0].clientY;const r=musicMiniIcon.getBoundingClientRect();iL=r.left;iT=r.top;musicMiniIcon.style.right='auto';musicMiniIcon.style.bottom='auto';musicMiniIcon.style.left=iL+'px';musicMiniIcon.style.top=iT+'px';},{passive:false});
-document.addEventListener('mousemove',(e)=>{if(isDragging){e.preventDefault();musicPlayer.style.left=(iL+e.clientX-sX)+'px';musicPlayer.style.top=(iT+e.clientY-sY)+'px';}if(miniDragging){e.preventDefault();musicMiniIcon.style.left=(iL+e.clientX-sX)+'px';musicMiniIcon.style.top=(iT+e.clientY-sY)+'px';}});
-document.addEventListener('touchmove',(e)=>{if(isDragging){e.preventDefault();musicPlayer.style.left=(iL+e.touches[0].clientX-sX)+'px';musicPlayer.style.top=(iT+e.touches[0].clientY-sY)+'px';}if(miniDragging){e.preventDefault();musicMiniIcon.style.left=(iL+e.touches[0].clientX-sX)+'px';musicMiniIcon.style.top=(iT+e.touches[0].clientY-sY)+'px';}},{passive:false});
-document.addEventListener('mouseup',()=>{isDragging=false;miniDragging=false});
-document.addEventListener('touchend',()=>{isDragging=false;miniDragging=false});
+let dragActive=false,dSX,dSY,dIL,dIT,dragTarget=null;
+function startDrag(e,el){if(e.target.closest('button'))return;dragActive=true;dragTarget=el;const cx=e.clientX||e.touches[0].clientX,cy=e.clientY||e.touches[0].clientY;dSX=cx;dSY=cy;const r=el.getBoundingClientRect();dIL=r.left;dIT=r.top;el.style.right='auto';el.style.bottom='auto';el.style.left=dIL+'px';el.style.top=dIT+'px'}
+function moveDrag(e){if(!dragActive||!dragTarget)return;e.preventDefault();const cx=e.clientX||e.touches[0].clientX,cy=e.clientY||e.touches[0].clientY;dragTarget.style.left=(dIL+cx-dSX)+'px';dragTarget.style.top=(dIT+cy-dSY)+'px'}
+function endDrag(){dragActive=false;dragTarget=null}
+musicPlayer.addEventListener('mousedown',(e)=>startDrag(e,musicPlayer));musicPlayer.addEventListener('touchstart',(e)=>startDrag(e,musicPlayer),{passive:false});
+musicMiniIcon.addEventListener('mousedown',(e)=>startDrag(e,musicMiniIcon));musicMiniIcon.addEventListener('touchstart',(e)=>startDrag(e,musicMiniIcon),{passive:false});
+document.addEventListener('mousemove',moveDrag);document.addEventListener('touchmove',moveDrag,{passive:false});
+document.addEventListener('mouseup',endDrag);document.addEventListener('touchend',endDrag);
 
-// Loading Screen
+function typeText(el,text,idx,cb){if(idx>=text.length){if(cb)cb();return}const span=document.createElement('span');span.className='letter';span.textContent=text[idx];el.appendChild(span);setTimeout(()=>typeText(el,text,idx+1,cb),70)}
+function addDots(el,count,current,cb){if(current>=count){if(cb)cb();return}const dot=document.createElement('span');dot.className='dot';dot.textContent='.';el.appendChild(dot);setTimeout(()=>addDots(el,count,current+1,cb),400)}
+function startDotCycle(el){let cycles=0;function cycle(){if(cycles>=3)return;el.querySelectorAll('.dot').forEach(d=>d.remove());addDots(el,3,0,()=>{cycles++;setTimeout(()=>{if(cycles<3)cycle()},400)})}cycle()}
+
+// LOADING — 10s total (5s+5s)
 function startLoading(){
   loadingScreen.classList.remove('hidden');createParticles('loadingParticles',30);
-  const phaseEl=document.getElementById('loadingPhase'),bar=document.getElementById('loadingBar'),complete=document.getElementById('loadingComplete'),ready=document.getElementById('loadingReady'),bootLines=document.getElementById('bootLines');bootLines.innerHTML='';
-  let chainedDetected=false,relayChained=false;
-  fetch('/runtime.json').then(r=>r.json()).then(data=>{if(data.pointed)chainedDetected=true;if(data.relay_chained)relayChained=true;}).catch(()=>{}).finally(()=>{
-    window._finalStatusLines=[{text:'[OK] Cloud Run Node — Ready',cls:'done'},{text:relayChained?'[OK] Relay Chain — Active':'[None] Relay Chain — Not Detected',cls:relayChained?'done':'pending'},{text:chainedDetected?'[OK] Chained Node — Active':'[None] Chained Node — Not Detected',cls:chainedDetected?'done':'pending'},{text:'[OK] VLESS Protocol — Ready',cls:'done'},{text:'[OK] Security Layer — Verified',cls:'done'},{text:'[OK] Dashboard Resources — Loaded',cls:'done'}];
-  });
-  typeText(phaseEl,'Loading',0,()=>{setTimeout(()=>{addDots(phaseEl,3,0);},400);});
-  const loadingLines=['[•] Initializing Cloud Run Node...','[•] Establishing Relay Chain...','[•] Scanning Chained Nodes...','[•] Activating VLESS Protocol...','[•] Verifying Security Layer...','[•] Loading Dashboard Resources...'];
-  let lineIdx=0;const lineInterval=setInterval(()=>{if(lineIdx>=loadingLines.length){clearInterval(lineInterval);return;}const div=document.createElement('div');div.className='boot-line';div.innerHTML='<span class="pending">•</span> '+loadingLines[lineIdx];bootLines.appendChild(div);lineIdx++;},1500);
-  let elapsed=0,totalDuration=20000;
-  const timer=setInterval(()=>{elapsed+=200;const pct=Math.min(100,Math.floor((elapsed/totalDuration)*100));bar.style.width=pct+'%';if(elapsed>=10000&&!window._verifyingStarted){window._verifyingStarted=true;phaseEl.innerHTML='';typeText(phaseEl,'Verifying',0,()=>{setTimeout(()=>{addDots(phaseEl,3,0);},400);});verifyLinesOneByOne(bootLines);}if(elapsed>=totalDuration){clearInterval(timer);clearInterval(lineInterval);finishLoading();}},200);
-  function verifyLinesOneByOne(container){const lines=container.querySelectorAll('.boot-line');const finalLines=window._finalStatusLines||[{text:'[OK] Cloud Run Node — Ready',cls:'done'},{text:'[None] Relay Chain — Not Detected',cls:'pending'},{text:'[None] Chained Node — Not Detected',cls:'pending'},{text:'[OK] VLESS Protocol — Ready',cls:'done'},{text:'[OK] Security Layer — Verified',cls:'done'},{text:'[OK] Dashboard Resources — Loaded',cls:'done'}];let vIdx=0;const vInterval=setInterval(()=>{if(vIdx>=lines.length||vIdx>=finalLines.length){clearInterval(vInterval);return;}const l=finalLines[vIdx];const iconClass=l.cls==='done'?'check':'pending';lines[vIdx].innerHTML='<span class="'+iconClass+'">'+(l.cls==='done'?'✓':'–')+'</span> '+l.text;if(l.cls==='done')lines[vIdx].classList.add('done');vIdx++;},1200);}
-  function finishLoading(){bootLines.innerHTML='';const finalLines=window._finalStatusLines||[{text:'[OK] Cloud Run Node — Ready',cls:'done'},{text:'[None] Relay Chain — Not Detected',cls:'pending'},{text:'[None] Chained Node — Not Detected',cls:'pending'},{text:'[OK] VLESS Protocol — Ready',cls:'done'},{text:'[OK] Security Layer — Verified',cls:'done'},{text:'[OK] Dashboard Resources — Loaded',cls:'done'}];finalLines.forEach(l=>{const div=document.createElement('div');div.className='boot-line done';div.innerHTML='<span class="check">✓</span> '+l.text;bootLines.appendChild(div);});bar.style.width='100%';complete.classList.add('show');setTimeout(()=>{ready.classList.add('show');},1000);setTimeout(()=>{loadingScreen.classList.add('fade-out');setTimeout(()=>{loadingScreen.classList.add('hidden');startGateway();},800);},3000);}
+  const phaseEl=document.getElementById('loadingPhase'),circleFill=document.getElementById('circleProgressFill'),percentEl=document.getElementById('circlePercent'),complete=document.getElementById('loadingComplete'),ready=document.getElementById('loadingReady'),bootLines=document.getElementById('bootLines');bootLines.innerHTML='';
+  const circumference=2*Math.PI*40;let chainedDetected=false;
+  fetch('/runtime.json').then(r=>r.json()).then(data=>{if(data.pointed)chainedDetected=true}).catch(()=>{});
+  typeText(phaseEl,'Loading',0,()=>{startDotCycle(phaseEl)});
+  const loadingLines=['[•] Initializing Cloud Run Node...','[•] Establishing Relay Chain...','[•] Activating VLESS Protocol...','[•] Verifying Security Layer...','[•] Loading Dashboard Resources...'];
+  let lineIdx=0;const lineInterval=setInterval(()=>{if(lineIdx>=loadingLines.length){clearInterval(lineInterval);return}const div=document.createElement('div');div.className='boot-line';div.innerHTML='<span class="neutral">•</span> '+loadingLines[lineIdx];bootLines.appendChild(div);lineIdx++},1000);
+  let elapsed=0,totalDuration=10000;
+  const timer=setInterval(()=>{elapsed+=200;const pct=Math.min(100,Math.floor((elapsed/totalDuration)*100));circleFill.style.strokeDashoffset=circumference-((pct/100)*circumference);percentEl.textContent=pct+'%';if(elapsed>=5000&&!window._verifyingStarted){window._verifyingStarted=true;phaseEl.innerHTML='';typeText(phaseEl,'Verifying',0,()=>{startDotCycle(phaseEl)});verifyLines(bootLines,chainedDetected)}if(elapsed>=totalDuration){clearInterval(timer);clearInterval(lineInterval);finishLoading()}},200);
+  function verifyLines(container,chained){const lines=container.querySelectorAll('.boot-line');const finalLines=['<span class="check">✓</span> [OK] Cloud Run Node — Ready',chained?'<span class="check">✓</span> [OK] Relay Chain — Active':'<span class="neutral">–</span> [~] Relay Chain — Not Detected','<span class="check">✓</span> [OK] VLESS Protocol — Ready','<span class="check">✓</span> [OK] Security Layer — Verified','<span class="check">✓</span> [OK] Dashboard Resources — Loaded'];let vIdx=0;const vInterval=setInterval(()=>{if(vIdx>=lines.length||vIdx>=finalLines.length){clearInterval(vInterval);return}lines[vIdx].innerHTML=finalLines[vIdx];vIdx++},1000)}
+  function finishLoading(){bootLines.innerHTML='';const finalLines=['<span class="check">✓</span> [OK] Cloud Run Node — Ready',chainedDetected?'<span class="check">✓</span> [OK] Relay Chain — Active':'<span class="neutral">–</span> [~] Relay Chain — Not Detected','<span class="check">✓</span> [OK] VLESS Protocol — Ready','<span class="check">✓</span> [OK] Security Layer — Verified','<span class="check">✓</span> [OK] Dashboard Resources — Loaded'];finalLines.forEach(l=>{const div=document.createElement('div');div.className='boot-line done';div.innerHTML=l;bootLines.appendChild(div)});circleFill.style.strokeDashoffset=0;percentEl.textContent='100%';complete.classList.add('show');setTimeout(()=>{ready.classList.add('show')},800);setTimeout(()=>{loadingScreen.classList.add('fade-out');setTimeout(()=>{loadingScreen.classList.add('hidden');startGateway()},500)},1500)}
 }
-function typeText(el,text,idx,cb){if(idx>=text.length){if(cb)cb();return;}const span=document.createElement('span');span.className='letter';span.textContent=text[idx];span.style.animationDelay=(idx*0.08)+'s';el.appendChild(span);setTimeout(()=>typeText(el,text,idx+1,cb),80);}
-function addDots(el,count,current,cb){if(current>=count){if(cb)cb();return;}const dot=document.createElement('span');dot.className='dot';dot.textContent='.';dot.style.animationDelay=(current*0.25)+'s';el.appendChild(dot);setTimeout(()=>addDots(el,count,current+1,cb),250);}
 
-// Gateway
-function startGateway(){accessGateway.classList.remove('hidden');createParticles('gatewayParticles',20);gatewayQuestionIndex=0;gatewayCorrectCount=0;gatewayWrongCount=0;gatewayQuestions=getRandomQuestions(3);loadGatewayQuestion();}
-function loadGatewayQuestion(){selectedAnswer=null;document.getElementById('gatewayFeedback').style.display='none';document.getElementById('gatewayProgress').textContent='Question '+(gatewayQuestionIndex+1)+' of 3';document.querySelectorAll('.answer-btn').forEach(b=>b.classList.remove('selected','correct-flash','wrong-flash'));const q=gatewayQuestions[gatewayQuestionIndex];document.getElementById('questionText').textContent=q.q;const grid=document.getElementById('answerGrid');grid.innerHTML='';const letters=['A','B','C','D'];const shuffled=shuffleArray(q.a.map((ans,i)=>({text:ans,oi:i})));shuffled.forEach((item,i)=>{const btn=document.createElement('button');btn.className='answer-btn';btn.innerHTML='<span class="ans-letter">'+letters[i]+'</span> '+item.text;btn.addEventListener('click',()=>{if(selectedAnswer!==null)return;selectedAnswer=i;document.querySelectorAll('.answer-btn').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');checkAnswer(item.oi,btn);});grid.appendChild(btn);});const card=document.getElementById('questionCard');card.style.animation='none';card.offsetHeight;card.style.animation='fadeInDown .5s ease-out';}
-function checkAnswer(idx,btn){const q=gatewayQuestions[gatewayQuestionIndex],fb=document.getElementById('gatewayFeedback'),icon=document.getElementById('feedbackIcon'),title=document.getElementById('feedbackTitle'),msg=document.getElementById('feedbackMsg');if(idx===q.correct){btn.classList.add('correct-flash');gatewayCorrectCount++;gatewayWrongCount=0;icon.textContent='✅';title.textContent='Successful!';title.className='feedback-title success';msg.textContent='';fb.style.display='block';fb.style.animation='none';fb.offsetHeight;fb.style.animation='fadeInDown .4s ease-out';setTimeout(()=>{gatewayQuestionIndex++;if(gatewayQuestionIndex>=3){accessGranted();}else{loadGatewayQuestion();}},1500);}else{btn.classList.add('wrong-flash');gatewayWrongCount++;const fem=['😉','😁','🤪'];const ei=Math.min(gatewayWrongCount-1,fem.length-1);icon.textContent=fem[ei];if(gatewayWrongCount>=3){title.textContent='Oopss.. Keep trying. Until your fingers bleed...';title.className='feedback-title brutal';msg.textContent="Don't cry. The strongest never give up!";}else if(gatewayWrongCount===2){title.textContent='Wrong Answer!';title.className='feedback-title fail';msg.textContent='Try again. Only the strongest may proceed again.';}else{title.textContent='Wrong Answer!';title.className='feedback-title fail';msg.textContent='Try again. Only the strongest may proceed.';}fb.style.display='block';fb.style.animation='none';fb.offsetHeight;fb.style.animation='fadeInDown .4s ease-out';setTimeout(()=>{selectedAnswer=null;document.querySelectorAll('.answer-btn').forEach(b=>b.classList.remove('selected','wrong-flash'));},1200);}}
-function accessGranted(){const fb=document.getElementById('gatewayFeedback');fb.style.display='block';document.getElementById('feedbackIcon').textContent='😎';document.getElementById('feedbackTitle').textContent='Access Granted';document.getElementById('feedbackTitle').className='feedback-title success';document.getElementById('feedbackMsg').textContent='"Nah, I\'d win" — Successfully Achieved.';document.getElementById('gatewayProgress').textContent='All 3 Questions Passed!';accessGateway.style.background='rgba(139,92,246,.15)';setTimeout(()=>{accessGateway.classList.add('fade-out');setTimeout(()=>{accessGateway.classList.add('hidden');showVerified();},800);},2200);}
-function showVerified(){verifiedOverlay.classList.add('show');setTimeout(()=>{verifiedOverlay.style.opacity='0';verifiedOverlay.style.transition='opacity .8s ease';setTimeout(()=>{verifiedOverlay.style.display='none';mainApp.classList.add('visible');initDashboard();},800);},4000);}
+// Q&A
+const questions=[{q:"What does 'No Load' typically mean in VPN context?",a:["No bandwidth limit","No configuration needed","No server load","No encryption"],correct:1},{q:"Which port is commonly used for TLS connections?",a:["80","443","8080","3000"],correct:1},{q:"What protocol does VLESS replace in V2Ray?",a:["VMess","Trojan","Shadowsocks","SOCKS5"],correct:0},{q:"What does SNI stand for?",a:["Server Network Interface","Server Name Indication","Secure Node Integration","System Network Identifier"],correct:1},{q:"What is Google Cloud Run primarily used for?",a:["Database hosting","Containerized apps","DNS management","File storage"],correct:1},{q:"What does WebSocket allow?",a:["One-way data flow","Full-duplex communication","Static file serving","DNS resolution"],correct:1},{q:"What is Gojo's Domain Expansion called?",a:["Infinite Void","Unlimited Void","Eternal Void","Absolute Void"],correct:1},{q:"What does Gojo's Infinity technique do?",a:["Increases speed","Stops anything that touches him","Creates clones","Heals instantly"],correct:1},{q:"Which cloud provider runs this dashboard?",a:["AWS","Azure","Google Cloud","DigitalOcean"],correct:2},{q:"What encryption does VLESS typically use?",a:["AES-256","ChaCha20","None (relies on TLS)","RSA"],correct:2},{q:"What is the default Cloud Run region?",a:["us-east1","us-central1","europe-west1","asia-east1"],correct:1},{q:"What protocol is used for VLESS transport?",a:["TCP","WebSocket","HTTP/2","gRPC"],correct:1},{q:"What does FCM stand for in Firebase?",a:["Firebase Cloud Messaging","Fast Connection Module","Firebase Configuration Manager","Flexible Communication Method"],correct:0},{q:"What is the typical session duration?",a:["1 hour","5 hours 15 minutes","24 hours","Unlimited"],correct:1},{q:"What color represents Gojo's cursed energy?",a:["Red","Blue","Purple","Gold"],correct:2},{q:"What is the purpose of SNI in TLS?",a:["Encrypt data","Identify hostname","Generate certificates","Compress traffic"],correct:1},{q:"What does 'Hollow Purple' combine?",a:["Red + Blue","Blue + Green","Red + Yellow","Purple + White"],correct:0},{q:"Which company developed V2Ray?",a:["Google","Cloudflare","V2Fly","Microsoft"],correct:2},{q:"What happens to idle Cloud Run instances?",a:["Stay alive","Scale to zero","Reboot","Send alert"],correct:1},{q:"Max Cloud Run timeout?",a:["5 min","15 min","60 min","24 hours"],correct:2},{q:"Who says 'Nah, I'd win'?",a:["Itadori","Megumi","Gojo","Sukuna"],correct:2},{q:"What is the WebSocket path?",a:["/ws","/vless","Dynamic from runtime","/proxy"],correct:2},{q:"What does Infinity allow Gojo to do?",a:["Teleport","Manipulate space at atomic level","Read minds","Fly"],correct:1},{q:"Default Cloud Run port?",a:["80","443","8080","3000"],correct:2},{q:"What type is Cloud Run?",a:["IaaS","PaaS","Serverless container","SaaS"],correct:2},{q:"What is Gojo's signature move?",a:["Black Flash","Hollow Purple","Domain Expansion","Six Eyes"],correct:1},{q:"What does VLESS stand for?",a:["Very Light Encryption","V2Ray Less","Verified Less Encryption","V2Ray Light Encryption"],correct:1},{q:"Cloud Run scaling?",a:["Manual only","Auto-scale to zero","Fixed instances","Kubernetes only"],correct:1},{q:"Gojo's Infinity barrier?",a:["Slows time","Stops anything approaching","Reflects attacks","Absorbs energy"],correct:1},{q:"Which DNS is used with Cloud Run?",a:["Cloud DNS","Route 53","Cloudflare","Google Domains"],correct:0},{q:"What is the advantage of WebSocket over HTTP?",a:["Faster initial connection","Full-duplex communication","Better security","Lower latency"],correct:1},{q:"What does CDN stand for?",a:["Content Delivery Network","Cloud Data Node","Central Domain Name","Cached Data Network"],correct:0},{q:"What is latency in networking?",a:["Data size","Time delay","Connection type","Bandwidth limit"],correct:1},{q:"Which Gojo ability allows him to see cursed energy?",a:["Infinity","Six Eyes","Hollow Purple","Domain Expansion"],correct:1},{q:"What is a container in cloud computing?",a:["Virtual machine","Isolated process environment","Storage bucket","Network switch"],correct:1},{q:"What does 'serverless' actually mean?",a:["No servers at all","Servers managed by the provider","Only local servers","No internet needed"],correct:1},{q:"What is the main benefit of Cloud Run?",a:["Free forever","Auto-scaling containers","Unlimited storage","Built-in database"],correct:1},{q:"What is a proxy server?",a:["File storage","Intermediary between client and server","Database engine","Email server"],correct:1},{q:"What does TLS encrypt?",a:["Only passwords","Data in transit","Stored files","DNS queries"],correct:1},{q:"Who is Gojo's best friend?",a:["Itadori","Geto","Megumi","Nanami"],correct:1},{q:"What is the opposite of Infinity in Gojo's technique?",a:["Zero","Void","Blue (attraction)","Red (repulsion)"],correct:2},{q:"What port does DNS typically use?",a:["80","443","53","8080"],correct:2},{q:"What is a reverse proxy?",a:["Client-side proxy","Server-side proxy that forwards requests","VPN tunnel","Firewall"],correct:1},{q:"What happens when Cloud Run scales to zero?",a:["Instance stays alive","Instance shuts down until next request","Data is deleted","Region changes"],correct:1},{q:"What is Gojo's famous line before a fight?",a:["I'll try my best","Nah, I'd win","Let's go","This might be tough"],correct:1}];
+let gatewayQuestionIndex=0,gatewayQuestions=[],gatewayCorrectCount=0,gatewayWrongCount=0,selectedAnswer=null,usedQuestions=[];
+function shuffleArray(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function getRandomQuestions(count){const stored=sessionStorage.getItem('gj_used');if(stored)usedQuestions=JSON.parse(stored);const available=questions.filter((_,i)=>!usedQuestions.includes(i));if(available.length<count){usedQuestions=[];sessionStorage.removeItem('gj_used');return shuffleArray(questions).slice(0,count)}const selected=shuffleArray(available).slice(0,count);selected.forEach(q=>{const idx=questions.indexOf(q);if(idx>=0)usedQuestions.push(idx)});sessionStorage.setItem('gj_used',JSON.stringify(usedQuestions));return selected}
+function startGateway(){accessGateway.classList.remove('hidden');createParticles('gatewayParticles',20);gatewayQuestionIndex=0;gatewayCorrectCount=0;gatewayWrongCount=0;gatewayQuestions=getRandomQuestions(3);loadGatewayQuestion()}
+function loadGatewayQuestion(){selectedAnswer=null;document.getElementById('gatewayFeedback').style.display='none';document.getElementById('gatewayProgress').textContent='Question '+(gatewayQuestionIndex+1)+' of 3';document.querySelectorAll('.answer-btn').forEach(b=>b.classList.remove('selected','correct-flash','wrong-flash'));const q=gatewayQuestions[gatewayQuestionIndex];document.getElementById('questionText').textContent=q.q;const grid=document.getElementById('answerGrid');grid.innerHTML='';const letters=['A','B','C','D'];const shuffled=shuffleArray(q.a.map((ans,i)=>({text:ans,oi:i})));shuffled.forEach((item,i)=>{const btn=document.createElement('button');btn.className='answer-btn';btn.innerHTML='<span class="ans-letter">'+letters[i]+'</span> '+item.text;btn.addEventListener('click',()=>{if(selectedAnswer!==null)return;selectedAnswer=i;document.querySelectorAll('.answer-btn').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');checkAnswer(item.oi,btn)});grid.appendChild(btn)});const card=document.getElementById('questionCard');card.style.animation='none';card.offsetHeight;card.style.animation='fadeInDown .5s ease-out'}
+function checkAnswer(idx,btn){const q=gatewayQuestions[gatewayQuestionIndex],fb=document.getElementById('gatewayFeedback'),icon=document.getElementById('feedbackIcon'),title=document.getElementById('feedbackTitle'),msg=document.getElementById('feedbackMsg');if(idx===q.correct){btn.classList.add('correct-flash');gatewayCorrectCount++;gatewayWrongCount=0;icon.textContent='✅';title.textContent='Successful!';title.className='feedback-title success';msg.textContent='';fb.style.display='block';fb.style.animation='none';fb.offsetHeight;fb.style.animation='fadeInDown .4s ease-out';setTimeout(()=>{gatewayQuestionIndex++;if(gatewayQuestionIndex>=3){accessGranted()}else{loadGatewayQuestion()}},1500)}else{btn.classList.add('wrong-flash');gatewayWrongCount++;const fem=['😉','😁','🤪'];const ei=Math.min(gatewayWrongCount-1,fem.length-1);icon.textContent=fem[ei];if(gatewayWrongCount>=3){title.textContent='Oopss.. Keep trying. Until your fingers bleed...';title.className='feedback-title brutal';msg.textContent="Don't cry. The strongest never give up!"}else if(gatewayWrongCount===2){title.textContent='Wrong Answer!';title.className='feedback-title fail';msg.textContent='Try again. Only the strongest may proceed again.'}else{title.textContent='Wrong Answer!';title.className='feedback-title fail';msg.textContent='Try again. Only the strongest may proceed.'}fb.style.display='block';fb.style.animation='none';fb.offsetHeight;fb.style.animation='fadeInDown .4s ease-out';setTimeout(()=>{selectedAnswer=null;document.querySelectorAll('.answer-btn').forEach(b=>b.classList.remove('selected','wrong-flash'))},1200)}}
+function accessGranted(){const fb=document.getElementById('gatewayFeedback');fb.style.display='block';document.getElementById('feedbackIcon').textContent='😎';document.getElementById('feedbackTitle').textContent='Access Granted';document.getElementById('feedbackTitle').className='feedback-title success';document.getElementById('feedbackMsg').textContent='"Nah, I\'d win" — Successfully Achieved.';document.getElementById('gatewayProgress').textContent='All 3 Questions Passed!';accessGateway.style.background='rgba(249,115,22,.15)';setTimeout(()=>{accessGateway.classList.add('fade-out');setTimeout(()=>{accessGateway.classList.add('hidden');showVerified()},500)},2200)}
 
-// Dashboard
-function initDashboard(){showMusicPlayer();loadRT();updateAboutSession();startAutoPing();}
-let st=parseInt(localStorage.getItem(SK)||0);const hasTimer=!!st;if(!st){st=Date.now();localStorage.setItem(SK,st);}
-const dep=new Date(st),exp=new Date(st+DUR*1000);
-function renderSessionCard(){const card=document.getElementById('sessionCard');if(!card)return;const ct=dep.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});if(hasTimer){card.innerHTML='<div class="env-label qwik">☁️ Qwiklabs Environment</div><div class="created-text">🚀 Created: '+ct+'</div><div class="deploy-status temp">🟡 DEPLOYMENT STATUS</div><div class="main-display" id="cdown">05:15:00</div><div class="sbar"><div class="sbar-f" id="sbarF" style="width:100%"></div></div><div class="sub-text">⏳ Temporary Instance</div><div class="sub-text" style="color:var(--gold)">⏰ Expires: <span id="expiresAt">--:--</span></div>';setTimeout(()=>{const el=document.getElementById('expiresAt');if(el)el.textContent=exp.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});},100);setInterval(tickTimer,1000);tickTimer();}else{card.innerHTML='<div class="env-label cloud">☁️ Google Cloud Environment</div><div class="created-text">🚀 Created: '+ct+'</div><div class="deploy-status unlimited">🟢 DEPLOYMENT STATUS</div><div class="sub-text" style="font-size:10px;color:var(--muted);margin:4px 0">⚡ Unlimited Runtime Detected</div><div class="main-display infinity-icon">&#8734;</div><div class="sub-text glow">🔥 The Strongest Never Expires</div><div class="unlimited-void">🌌 Expiry: Unlimited Void</div>';}}
-function updateAboutSession(){const el=document.getElementById('aboutSession');if(el)el.textContent=hasTimer?'Qwiklabs · Temporary Instance':'Google Cloud · Active Instance';}
-function tickTimer(){const rem=Math.max(0,DUR-Math.floor((Date.now()-st)/1000));const h=Math.floor(rem/3600),m=Math.floor((rem%3600)/60),s=rem%60;const el=document.getElementById('cdown');if(!el)return;el.textContent=String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');const pct=(rem/DUR)*100;el.className='main-display'+(pct<15?' crit':pct<30?' warn':'');const b=document.getElementById('sbarF');if(b){b.style.width=pct+'%';b.style.background=pct<15?'linear-gradient(90deg,#ef4444,#f87171)':pct<30?'linear-gradient(90deg,#f59e0b,#fbbf24)':'linear-gradient(90deg,#7c3aed,#8b5cf6)';}}
+// VERIFIED — 2s
+function showVerified(){verifiedOverlay.classList.add('show');startFlameEffect();setTimeout(()=>{stopFlameEffect();verifiedOverlay.style.opacity='0';setTimeout(()=>{verifiedOverlay.style.display='none';mainApp.classList.add('visible');initDashboard()},500)},2000)}
+let flameActive=false,flameParticles=[],flameCtx,flameCanvas;
+function startFlameEffect(){flameCanvas=document.getElementById('flameCanvas');flameCanvas.style.display='block';flameCtx=flameCanvas.getContext('2d');flameCanvas.width=window.innerWidth;flameCanvas.height=window.innerHeight;flameActive=true;flameParticles=[];for(let i=0;i<80;i++){flameParticles.push({x:flameCanvas.width/2+Math.random()*300-150,y:flameCanvas.height/2+Math.random()*300-150,vx:(Math.random()-.5)*5,vy:(Math.random()-.5)*3-3,life:1,size:2+Math.random()*5,color:Math.random()>.5?'rgba(249,115,22,':'rgba(245,158,11,'})}animateFlame()}
+function animateFlame(){if(!flameActive)return;flameCtx.clearRect(0,0,flameCanvas.width,flameCanvas.height);flameParticles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.life-=.015;p.vy-=.02;flameCtx.beginPath();flameCtx.arc(p.x,p.y,p.size,0,Math.PI*2);flameCtx.fillStyle=p.color+p.life+')';flameCtx.fill()});flameParticles=flameParticles.filter(p=>p.life>0);for(let i=0;i<6;i++){flameParticles.push({x:flameCanvas.width/2+Math.random()*150-75,y:flameCanvas.height/2+Math.random()*150-75,vx:(Math.random()-.5)*7,vy:(Math.random()-.5)*4-4,life:1,size:2+Math.random()*4,color:Math.random()>.5?'rgba(249,115,22,':'rgba(245,158,11,'})}requestAnimationFrame(animateFlame)}
+function stopFlameEffect(){flameActive=false;flameCanvas.style.display='none';if(flameCtx)flameCtx.clearRect(0,0,flameCanvas.width,flameCanvas.height)}
+
+// DASHBOARD INIT
+function initDashboard(){showMusicPlayer();loadRT();startAutoPing();fetchClientInfo();updateVisitorCount();document.getElementById('infoBtn').style.display='flex'}
+
+// TIMER
+let st=parseInt(localStorage.getItem(SK)||0);if(!st){st=Date.now();localStorage.setItem(SK,st)}
+const hasTimer=!!st;const dep=new Date(st),exp=new Date(st+DUR*1000);
+function renderSessionCard(){const card=document.getElementById('sessionCard');if(!card)return;const ct=dep.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});if(hasTimer){card.innerHTML='<div class="clabel" style="width:100%">⛅ Cloud Run Environment</div><div class="dash-timer-container"><svg class="dash-timer-svg" viewBox="0 0 130 130"><circle class="dash-timer-bg" cx="65" cy="65" r="60"></circle><circle id="dashTimerFill" class="dash-timer-fill" cx="65" cy="65" r="60"></circle></svg><div class="dash-timer-content"><div class="dash-timer-label" style="color:#60a5fa;text-shadow:0 0 8px rgba(96,165,250,0.5)">🚀 Created</div><div class="dash-timer-sub">'+ct+'</div><div class="dash-timer-main" id="cdown">05:15:00</div><div class="dash-timer-label" style="color:#f59e0b;text-shadow:0 0 8px rgba(245,158,11,0.5)">⏰ Expires</div><div class="dash-timer-sub glow" id="expiresAt">--:--</div></div></div><div class="dash-timer-sub" style="letter-spacing:1px;text-transform:uppercase;margin-top:2px;font-size:9px;color:#f97316;text-shadow:0 0 6px rgba(249,115,22,0.4)">⏳ Temporary Instance</div>';setTimeout(()=>{const el=document.getElementById('expiresAt');if(el)el.textContent=exp.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});tickTimer()},0);setInterval(tickTimer,1000)}else{card.innerHTML='<div class="clabel" style="width:100%">⛅ Cloud Run Environment</div><div class="dash-timer-container"><svg class="dash-timer-svg" viewBox="0 0 130 130"><circle class="dash-timer-bg" cx="65" cy="65" r="60"></circle><circle class="dash-timer-fill" cx="65" cy="65" r="60" style="stroke-dashoffset:0"></circle></svg><div class="dash-timer-content"><div class="dash-timer-label" style="color:#60a5fa;text-shadow:0 0 8px rgba(96,165,250,0.5)">🚀 Created</div><div class="dash-timer-sub">'+ct+'</div><div class="dash-timer-main" style="font-size:26px;font-weight:900;color:var(--gold)">∞</div><div class="dash-timer-label" style="color:#f59e0b;text-shadow:0 0 8px rgba(245,158,11,0.5)">🔥 Runtime</div><div class="dash-timer-sub">Unlimited Void</div></div></div><div class="dash-timer-sub" style="letter-spacing:1px;text-transform:uppercase;margin-top:2px;font-size:9px;color:#f97316;text-shadow:0 0 6px rgba(249,115,22,0.4)">♾️ Expiry: Infinity Void</div>'}}
+function tickTimer(){const rem=Math.max(0,DUR-Math.floor((Date.now()-st)/1000));const h=Math.floor(rem/3600),m=Math.floor((rem%3600)/60),s=rem%60;const el=document.getElementById('cdown'),circleFill=document.getElementById('dashTimerFill');if(!el)return;el.textContent=String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');const pct=(rem/DUR)*100;el.className='dash-timer-main'+(pct<15?' crit':pct<30?' warn':'');if(circleFill){const circumference=2*Math.PI*60;circleFill.style.strokeDashoffset=circumference-((pct/100)*circumference)}}
 renderSessionCard();
 
-function goTab(id,el){document.querySelectorAll('.pane').forEach(p=>p.classList.remove('on'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));document.getElementById('tab-'+id).classList.add('on');el.classList.add('on');}
+async function fetchClientInfo(){try{const r=await fetch('https://api.ipify.org?format=json');const d=await r.json();document.getElementById('clientIP').textContent=d.ip;const gr=await fetch('https://ipapi.co/'+d.ip+'/json/');const gd=await gr.json();if(gd.country){const cc=gd.country.toLowerCase();document.getElementById('clientFlag').innerHTML='<img src="https://flagcdn.com/24x18/'+cc+'.png" alt="flag" style="width:18px;height:13px;border-radius:2px;object-fit:cover;display:inline-block;vertical-align:middle;margin-right:3px">'}if(gd.country_name)document.getElementById('clientCountry').textContent=gd.country_name;if(gd.city)document.getElementById('clientCity').textContent=gd.city+', '+gd.region}catch(e){}}
+function updateVisitorCount(){let v=parseInt(localStorage.getItem('gojoVisits')||0);v++;localStorage.setItem('gojoVisits',v);document.getElementById('visitCount').textContent=v}
 
-async function loadRT(){
-  try{const r=await fetch('/runtime.json');rt=await r.json();
-    if(rt.pointed){document.getElementById('chainBadge').style.display='flex';document.getElementById('chainSec').classList.add('show');fetchChainInfo();}
-    document.getElementById('tAddr').textContent=window.location.host;document.getElementById('tUUID').textContent=rt.uuid;document.getElementById('tPath').textContent=rt.path;document.getElementById('tSni').textContent=curS;
-    buildLink();doPing();
-    // Display Cloud Run IP + Flag from runtime.json
-    if(rt.server_ip){
-      document.getElementById('sIp').textContent='🌐 Cloud Run IP: '+rt.server_ip;
-      fetchGeoInfo(rt.server_ip,'server');
-    }
-  }catch(e){setTimeout(loadRT,2000);}
-}
-
-async function fetchGeoInfo(ip,type){
-  try{
-    const r=await fetch('https://ipapi.co/'+ip+'/json/');
-    const d=await r.json();
-    if(d.country_flag&&d.country_name){
-      if(type==='server'){
-        document.getElementById('serverFlag').textContent=d.country_flag;
-        document.getElementById('serverCountry').textContent=d.country_name;
-      }
-    }
-  }catch(e){}
-}
-
-async function fetchChainInfo(){
-  try{
-    const r=await fetch('https://api.ipify.org?format=json');
-    const d=await r.json();
-    document.getElementById('chainIp').textContent='🌐 Exit IP: '+d.ip;
-    // Get geo info for exit node
-    const gr=await fetch('https://ipapi.co/'+d.ip+'/json/');
-    const gd=await gr.json();
-    if(gd.country_flag&&gd.country_name){
-      document.getElementById('chainFlag').textContent=gd.country_flag;
-      document.getElementById('chainCountry').textContent=gd.country_name;
-    }
-  }catch(e){}
-}
-
-function buildLink(){const h=window.location.host;vlink='vless://'+rt.uuid+'@'+curA+':443?encryption=none&security=tls&sni='+curS+'&type=ws&host='+h+'&path='+encodeURIComponent(rt.path)+'#Gojo-Relay';if(revealed)document.getElementById('vtxt').textContent=vlink;}
-function toggleShow(){revealed=!revealed;const el=document.getElementById('vtxt'),btn=document.getElementById('showBtn');if(revealed){el.textContent=vlink;el.classList.add('rev');btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>Hide';}else{el.innerHTML='vless://&#8226;&#8226;&#8226;&#8226;-&#8226;&#8226;&#8226;&#8226;-&#8226;&#8226;&#8226;&#8226;-&#8226;&#8226;&#8226;&#8226;-&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;@...';el.classList.remove('rev');btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>Show';}}
-function toggleCI(id){const el=document.getElementById(id);el.style.display=el.style.display==='block'?'none':'block';if(el.style.display==='block')el.focus();}
-function onAddr(){curA=document.getElementById('addrSel').value;document.getElementById('tSni').textContent=curS;if(rt.uuid)buildLink();}
-function onSni(){curS=document.getElementById('sniSel').value;document.getElementById('tSni').textContent=curS;if(rt.uuid)buildLink();}
-function rebuildLink(){const ca=document.getElementById('cAddr').value,cs=document.getElementById('cSni').value;if(ca)curA=ca;if(cs)curS=cs;document.getElementById('tSni').textContent=curS;if(rt.uuid)buildLink();}
-function startAutoPing(){if(pingInterval)clearInterval(pingInterval);doPing();pingInterval=setInterval(doPing,1000);}
-async function doPing(){try{const t=Date.now();await fetch('/health?t='+t,{cache:'no-store'});const ms=Date.now()-t;const[l,c]=ms<150?['EXCELLENT','ping-exc']:ms<300?['GOOD','ping-good']:ms<500?['FAIR','ping-good']:['POOR','ping-poor'];const r=document.getElementById('pRating');if(r){r.textContent='⚡ '+l+' • ';r.className=c;}const pm=document.getElementById('pMs');if(pm)pm.textContent=ms+'ms';}catch(e){const r=document.getElementById('pRating');if(r)r.textContent='OFFLINE';}}
-async function runPing(){document.getElementById('pvVal').textContent='...';document.getElementById('pingRes').style.display='flex';try{const t=Date.now();await fetch('/health?t='+t,{cache:'no-store'});const ms=Date.now()-t;const[l,col]=ms<150?['EXCELLENT','var(--green)']:ms<300?['GOOD','var(--gold)']:ms<500?['FAIR','var(--gold)']:['POOR','var(--red)'];document.getElementById('pvVal').textContent=ms+'ms';const r=document.getElementById('pvRate');r.textContent=l;r.style.color=col;document.getElementById('pvTime').textContent=new Date().toLocaleTimeString();}catch(e){document.getElementById('pvVal').textContent='ERR';}}
-function copyConf(){if(!vlink)return;navigator.clipboard.writeText(vlink).then(()=>{const b=document.getElementById('copyBtn'),o=b.innerHTML;b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Copied!';b.style.background='#16a34a';setTimeout(()=>{b.innerHTML=o;b.style.background='';},2000);});}
-function showQR(){if(!vlink)return;document.getElementById('qrBg').classList.add('show');document.getElementById('qrImg').src='https://api.qrserver.com/v1/create-qr-code/?size=180x180&data='+encodeURIComponent(vlink);}
-function closeQR(){document.getElementById('qrBg').classList.remove('show');}
+async function loadRT(){try{const r=await fetch('/runtime.json');rt=await r.json();if(rt.pointed){document.getElementById('chainBadge').style.display='flex';document.getElementById('relayLabel').style.display='flex';document.getElementById('relayLabel').innerHTML='<span style="font-weight:600;background:linear-gradient(90deg,#22c55e,#f59e0b,#22c55e);-webkit-background-clip:text;-webkit-text-fill-color:transparent">⚡ Relay: Private</span>';document.getElementById('relayStatus').innerHTML='Cloud Relay: <span style="font-weight:700;background:linear-gradient(90deg,#f59e0b,#ef4444);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Active</span>'}buildLink();doPing()}catch(e){setTimeout(loadRT,2000)}}
+function buildLink(){const h=window.location.host;const sniPart=curS?'&sni='+curS:'';vlink='vless://'+rt.uuid+'@'+curA+':443?encryption=none&security=tls'+sniPart+'&type=ws&host='+h+'&path='+encodeURIComponent(rt.path)+'#Gojo-Relay';if(revealed)document.getElementById('vtxt').textContent=vlink}
+function toggleShow(){revealed=!revealed;const el=document.getElementById('vtxt'),btn=document.getElementById('showBtn');if(revealed){el.textContent=vlink;el.classList.add('rev');btn.textContent='Hide'}else{el.innerHTML='vless://⚡<span class="blink-eye">👀</span>⚡•-••••-•<span class="tease">🤪🖕</span>-••••-••<span class="smile">😁🤞</span>••••@...';el.classList.remove('rev');btn.textContent='Show'}}
+function toggleCI(id){const el=document.getElementById(id);el.style.display=el.style.display==='block'?'none':'block'}
+function onAddr(){curA=document.getElementById('addrSel').value;if(rt.uuid)buildLink()}
+function onSni(){curS=document.getElementById('sniSel').value;if(rt.uuid)buildLink()}
+function rebuildLink(){const ca=document.getElementById('cAddr').value,cs=document.getElementById('cSni').value;if(ca)curA=ca;if(cs)curS=cs;if(rt.uuid)buildLink()}
+function startAutoPing(){if(pingInterval)clearInterval(pingInterval);doPing();pingInterval=setInterval(doPing,1000)}
+async function doPing(){try{const t=Date.now();await fetch('/health?t='+t,{cache:'no-store'});const ms=Date.now()-t;const[l,c]=ms<150?['EXCELLENT','var(--green)']:ms<300?['GOOD','var(--gold)']:ms<500?['FAIR','var(--gold)']:['POOR','var(--red)'];const r=document.getElementById('pRating');if(r){r.textContent='⚡ '+l+' • ';r.style.color=c}const pm=document.getElementById('pMs');if(pm)pm.textContent=ms+'ms'}catch(e){const r=document.getElementById('pRating');if(r)r.textContent='OFFLINE'}}
+async function runPing(){const res=document.getElementById('pingResult');res.textContent='Testing...';res.style.color='var(--gold)';try{const t=Date.now();await fetch('/health?t='+t,{cache:'no-store'});const ms=Date.now()-t;const[l,col]=ms<150?['⚡ Excellent','var(--green)']:ms<300?['🟡 Good','var(--gold)']:ms<500?['🟠 Fair','var(--gold)']:['🔴 Poor','var(--red)'];res.textContent=l+' • '+ms+'ms';res.style.color=col}catch(e){res.textContent='Offline';res.style.color='var(--red)'}}
+function copyConf(){if(!vlink)return;navigator.clipboard.writeText(vlink).then(()=>{const b=document.getElementById('copyBtn');b.textContent='Copied!';b.style.background='#16a34a';setTimeout(()=>{b.textContent='Copy';b.style.background=''},1500)})}
+function showQR(){const url=vlink||'vless://example@'+curA+':443?encryption=none&security=tls&sni='+curS+'&type=ws&host='+window.location.host+'&path=%2Fgojo%2Finfinity#Gojo-Relay';document.getElementById('qrBg').classList.add('show');document.getElementById('qrImg').src='https://api.qrserver.com/v1/create-qr-code/?size=180x180&data='+encodeURIComponent(url)}
+function closeQR(){document.getElementById('qrBg').classList.remove('show')}
+function toggleInfoDrawer(){document.getElementById('infoDrawer').classList.toggle('show');document.getElementById('infoOverlay').classList.toggle('show')}
+function toggleInfoSection(id){const el=document.getElementById(id);el.classList.toggle('open');const arrowMap={changelogs:'changelogsArrow',about:'aboutArrow',v13:'v13Arrow',v12:'v12Arrow',v11:'v11Arrow',v10:'v10Arrow'};if(arrowMap[id]){const arrow=document.getElementById(arrowMap[id]);if(arrow)arrow.textContent=el.classList.contains('open')?'▼':'▶'}}
 </script>
 </body>
 </html>
