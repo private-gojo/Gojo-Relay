@@ -1,10 +1,11 @@
 FROM teddysun/xray:latest
 
-# Install nginx + supervisord + python3
+# Install nginx + supervisord + python3 + curl
 RUN apk add --no-cache \
     nginx \
     supervisor \
-    python3
+    python3 \
+    curl
 
 # Copy configs
 COPY config.json /etc/xray/config.json
