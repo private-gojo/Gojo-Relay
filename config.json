@@ -67,7 +67,7 @@
       },
       "streamSettings": {
         "network": "ws",
-        "security": "tls",
+        "security": "GOJO_SECURITY_PLACEHOLDER",
         "tlsSettings": {
           "allowInsecure": false
         },
@@ -102,7 +102,7 @@
       },
       "streamSettings": {
         "network": "ws",
-        "security": "tls",
+        "security": "GOJO_SECURITY_PLACEHOLDER",
         "tlsSettings": {
           "allowInsecure": false
         },
@@ -137,7 +137,7 @@
       },
       "streamSettings": {
         "network": "ws",
-        "security": "tls",
+        "security": "GOJO_SECURITY_PLACEHOLDER",
         "tlsSettings": {
           "allowInsecure": false
         },
@@ -168,7 +168,7 @@
       },
       "streamSettings": {
         "network": "ws",
-        "security": "tls",
+        "security": "GOJO_SECURITY_PLACEHOLDER",
         "tlsSettings": {
           "allowInsecure": false
         },
