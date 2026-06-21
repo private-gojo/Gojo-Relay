@@ -94,8 +94,7 @@
             "users": [
               {
                 "id": "GOJO_PASSWORD_PLACEHOLDER",
-                "alterId": GOJO_ALTERID_PLACEHOLDER
-              
+                "alterId": GOJO_ALTERID_PLPLACEHOLDER,             
             ]
           }
         ]
