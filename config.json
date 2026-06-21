@@ -33,7 +33,7 @@
           "tcpUserTimeout": 10000,
           "tcpcongestion": "bbr",
           "tcpMaxSeg": 1440,
-          "trustedXForwardedFor": "privateIPAddress"
+          "trustedXForwardedFor": ["privateIPAddress"]
         }
       },
       "sniffing": {
