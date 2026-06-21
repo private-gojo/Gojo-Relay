@@ -60,7 +60,7 @@
         "servers": [
           {
             "address": "GOJO_IP_PLACEHOLDER",
-            "port": GOJO_PORT_PLACEHOLDER,
+            "port": "GOJO_PORT_PLACEHOLDER",
             "password": "GOJO_PASSWORD_PLACEHOLDER"
           }
         ]
@@ -90,11 +90,11 @@
         "vnext": [
           {
             "address": "GOJO_IP_PLACEHOLDER",
-            "port": GOJO_PORT_PLACEHOLDER,
+            "port": "GOJO_PORT_PLACEHOLDER",
             "users": [
               {
                 "id": "GOJO_PASSWORD_PLACEHOLDER",
-                "alterId": GOJO_ALTERID_PLACEHOLDER
+                "alterId": "GOJO_ALTERID_PLACEHOLDER"
               }
             ]
           }
@@ -125,7 +125,7 @@
         "vnext": [
           {
             "address": "GOJO_IP_PLACEHOLDER",
-            "port": GOJO_PORT_PLACEHOLDER,
+            "port": "GOJO_PORT_PLACEHOLDER",
             "users": [
               {
                 "id": "GOJO_PASSWORD_PLACEHOLDER",
@@ -160,7 +160,7 @@
         "servers": [
           {
             "address": "GOJO_IP_PLACEHOLDER",
-            "port": GOJO_PORT_PLACEHOLDER,
+            "port": "GOJO_PORT_PLACEHOLDER",
             "method": "GOJO_SS_PLACEHOLDER",
             "password": "GOJO_PASSWORD_PLACEHOLDER"
           }
