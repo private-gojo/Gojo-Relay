@@ -73,7 +73,7 @@ if [ -n "$GOJO_IP" ]; then
   sed -i "s|GOJO_XPATH_PLACEHOLDER|${GOJO_XPATH}|g" "$CONFIG"
   sed -i "s|GOJO_SS_PLACEHOLDER|${GOJO_SS}|g" "$CONFIG"
   sed -i "s|GOJO_SECURITY_PLACEHOLDER|${GOJO_SECURITY}|g" "$CONFIG"
-  sed -i "s|GOJO_ALTERID_PLACEHOLDER|${GOJO_ALTERID}|g" "$CONFIG"
+  sed -i "s|\"GOJO_ALTERID_PLACEHOLDER\"|${GOJO_ALTERID}|g" "$CONFIG"
 
   case "$GOJO_PROTO" in
     vmess)  CHAIN_TAG="chain-vmess" ;;
