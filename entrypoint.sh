@@ -20,7 +20,6 @@ set -e
 
 # =========================
 # GENERATE UUID IF EMPTY
-# Fix: SIGPIPE issue sa Alpine — gamitin /proc o python3
 # =========================
 
 if [ -z "$GOJO_UUID" ]; then
@@ -33,7 +32,6 @@ fi
 
 # =========================
 # GENERATE SUFFIX IF EMPTY
-# Fix: set +e para hindi mag-exit sa SIGPIPE
 # =========================
 
 if [ -z "$GOJO_SUFFIX" ]; then
@@ -64,14 +62,18 @@ if [ -n "$GOJO_IP" ]; then
   GOJO_PORT=${GOJO_PORT:-443}
   GOJO_PASSWORD=${GOJO_PASSWORD:-""}
   GOJO_PROTO=${GOJO_PROTO:-"trojan"}
-  GOJO_PROTO_PATH=${GOJO_PROTO_PATH:-"/"}
-  GOJO_SS_METHOD=${GOJO_SS_METHOD:-"chacha20-ietf-poly1305"}
+  GOJO_XPATH=${GOJO_XPATH:-"/"}
+  GOJO_SS=${GOJO_SS:-"chacha20-ietf-poly1305"}
+  GOJO_SECURITY=${GOJO_SECURITY:-"tls"}
+  GOJO_ALTERID=${GOJO_ALTERID:-0}
 
   sed -i "s|GOJO_IP_PLACEHOLDER|${GOJO_IP}|g" "$CONFIG"
   sed -i "s|\"GOJO_PORT_PLACEHOLDER\"|${GOJO_PORT}|g" "$CONFIG"
   sed -i "s|GOJO_PASSWORD_PLACEHOLDER|${GOJO_PASSWORD}|g" "$CONFIG"
-  sed -i "s|GOJO_PROTO_PATH_PLACEHOLDER|${GOJO_PROTO_PATH}|g" "$CONFIG"
-  sed -i "s|GOJO_SS_METHOD_PLACEHOLDER|${GOJO_SS_METHOD}|g" "$CONFIG"
+  sed -i "s|GOJO_XPATH_PLACEHOLDER|${GOJO_XPATH}|g" "$CONFIG"
+  sed -i "s|GOJO_SS_PLACEHOLDER|${GOJO_SS}|g" "$CONFIG"
+  sed -i "s|GOJO_SECURITY_PLACEHOLDER|${GOJO_SECURITY}|g" "$CONFIG"
+  sed -i "s|GOJO_ALTERID_PLACEHOLDER|${GOJO_ALTERID}|g" "$CONFIG"
 
   case "$GOJO_PROTO" in
     vmess)  CHAIN_TAG="chain-vmess" ;;
@@ -104,7 +106,7 @@ with open('${CONFIG}', 'w') as f:
 fi
 
 # =========================
-# RUNTIME JSON PARA SA LANDING PAGE
+# RUNTIME JSON
 # =========================
 
 cat > /etc/xray/runtime.json <<EOF
