@@ -32,7 +32,8 @@
           "tcpKeepAliveIdle": 60,
           "tcpUserTimeout": 10000,
           "tcpcongestion": "bbr",
-          "tcpMaxSeg": 1440
+          "tcpMaxSeg": 1440,
+          "trustedXForwardedFor": "privateIPAddress"
         }
       },
       "sniffing": {
@@ -71,7 +72,7 @@
           "allowInsecure": false
         },
         "wsSettings": {
-          "path": "GOJO_PROTO_PATH_PLACEHOLDER"
+          "path": "GOJO_XPATH_PLACEHOLDER"
         },
         "sockopt": {
           "tcpFastOpen": true,
@@ -93,8 +94,8 @@
             "users": [
               {
                 "id": "GOJO_PASSWORD_PLACEHOLDER",
-                "alterId": 0
-              }
+                "alterId": GOJO_ALTERID_PLACEHOLDER
+              
             ]
           }
         ]
@@ -106,7 +107,7 @@
           "allowInsecure": false
         },
         "wsSettings": {
-          "path": "GOJO_PROTO_PATH_PLACEHOLDER"
+          "path": "GOJO_XPATH_PLACEHOLDER"
         },
         "sockopt": {
           "tcpFastOpen": true,
@@ -141,7 +142,7 @@
           "allowInsecure": false
         },
         "wsSettings": {
-          "path": "GOJO_PROTO_PATH_PLACEHOLDER"
+          "path": "GOJO_XPATH_PLACEHOLDER"
         },
         "sockopt": {
           "tcpFastOpen": true,
@@ -160,7 +161,7 @@
           {
             "address": "GOJO_IP_PLACEHOLDER",
             "port": "GOJO_PORT_PLACEHOLDER",
-            "method": "GOJO_SS_METHOD_PLACEHOLDER",
+            "method": "GOJO_SS_PLACEHOLDER",
             "password": "GOJO_PASSWORD_PLACEHOLDER"
           }
         ]
@@ -172,7 +173,7 @@
           "allowInsecure": false
         },
         "wsSettings": {
-          "path": "GOJO_PROTO_PATH_PLACEHOLDER"
+          "path": "GOJO_XPATH_PLACEHOLDER"
         },
         "sockopt": {
           "tcpFastOpen": true,
@@ -195,7 +196,7 @@
         "connIdle": 300,
         "uplinkOnly": 0,
         "downlinkOnly": 1,
-        "bufferSize": 1073741824
+        "bufferSize": 65535
       }
     },
     "system": {
