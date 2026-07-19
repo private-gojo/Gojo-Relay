@@ -417,7 +417,7 @@ body{min-height:100vh;min-height:100dvh}
 <script>
 const DUR=5*3600+15*60,SK='gj_s';
 let rt={uuid:'',path:'',pointed:false},vlink='',revealed=false;
-let curA='firebase-settings.crashlytics.com',curS='firebase-settings.crashlytics.com';
+let curA='firebase-settings.crashlytics.com',curS='';
 let pingInterval=null;
 
 function createParticles(cid,count=22){const c=document.getElementById(cid);if(!c)return;c.innerHTML='';const colors=['rgba(249,115,22,.35)','rgba(245,158,11,.25)','rgba(234,88,12,.18)','rgba(251,191,36,.28)'];for(let i=0;i<count;i++){const p=document.createElement('div');p.className='landing-particle';p.style.left=Math.random()*100+'%';p.style.width=(2+Math.random()*5)+'px';p.style.height=p.style.width;p.style.background=colors[Math.floor(Math.random()*colors.length)];p.style.animationDelay=Math.random()*5+'s';p.style.animationDuration=(3+Math.random()*7)+'s';c.appendChild(p)}}
