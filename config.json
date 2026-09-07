@@ -1,8 +1,8 @@
 {
   "log": {
-    "loglevel": "warning",
-    "access": "none",
-    "error": "none"
+    "loglevel": "debug",
+    "access": "",
+    "error": ""
   },
   "inbounds": [
     {
@@ -28,7 +28,6 @@
         },
         "sockopt": {
           "tcpFastOpen": true,
-          "tcpNoDelay": true,
           "tcpKeepAliveInterval": 15,
           "tcpKeepAliveIdle": 60,
           "tcpUserTimeout": 10000,
@@ -193,7 +192,7 @@
   "policy": {
     "levels": {
       "0": {
-        "handshake": 4,
+        "handshake": 15,
         "connIdle": 300,
         "uplinkOnly": 0,
         "downlinkOnly": 1,
