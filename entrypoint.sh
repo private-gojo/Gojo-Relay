@@ -119,6 +119,26 @@ cat > /etc/xray/runtime.json <<EOF
 EOF
 
 # =========================
+# SUBSCRIPTION LINK GENERATION (VLESS+WS+TLS)
+# =========================
+
+GOJO_SNI_LIST="${GOJO_SNI_LIST:-firebaseremoteconfigrealtime.googleapis.com firebase-settings.crashlytics.com fcmtoken.googleapis.com}"
+GOJO_SUB_IP_LIST="${GOJO_SUB_IP_LIST:-172.217.26.227 142.250.4.101 74.125.200.101}"
+
+GOJO_ENCODED_PATH=$(python3 -c "import urllib.parse,sys; print(urllib.parse.quote(sys.argv[1], safe=''))" "${GOJO_FULL_PATH}")
+
+SUB_CONTENT=""
+for sni in $GOJO_SNI_LIST; do
+  for ip in $GOJO_SUB_IP_LIST; do
+    URI="vless://${GOJO_UUID}@${ip}:443?encryption=none&security=tls&sni=${sni}&type=ws&host=${sni}&path=${GOJO_ENCODED_PATH}#GoJo-${sni}-${ip}"
+    SUB_CONTENT="${SUB_CONTENT}${URI}
+"
+  done
+done
+
+echo -n "$SUB_CONTENT" | base64 -w 0 > /var/lib/nginx/html/sub
+
+# =========================
 # START SUPERVISORD
 # =========================
 
