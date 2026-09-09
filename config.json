@@ -4,6 +4,14 @@
     "access": "",
     "error": ""
   },
+  "dns": {
+    "servers": [
+      "https://cloudflare-dns.com/dns-query",
+      "https://dns.google/dns-query",
+      "1.1.1.1",
+      "8.8.8.8"
+    ]
+  },
   "inbounds": [
     {
       "tag": "vless-ws-in",
@@ -24,7 +32,9 @@
         "security": "none",
         "wsSettings": {
           "path": "GOJO_PATH_PLACEHOLDER",
-          "heartbeatPeriod": 0
+          "heartbeatPeriod": 0,
+          "maxEarlyData": 2048,
+          "earlyDataHeaderName": "Sec-WebSocket-Protocol"
         },
         "sockopt": {
           "tcpFastOpen": true,
@@ -72,14 +82,18 @@
           "allowInsecure": false
         },
         "wsSettings": {
-          "path": "GOJO_XPATH_PLACEHOLDER"
+          "path": "GOJO_XPATH_PLACEHOLDER",
+          "headers": {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+          }
         },
         "sockopt": {
           "tcpFastOpen": true,
           "tcpKeepAliveInterval": 15,
           "tcpKeepAliveIdle": 60,
           "tcpUserTimeout": 10000,
-          "tcpcongestion": "bbr"
+          "tcpcongestion": "bbr",
+          "tcpMaxSeg": 1440
         }
       }
     },
@@ -107,14 +121,18 @@
           "allowInsecure": false
         },
         "wsSettings": {
-          "path": "GOJO_XPATH_PLACEHOLDER"
+          "path": "GOJO_XPATH_PLACEHOLDER",
+          "headers": {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+          }
         },
         "sockopt": {
           "tcpFastOpen": true,
           "tcpKeepAliveInterval": 15,
           "tcpKeepAliveIdle": 60,
           "tcpUserTimeout": 10000,
-          "tcpcongestion": "bbr"
+          "tcpcongestion": "bbr",
+          "tcpMaxSeg": 1440
         }
       }
     },
@@ -142,14 +160,18 @@
           "allowInsecure": false
         },
         "wsSettings": {
-          "path": "GOJO_XPATH_PLACEHOLDER"
+          "path": "GOJO_XPATH_PLACEHOLDER",
+          "headers": {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+          }
         },
         "sockopt": {
           "tcpFastOpen": true,
           "tcpKeepAliveInterval": 15,
           "tcpKeepAliveIdle": 60,
           "tcpUserTimeout": 10000,
-          "tcpcongestion": "bbr"
+          "tcpcongestion": "bbr",
+          "tcpMaxSeg": 1440
         }
       }
     },
@@ -173,14 +195,18 @@
           "allowInsecure": false
         },
         "wsSettings": {
-          "path": "GOJO_XPATH_PLACEHOLDER"
+          "path": "GOJO_XPATH_PLACEHOLDER",
+          "headers": {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+          }
         },
         "sockopt": {
           "tcpFastOpen": true,
           "tcpKeepAliveInterval": 15,
           "tcpKeepAliveIdle": 60,
           "tcpUserTimeout": 10000,
-          "tcpcongestion": "bbr"
+          "tcpcongestion": "bbr",
+          "tcpMaxSeg": 1440
         }
       }
     }
@@ -201,7 +227,9 @@
     },
     "system": {
       "statsInboundUplink": false,
-      "statsInboundDownlink": false
+      "statsInboundDownlink": false,
+      "statsOutboundUplink": false,
+      "statsOutboundDownlink": false
     }
   }
 }
