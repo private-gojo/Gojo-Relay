@@ -1,8 +1,23 @@
+# =========================
+# GIT METADATA - not needed inside the image
+# =========================
 .git
 .gitignore
 .github
+
+# =========================
+# DOCUMENTATION - not needed inside the image
+# =========================
 README.md
 *.md
+
+# =========================
+# OS / EDITOR JUNK FILES
+# =========================
 .DS_Store
 Thumbs.db
+
+# =========================
+# LOGS
+# =========================
 *.log
