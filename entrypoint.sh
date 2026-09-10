@@ -55,6 +55,8 @@ sed -i "s|GOJO_PATH_PLACEHOLDER|${GOJO_FULL_PATH}|g" "$CONFIG"
 
 # =========================
 # CHAIN OUTBOUND (OPTIONAL)
+# Points relay to an external exit node (trojan/vmess/vless/ss)
+# instead of direct connection, if GOJO_IP is set
 # =========================
 
 if [ -n "$GOJO_IP" ]; then
@@ -75,6 +77,7 @@ if [ -n "$GOJO_IP" ]; then
   sed -i "s|GOJO_SECURITY_PLACEHOLDER|${GOJO_SECURITY}|g" "$CONFIG"
   sed -i "s|\"GOJO_ALTERID_PLACEHOLDER\"|${GOJO_ALTERID}|g" "$CONFIG"
 
+  # Keep only the selected protocol's outbound + direct/block
   case "$GOJO_PROTO" in
     vmess)  CHAIN_TAG="chain-vmess" ;;
     vless)  CHAIN_TAG="chain-vless" ;;
@@ -95,6 +98,7 @@ with open('${CONFIG}', 'w') as f:
 "
 
 else
+  # No chain outbound - keep only direct/block, relay connects straight out
   python3 -c "
 import json
 with open('${CONFIG}') as f:
@@ -107,6 +111,7 @@ fi
 
 # =========================
 # RUNTIME JSON
+# Written for nginx (/runtime.json endpoint) and sub_server.py to read
 # =========================
 
 cat > /etc/xray/runtime.json <<EOF
@@ -120,6 +125,8 @@ EOF
 
 # =========================
 # START SUPERVISORD
+# Hands off to supervisord, which launches nginx (via wait-for-xray.sh),
+# xray, and sub_server
 # =========================
 
 exec supervisord -c /etc/supervisord.conf
