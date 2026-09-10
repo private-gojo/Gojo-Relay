@@ -13,9 +13,10 @@ COPY nginx.conf /etc/nginx/nginx.conf
 COPY supervisord.conf /etc/supervisord.conf
 COPY index.html /var/lib/nginx/html/index.html
 COPY entrypoint.sh /entrypoint.sh
+COPY sub_server.py /sub_server.py
 
 # Permissions
-RUN chmod +x /entrypoint.sh
+RUN chmod +x /entrypoint.sh /sub_server.py
 
 EXPOSE 8080
 
