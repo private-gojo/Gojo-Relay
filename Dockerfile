@@ -1,6 +1,11 @@
 FROM teddysun/xray:latest
 
-# Install nginx + supervisord + python3 + curl + netcat
+# =========================
+# SYSTEM DEPENDENCIES
+# nginx = reverse proxy | supervisor = process manager
+# python3 = entrypoint scripting + sub_server.py | curl = healthcheck + metadata fetch
+# netcat-openbsd = wait-for-xray.sh port check
+# =========================
 RUN apk add --no-cache \
     nginx \
     supervisor \
@@ -8,7 +13,9 @@ RUN apk add --no-cache \
     curl \
     netcat-openbsd
 
-# Copy configs
+# =========================
+# COPY CONFIGS & SCRIPTS
+# =========================
 COPY config.json /etc/xray/config.json
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY supervisord.conf /etc/supervisord.conf
@@ -17,11 +24,17 @@ COPY entrypoint.sh /entrypoint.sh
 COPY sub_server.py /sub_server.py
 COPY wait-for-xray.sh /wait-for-xray.sh
 
-# Permissions
+# =========================
+# PERMISSIONS
+# =========================
 RUN chmod +x /entrypoint.sh /sub_server.py /wait-for-xray.sh
 
 EXPOSE 8080
 
+# =========================
+# HEALTHCHECK
+# Uses nginx's /health endpoint to verify container is responsive
+# =========================
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
   CMD curl -f http://localhost:8080/health || exit 1
 
