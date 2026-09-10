@@ -131,7 +131,7 @@ COUNT=1
 SUB_CONTENT=""
 for sni in $GOJO_SNI_LIST; do
   for ip in $GOJO_SUB_IP_LIST; do
-    URI="vless://${GOJO_UUID}@${ip}:443?encryption=none&security=tls&sni=${sni}&type=ws&host=${sni}&path=${GOJO_ENCODED_PATH}#Gojo-Relay-${COUNT}"
+    URI="vless://${GOJO_UUID}@${ip}:443?encryption=none&security=tls&sni=${sni}&type=ws&host=${host}&path=${GOJO_ENCODED_PATH}#Gojo-Relay-${COUNT}"
     SUB_CONTENT="${SUB_CONTENT}${URI}
 "
     COUNT=$((COUNT + 1))
