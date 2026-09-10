@@ -127,21 +127,16 @@ GOJO_SUB_IP_LIST="${GOJO_SUB_IP_LIST:-172.217.26.227 142.250.4.101 74.125.200.10
 
 GOJO_ENCODED_PATH=$(python3 -c "import urllib.parse,sys; print(urllib.parse.quote(sys.argv[1], safe=''))" "${GOJO_FULL_PATH}")
 
+mkdir -p /var/lib/nginx/html
+TMP_RAW_SUB="/tmp/raw_sub.txt"
+> "$TMP_RAW_SUB"
+
 COUNT=1
-SUB_CONTENT=""
 for sni in $GOJO_SNI_LIST; do
   for ip in $GOJO_SUB_IP_LIST; do
-    URI="vless://${GOJO_UUID}@${ip}:443?encryption=none&security=tls&sni=${sni}&type=ws&host=${host}&path=${GOJO_ENCODED_PATH}#Gojo-Relay-${COUNT}"
-    SUB_CONTENT="${SUB_CONTENT}${URI}
-"
+    echo "vless://${GOJO_UUID}@${ip}:443?encryption=none&security=tls&sni=${sni}&type=ws&host=__CLOUDRUN_HOST_PLACEHOLDER__&path=${GOJO_ENCODED_PATH}#Gojo-Relay-${COUNT}" >> "$TMP_RAW_SUB"
     COUNT=$((COUNT + 1))
   done
 done
 
-echo -n "$SUB_CONTENT" | base64 -w 0 > /var/lib/nginx/html/sub
-
-# =========================
-# START SUPERVISORD
-# =========================
-
-exec supervisord -c /etc/supervisord.conf
+mv "$TMP_RAW_SUB" /var/lib/nginx/html/sub
