@@ -32,9 +32,7 @@
         "security": "none",
         "wsSettings": {
           "path": "GOJO_PATH_PLACEHOLDER",
-          "heartbeatPeriod": 0,
-          "maxEarlyData": 2048,
-          "earlyDataHeaderName": "Sec-WebSocket-Protocol"
+          "heartbeatPeriod": 30
         },
         "sockopt": {
           "tcpFastOpen": true,
