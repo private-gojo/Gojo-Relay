@@ -127,12 +127,14 @@ GOJO_SUB_IP_LIST="${GOJO_SUB_IP_LIST:-172.217.26.227 142.250.4.101 74.125.200.10
 
 GOJO_ENCODED_PATH=$(python3 -c "import urllib.parse,sys; print(urllib.parse.quote(sys.argv[1], safe=''))" "${GOJO_FULL_PATH}")
 
+COUNT=1
 SUB_CONTENT=""
 for sni in $GOJO_SNI_LIST; do
   for ip in $GOJO_SUB_IP_LIST; do
-    URI="vless://${GOJO_UUID}@${ip}:443?encryption=none&security=tls&sni=${sni}&type=ws&host=${sni}&path=${GOJO_ENCODED_PATH}#GoJo-${sni}-${ip}"
+    URI="vless://${GOJO_UUID}@${ip}:443?encryption=none&security=tls&sni=${sni}&type=ws&host=${sni}&path=${GOJO_ENCODED_PATH}#Gojo-Relay-${COUNT}"
     SUB_CONTENT="${SUB_CONTENT}${URI}
 "
+    COUNT=$((COUNT + 1))
   done
 done
 
