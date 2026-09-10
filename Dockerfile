@@ -14,6 +14,14 @@ RUN apk add --no-cache \
     netcat-openbsd
 
 # =========================
+# CUSTOM GEO DATA (gojo-xlimit/x-geosource)
+# geoip.dat = upstream/complete (all countries)
+# geosite.dat = custom build with weekly-updated ads blocking + PH-specific categories
+# =========================
+ADD https://github.com/gojo-xlimit/x-geosource/raw/main/geoip.dat /usr/local/share/xray/geoip.dat
+ADD https://github.com/gojo-xlimit/x-geosource/raw/main/output/geosite.dat /usr/local/share/xray/geosite.dat    
+
+# =========================
 # COPY CONFIGS & SCRIPTS
 # =========================
 COPY config.json /etc/xray/config.json
