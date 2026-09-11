@@ -23,12 +23,12 @@ jobs:
 
       # --------------------------------------------------
       # Pre-flight Linting:
-      # Xray accepts JSONC (comments allowed), but standard
-      # linters fail. Strip inline comments before parsing.
+      # Strips actual comments while safely ignoring
+      # protocol slashes inside strings (e.g. https://).
       # --------------------------------------------------
       - name: Validate config.json
         run: |
-          python3 -c "import json, re; json.loads(re.sub(r'//.*', '', open('config.json').read()))" && echo "✅ config.json valid"
+          python3 -c "import json, re; s=open('config.json').read(); json.loads(re.sub(r'(\".*?\"|\'.*?\')|//.*?$|/\*.*?\*/', lambda m: m.group(1) if m.group(1) else '', s, flags=re.MULTILINE|re.DOTALL))" && echo "✅ config.json valid"
 
       # --------------------------------------------------
       # Dry-run build to verify container context integrity
