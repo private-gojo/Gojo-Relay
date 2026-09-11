@@ -62,27 +62,27 @@ sed -i "s|GOJO_PATH_PLACEHOLDER|${GOJO_FULL_PATH}|g" "$CONFIG"
 if [ -n "$GOJO_IP" ]; then
 
   GOJO_PORT=${GOJO_PORT:-443}
-  GOJO_PASSWORD=${GOJO_PASSWORD:-""}
+  GOJO_PASS=${GOJO_PASS:-""}
   GOJO_PROTO=${GOJO_PROTO:-"trojan"}
   GOJO_XPATH=${GOJO_XPATH:-"/"}
   GOJO_SS=${GOJO_SS:-"chacha20-ietf-poly1305"}
-  GOJO_SECURITY=${GOJO_SECURITY:-"tls"}
-  GOJO_ALTERID=${GOJO_ALTERID:-0}
+  GOJO_SEC=${GOJO_SEC:-"tls"}
+  GOJO_AID=${GOJO_AID:-0}
 
   sed -i "s|GOJO_IP_PLACEHOLDER|${GOJO_IP}|g" "$CONFIG"
   sed -i "s|\"GOJO_PORT_PLACEHOLDER\"|${GOJO_PORT}|g" "$CONFIG"
-  sed -i "s|GOJO_PASSWORD_PLACEHOLDER|${GOJO_PASSWORD}|g" "$CONFIG"
+  sed -i "s|GOJO_PASS_PLACEHOLDER|${GOJO_PASS}|g" "$CONFIG"
   sed -i "s|GOJO_XPATH_PLACEHOLDER|${GOJO_XPATH}|g" "$CONFIG"
   sed -i "s|GOJO_SS_PLACEHOLDER|${GOJO_SS}|g" "$CONFIG"
-  sed -i "s|GOJO_SECURITY_PLACEHOLDER|${GOJO_SECURITY}|g" "$CONFIG"
-  sed -i "s|\"GOJO_ALTERID_PLACEHOLDER\"|${GOJO_ALTERID}|g" "$CONFIG"
+  sed -i "s|GOJO_SEC_PLACEHOLDER|${GOJO_SEC}|g" "$CONFIG"
+  sed -i "s|\"GOJO_AID_PLACEHOLDER\"|${GOJO_AID}|g" "$CONFIG"
 
   # Keep only the selected protocol's outbound + direct/block
   case "$GOJO_PROTO" in
     vmess)  CHAIN_TAG="chain-vmess" ;;
-    vless)  CHAIN_TAG="chain-vless" ;;
+    trojan) CHAIN_TAG="chain-trojan" ;;
     ss)     CHAIN_TAG="chain-ss" ;;
-    *)      CHAIN_TAG="chain-trojan" ;;
+    *)      CHAIN_TAG="chain-vless" ;;
   esac
 
   python3 -c "
@@ -92,7 +92,7 @@ with open('${CONFIG}') as f:
 keep = ['direct', 'block', '${CHAIN_TAG}']
 c['outbounds'] = [o for o in c['outbounds'] if o['tag'] in keep]
 c['outbounds'] = sorted(c['outbounds'], key=lambda x: 0 if x['tag'] == '${CHAIN_TAG}' else 1)
-c['routing']['rules'] = [{'type': 'field', 'network': 'tcp,udp', 'outboundTag': '${CHAIN_TAG}'}]
+c['routing']['rules'].append({'type': 'field', 'network': 'tcp,udp', 'outboundTag': '${CHAIN_TAG}'})
 with open('${CONFIG}', 'w') as f:
   json.dump(c, f, indent=2)
 "
