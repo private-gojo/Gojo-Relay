@@ -7,6 +7,18 @@
 CONFIG="/etc/xray/config.json"
 
 # =========================
+# STRIP JSONC COMMENTS (xray runtime doesn't accept them)
+# =========================
+python3 -c "
+import re
+with open('$CONFIG') as f:
+    s = f.read()
+s = re.sub(r'(\"(?:\\\\.|[^\"\\\\])*\")|//.*?$|/\*.*?\*/', lambda m: m.group(1) if m.group(1) else '', s, flags=re.MULTILINE|re.DOTALL)
+with open('$CONFIG', 'w') as f:
+    f.write(s)
+"
+
+# =========================
 # GET CLOUD RUN IP FIRST (via metadata + fallback)
 # =========================
 
