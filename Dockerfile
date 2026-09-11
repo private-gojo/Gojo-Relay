@@ -3,8 +3,8 @@ FROM teddysun/xray:latest
 # =========================
 # SYSTEM DEPENDENCIES
 # nginx = reverse proxy | supervisor = process manager
-# python3 = entrypoint scripting + sub_server.py | curl = healthcheck + metadata fetch
-# netcat-openbsd = wait-for-xray.sh port check
+# python3 = entrypoint scripting + sub_server.py + anti_ddos.py | curl = healthcheck + metadata fetch
+# netcat-openbsd = wait-for-xray.sh / wait-for-nginx.sh port checks
 # =========================
 RUN apk add --no-cache \
     nginx \
@@ -31,11 +31,13 @@ COPY index.html /var/lib/nginx/html/index.html
 COPY entrypoint.sh /entrypoint.sh
 COPY sub_server.py /sub_server.py
 COPY wait-for-xray.sh /wait-for-xray.sh
+COPY wait-for-nginx.sh /wait-for-nginx.sh
+COPY anti_ddos.py /anti_ddos.py
 
 # =========================
 # PERMISSIONS
 # =========================
-RUN chmod +x /entrypoint.sh /sub_server.py /wait-for-xray.sh
+RUN chmod +x /entrypoint.sh /sub_server.py /wait-for-xray.sh /wait-for-nginx.sh /anti_ddos.py
 
 EXPOSE 8080
 
