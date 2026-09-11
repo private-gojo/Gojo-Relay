@@ -1,3 +1,11 @@
+# -----------------------------------------------------------------------------
+# Pipeline   : Gojo-Relay I/O Container Delivery
+# Purpose    : Lints Xray JSONC configs, executes dry-run builds, and pushes
+#              multi-tagged images (:latest, :sha) to Docker Hub.
+# Triggers   : Push to main branch
+# Secrets    : DOCKERHUB_USERNAME, DOCKERHUB_TOKEN
+# -----------------------------------------------------------------------------
+
 name: Build and Push — ⚡ Gojo-Relay I/O
 
 on:
@@ -9,23 +17,39 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Retrieve source repository tree
       - name: Checkout
         uses: actions/checkout@v3
 
+      # --------------------------------------------------
+      # Pre-flight Linting:
+      # Xray accepts JSONC (comments allowed), but standard
+      # linters fail. Strip inline comments before parsing.
+      # --------------------------------------------------
       - name: Validate config.json
         run: |
-          python3 -m json.tool config.json > /dev/null && echo "✅ config.json valid"
+          python3 -c "import json, re; json.loads(re.sub(r'//.*', '', open('config.json').read()))" && echo "✅ config.json valid"
 
+      # --------------------------------------------------
+      # Dry-run build to verify container context integrity
+      # before authenticating to remote registry.
+      # --------------------------------------------------
       - name: Test Docker Build
         run: |
           docker build -t gojo-relay-test . && echo "✅ Build OK"
 
+      # Authenticate securely using GitHub Action secrets
       - name: Login to DockerHub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      # --------------------------------------------------
+      # Multi-tag Deployment:
+      # :latest for quick pulls; :sha for immutable pinning
+      # and deterministic rollbacks on serverless runtimes.
+      # --------------------------------------------------
       - name: Build and Push
         uses: docker/build-push-action@v5
         with:
