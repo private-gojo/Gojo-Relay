@@ -1,18 +1,45 @@
 {
+  // =========================
+  // LOGGING
+  // =========================
   "log": {
     "loglevel": "debug",
     "access": "",
     "error": ""
   },
+
+  // =========================
+  // DNS
+  // Standby only, not used while exit nodes are IP-based. Would activate
+  // only if pointing to a hostname-based exit node. The fakedns entry
+  // below only takes effect if sniffing destOverride includes fakedns.
+  // =========================
   "dns": {
     "servers": [
       "https://cloudflare-dns.com/dns-query",
       "https://dns.google/dns-query",
       "1.1.1.1",
-      "8.8.8.8"
+      "8.8.8.8",
+      {
+        "address": "fakedns"
+      }
+    ],
+    "fakedns": [
+      {
+        "ipPool": "198.18.0.0/15",
+        "poolSize": 65535
+      }
     ]
   },
+
+  // =========================
+  // INBOUNDS
+  // Client-facing entry point, Nginx proxies WS traffic here
+  // =========================
   "inbounds": [
+    // -------------------------
+    // VLESS + WEBSOCKET
+    // -------------------------
     {
       "tag": "vless-ws-in",
       "port": 10001,
@@ -32,7 +59,7 @@
         "security": "none",
         "wsSettings": {
           "path": "GOJO_PATH_PLACEHOLDER",
-          "heartbeatPeriod": 30
+          "heartbeatPeriod": 15
         },
         "sockopt": {
           "tcpFastOpen": true,
@@ -40,16 +67,35 @@
           "tcpKeepAliveIdle": 60,
           "tcpUserTimeout": 10000,
           "tcpcongestion": "bbr",
-          "tcpMaxSeg": 1440,
+          "tcpMaxSeg": 1420,
           "trustedXForwardedFor": []
         }
       },
+      // Sniffing inspects inbound traffic to detect domain/protocol, used
+      // by the routing rules below for domain-based decisions. Enabled
+      // since ad-blocking and geoip provider rules now depend on it.
+      // destOverride picks which protocols get sniffed, metadataOnly true
+      // would skip payload inspection but disables fakedns, routeOnly
+      // true would sniff for routing only without overriding destination.
       "sniffing": {
-        "enabled": false
+        "enabled": true,
+        "destOverride": ["http", "tls", "quic", "fakedns"],
+        "metadataOnly": false,
+        "routeOnly": false
       }
     }
   ],
+
+  // =========================
+  // OUTBOUNDS
+  // direct/block always active, chain-* are relay-side exit hops,
+  // entrypoint keeps only one chain-* active based on GOJO_PROTO
+  // Order: vless, trojan, vmess, ss - vless is the default fallback
+  // =========================
   "outbounds": [
+    // -------------------------
+    // DIRECT - default exit, no chain outbound configured
+    // -------------------------
     {
       "tag": "direct",
       "protocol": "freedom",
@@ -57,83 +103,17 @@
         "domainStrategy": "AsIs"
       }
     },
+    // -------------------------
+    // BLOCK - blackhole, used for blocked routing rules
+    // -------------------------
     {
       "tag": "block",
       "protocol": "blackhole"
     },
-    {
-      "tag": "chain-trojan",
-      "protocol": "trojan",
-      "settings": {
-        "servers": [
-          {
-            "address": "GOJO_IP_PLACEHOLDER",
-            "port": "GOJO_PORT_PLACEHOLDER",
-            "password": "GOJO_PASSWORD_PLACEHOLDER"
-          }
-        ]
-      },
-      "streamSettings": {
-        "network": "ws",
-        "security": "GOJO_SECURITY_PLACEHOLDER",
-        "tlsSettings": {
-          "allowInsecure": false
-        },
-        "wsSettings": {
-          "path": "GOJO_XPATH_PLACEHOLDER",
-          "headers": {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
-          }
-        },
-        "sockopt": {
-          "tcpFastOpen": true,
-          "tcpKeepAliveInterval": 15,
-          "tcpKeepAliveIdle": 60,
-          "tcpUserTimeout": 10000,
-          "tcpcongestion": "bbr",
-          "tcpMaxSeg": 1440
-        }
-      }
-    },
-    {
-      "tag": "chain-vmess",
-      "protocol": "vmess",
-      "settings": {
-        "vnext": [
-          {
-            "address": "GOJO_IP_PLACEHOLDER",
-            "port": "GOJO_PORT_PLACEHOLDER",
-            "users": [
-              {
-                "id": "GOJO_PASSWORD_PLACEHOLDER",
-                "alterId": "GOJO_ALTERID_PLACEHOLDER"
-              }
-            ]
-          }
-        ]
-      },
-      "streamSettings": {
-        "network": "ws",
-        "security": "GOJO_SECURITY_PLACEHOLDER",
-        "tlsSettings": {
-          "allowInsecure": false
-        },
-        "wsSettings": {
-          "path": "GOJO_XPATH_PLACEHOLDER",
-          "headers": {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
-          }
-        },
-        "sockopt": {
-          "tcpFastOpen": true,
-          "tcpKeepAliveInterval": 15,
-          "tcpKeepAliveIdle": 60,
-          "tcpUserTimeout": 10000,
-          "tcpcongestion": "bbr",
-          "tcpMaxSeg": 1440
-        }
-      }
-    },
+    // -------------------------
+    // CHAIN OUTBOUND: VLESS
+    // Relay-side exit hop, kept active by entrypoint.sh if GOJO_PROTO=vless (default)
+    // -------------------------
     {
       "tag": "chain-vless",
       "protocol": "vless",
@@ -144,7 +124,7 @@
             "port": "GOJO_PORT_PLACEHOLDER",
             "users": [
               {
-                "id": "GOJO_PASSWORD_PLACEHOLDER",
+                "id": "GOJO_PASS_PLACEHOLDER",
                 "encryption": "none"
               }
             ]
@@ -153,7 +133,7 @@
       },
       "streamSettings": {
         "network": "ws",
-        "security": "GOJO_SECURITY_PLACEHOLDER",
+        "security": "GOJO_SEC_PLACEHOLDER",
         "tlsSettings": {
           "allowInsecure": false
         },
@@ -169,10 +149,95 @@
           "tcpKeepAliveIdle": 60,
           "tcpUserTimeout": 10000,
           "tcpcongestion": "bbr",
-          "tcpMaxSeg": 1440
+          "tcpMaxSeg": 1420
         }
       }
     },
+    // -------------------------
+    // CHAIN OUTBOUND: TROJAN
+    // Relay-side exit hop, kept active by entrypoint.sh if GOJO_PROTO=trojan
+    // -------------------------
+    {
+      "tag": "chain-trojan",
+      "protocol": "trojan",
+      "settings": {
+        "servers": [
+          {
+            "address": "GOJO_IP_PLACEHOLDER",
+            "port": "GOJO_PORT_PLACEHOLDER",
+            "password": "GOJO_PASS_PLACEHOLDER"
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "GOJO_SEC_PLACEHOLDER",
+        "tlsSettings": {
+          "allowInsecure": false
+        },
+        "wsSettings": {
+          "path": "GOJO_XPATH_PLACEHOLDER",
+          "headers": {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+          }
+        },
+        "sockopt": {
+          "tcpFastOpen": true,
+          "tcpKeepAliveInterval": 15,
+          "tcpKeepAliveIdle": 60,
+          "tcpUserTimeout": 10000,
+          "tcpcongestion": "bbr",
+          "tcpMaxSeg": 1420
+        }
+      }
+    },
+    // -------------------------
+    // CHAIN OUTBOUND: VMESS
+    // Relay-side exit hop, kept active by entrypoint.sh if GOJO_PROTO=vmess
+    // -------------------------
+    {
+      "tag": "chain-vmess",
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "GOJO_IP_PLACEHOLDER",
+            "port": "GOJO_PORT_PLACEHOLDER",
+            "users": [
+              {
+                "id": "GOJO_PASS_PLACEHOLDER",
+                "alterId": "GOJO_AID_PLACEHOLDER"
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "GOJO_SEC_PLACEHOLDER",
+        "tlsSettings": {
+          "allowInsecure": false
+        },
+        "wsSettings": {
+          "path": "GOJO_XPATH_PLACEHOLDER",
+          "headers": {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+          }
+        },
+        "sockopt": {
+          "tcpFastOpen": true,
+          "tcpKeepAliveInterval": 15,
+          "tcpKeepAliveIdle": 60,
+          "tcpUserTimeout": 10000,
+          "tcpcongestion": "bbr",
+          "tcpMaxSeg": 1420
+        }
+      }
+    },
+    // -------------------------
+    // CHAIN OUTBOUND: SHADOWSOCKS
+    // Relay-side exit hop, kept active by entrypoint.sh if GOJO_PROTO=ss
+    // -------------------------
     {
       "tag": "chain-ss",
       "protocol": "shadowsocks",
@@ -182,13 +247,13 @@
             "address": "GOJO_IP_PLACEHOLDER",
             "port": "GOJO_PORT_PLACEHOLDER",
             "method": "GOJO_SS_PLACEHOLDER",
-            "password": "GOJO_PASSWORD_PLACEHOLDER"
+            "password": "GOJO_PASS_PLACEHOLDER"
           }
         ]
       },
       "streamSettings": {
         "network": "ws",
-        "security": "GOJO_SECURITY_PLACEHOLDER",
+        "security": "GOJO_SEC_PLACEHOLDER",
         "tlsSettings": {
           "allowInsecure": false
         },
@@ -204,19 +269,78 @@
           "tcpKeepAliveIdle": 60,
           "tcpUserTimeout": 10000,
           "tcpcongestion": "bbr",
-          "tcpMaxSeg": 1440
+          "tcpMaxSeg": 1420
         }
       }
     }
   ],
+
+  // =========================
+  // ROUTING
+  // Rules evaluated top to bottom, first match wins. entrypoint.sh appends
+  // the chain outbound rule at the end when GOJO_IP is set.
+  // =========================
   "routing": {
     "domainStrategy": "AsIs",
-    "rules": []
+    "rules": [
+      // Private/LAN IPs go direct, not through the chain outbound
+      {
+        "type": "field",
+        "ip": ["geoip:private"],
+        "outboundTag": "direct"
+      },
+
+      // Big providers/CDNs go direct, bypassing the chain outbound if one
+      // is active. Has no effect while no chain outbound is pointed,
+      // since direct is already the default outbound in that case.
+      {
+        "type": "field",
+        "ip": [
+          "geoip:google",
+          "geoip:facebook",
+          "geoip:cloudflare",
+          "geoip:cloudfront",
+          "geoip:fastly",
+          "geoip:netflix",
+          "geoip:twitter",
+          "geoip:telegram"
+        ],
+        "outboundTag": "direct"
+      },
+
+      // Block QUIC/HTTP3 (UDP:433), forces fallback to regular TCP HTTPS
+      {
+        "type": "field",
+        "port": "443",
+        "network": "udp",
+        "outboundTag": "block"
+      },
+
+      // Ad blocking, HaGeZi Pro tier only (safest/smallest list) from the
+      // custom geosite build - not using the cumulative Pro++/Ultimate
+      // tiers to keep the match list small and fast
+      {
+        "type": "field",
+        "domain": ["geosite:ads-normal"],
+        "outboundTag": "block"
+      }
+
+      // All other traffic (local-ph, gov-ph, global-cdn, global-bigtech,
+      // entertainment, games, education, shopping-pay, working-tools,
+      // etc.) falls through to the default outbound (chain-* if active,
+      // otherwise direct), staying inside the tunnel for optimization
+    ]
   },
+
+  // =========================
+  // POLICY
+  // Connection-level behavior and stats, all stats disabled since no
+  // monitoring/StatsService is set up
+  // =========================
   "policy": {
     "levels": {
       "0": {
-        "handshake": 15,
+        "handshake": 4,
         "connIdle": 300,
         "uplinkOnly": 0,
         "downlinkOnly": 1,
