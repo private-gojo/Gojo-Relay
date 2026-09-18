@@ -321,7 +321,7 @@
       // tiers to keep the match list small and fast
       {
         "type": "field",
-        "domain": ["geosite:ads-normal"],
+        "domain": ["geosite:ads-normal,geosite:ads-standard"],
         "outboundTag": "block"
       }
 
