@@ -21,7 +21,7 @@ ACTIVE_CONNS = 0
 MAX_CONNS = 950
 
 # Must match the location blocks in nginx.conf
-ALLOWED_PREFIXES = (b"/", b"/go", b"/gojo/infinity-limitless", b"/runtime.json", b"/health")
+ALLOWED_PREFIXES = (b"/", b"/sub", b"/gojo/infinity-limitless", b"/runtime.json", b"/health")
 
 def get_real_ip(headers_bytes, raw_ip):
     # Extracts the real client IP from X-Forwarded-For so Nginx doesn't
