@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b1110">
+<title>GOJO RELAY</title>
+
+<!-- JS capability marker:
+     HTML Viewer without JavaScript will NOT get .js,
+     so the static URI fallback remains visible. -->
+<script>
+document.documentElement.classList.add("js");
+</script>
+
+<style>
+:root{
+  --bg:#09100f;
+  --panel:#101918;
+  --border:#22312e;
+  --text:#e7efed;
+  --muted:#91a09d;
+
+  --green:#7dc9aa;
+  --green-soft:rgba(125,201,170,.10);
+
+  --teal:#79c6c3;
+  --teal-soft:rgba(121,198,195,.10);
+
+  --gold:#d4bb83;
+  --gold-soft:rgba(212,187,131,.10);
+
+  --radius:18px;
+  --shadow:0 12px 32px rgba(0,0,0,.18);
+}
+
+*{box-sizing:border-box}
+
+html{scroll-behavior:smooth}
+
+body{
+  margin:0;
+  min-height:100vh;
+  background:
+    radial-gradient(circle at 15% 0%,rgba(125,201,170,.055),transparent 32%),
+    radial-gradient(circle at 90% 20%,rgba(121,198,195,.045),transparent 30%),
+    var(--bg);
+  color:var(--text);
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  padding:24px 14px 80px;
+}
+
+.container{
+  width:min(720px,100%);
+  margin:auto;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+header{
+  text-align:center;
+  margin:8px 0 24px;
+}
+
+.brand{
+  margin:0;
+  font-size:clamp(2rem,8vw,3rem);
+  line-height:1;
+  letter-spacing:.08em;
+  font-weight:800;
+}
+
+.brand span{
+  color:var(--green);
+  margin-right:5px;
+}
+
+.brand-note{
+  margin:9px 0 0;
+  color:#8fa09b;
+  font-size:.78rem;
+  line-height:1.45;
+}
+
+/* =========================
+   NOTICE
+========================= */
+
+.notice{
+  margin-bottom:16px;
+  padding:13px 15px;
+  border:1px solid rgba(121,198,195,.18);
+  border-left:3px solid var(--teal);
+  border-radius:14px;
+  background:var(--teal-soft);
+  color:#b9ccca;
+  font-size:.83rem;
+  line-height:1.55;
+}
+
+/* =========================
+   SECTIONS
+========================= */
+
+.section{
+  position:relative;
+  overflow:hidden;
+  margin-top:16px;
+  padding:18px;
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.018),transparent 45%),
+    var(--panel);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+}
+
+.section.client{
+  border-color:rgba(125,201,170,.19);
+}
+
+.section.custom{
+  border-color:rgba(121,198,195,.19);
+}
+
+.section-head{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:15px;
+}
+
+.section-mark{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  flex:none;
+}
+
+.client .section-mark{
+  background:var(--green);
+  box-shadow:0 0 14px rgba(125,201,170,.25);
+}
+
+.custom .section-mark{
+  background:var(--teal);
+  box-shadow:0 0 14px rgba(121,198,195,.25);
+}
+
+.section-title{
+  margin:0;
+  font-size:1rem;
+  letter-spacing:.04em;
+}
+
+.section-sub{
+  margin:2px 0 0;
+  color:var(--muted);
+  font-size:.76rem;
+}
+
+/* =========================
+   RELAY TABS
+========================= */
+
+.tabs{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:7px;
+  margin-bottom:14px;
+}
+
+.tab{
+  min-width:0;
+  padding:10px 8px;
+  border:1px solid #293835;
+  border-radius:11px;
+  background:#111b1a;
+  color:#9eafab;
+  font:600 .72rem system-ui,sans-serif;
+  cursor:pointer;
+  transition:.18s ease;
+}
+
+.tab:hover{
+  border-color:rgba(125,201,170,.35);
+  color:#d6e3df;
+}
+
+.tab.active{
+  border-color:rgba(125,201,170,.38);
+  background:var(--green-soft);
+  color:var(--green);
+}
+
+/* =========================
+   FIELD
+========================= */
+
+.field-label{
+  display:block;
+  margin:0 0 7px;
+  color:#aebcb8;
+  font-size:.74rem;
+  font-weight:700;
+  letter-spacing:.07em;
+  text-transform:uppercase;
+}
+
+select{
+  width:100%;
+  min-height:45px;
+  padding:0 13px;
+  border:1px solid #2a3936;
+  border-radius:11px;
+  outline:none;
+  background:#0d1716;
+  color:var(--text);
+  font:inherit;
+}
+
+select:focus{
+  border-color:rgba(121,198,195,.45);
+}
+
+/* =========================
+   URI AREA
+========================= */
+
+/*
+   IMPORTANT:
+   Without JS:
+   .uri-box stays visible.
+   With JS:
+   .js .uri-box is hidden until Show URI.
+*/
+
+.uri-wrap{
+  margin-top:14px;
+}
+
+.uri-toggle{
+  display:block;
+  margin:0 auto;
+  padding:8px 15px;
+  border:1px solid #30413d;
+  border-radius:999px;
+  background:#111c1a;
+  color:#a9bab6;
+  font:600 .75rem system-ui,sans-serif;
+  cursor:pointer;
+  transition:.18s ease;
+}
+
+.uri-toggle:hover{
+  border-color:rgba(121,198,195,.42);
+  color:#d8e5e2;
+  background:rgba(121,198,195,.07);
+}
+
+.uri-box{
+  display:block;
+  margin-top:11px;
+}
+
+/* Only JS-enabled browsers hide URI initially. */
+.js .uri-box{
+  display:none;
+}
+
+.js .uri-box.show{
+  display:block;
+}
+
+.code{
+  overflow:auto;
+  padding:14px;
+  border:1px solid #263532;
+  border-radius:13px;
+  background:#080f0e;
+  color:#dbe6e3;
+  font:12px/1.7 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+  white-space:pre-wrap;
+  word-break:break-all;
+
+  /* Important for HTML Viewer / long-press copy */
+  -webkit-user-select:all;
+  user-select:all;
+}
+
+.code .scheme{color:var(--green)}
+.code .key{color:var(--teal)}
+.code .value{color:#d6c58f}
+
+.fallback-list{
+  display:grid;
+  gap:12px;
+}
+
+.fallback-item{
+  display:block;
+}
+
+.fallback-label{
+  display:block;
+  margin-bottom:5px;
+  color:#71817d;
+  font:700 10px/1.4 system-ui,sans-serif;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+.hint{
+  margin:9px 2px 0;
+  color:#74837f;
+  font-size:.72rem;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.actions{
+  display:flex;
+  gap:9px;
+  margin-top:13px;
+}
+
+.btn{
+  flex:1;
+  min-height:43px;
+  border-radius:12px;
+  cursor:pointer;
+  font:700 .78rem system-ui,sans-serif;
+  letter-spacing:.02em;
+  transition:.18s ease;
+}
+
+.btn-copy{
+  border:1px solid rgba(125,201,170,.30);
+  background:rgba(125,201,170,.09);
+  color:#a8d5c2;
+}
+
+.btn-copy:hover{
+  background:rgba(125,201,170,.15);
+  border-color:rgba(125,201,170,.45);
+}
+
+.btn-copy.custom{
+  border-color:rgba(121,198,195,.30);
+  background:rgba(121,198,195,.08);
+  color:#a9d1cf;
+}
+
+.btn-copy.custom:hover{
+  background:rgba(121,198,195,.14);
+  border-color:rgba(121,198,195,.44);
+}
+
+.btn:active,
+.tab:active,
+.uri-toggle:active{
+  transform:translateY(1px);
+}
+
+/* =========================
+   CUSTOM
+========================= */
+
+.custom-grid{
+  display:grid;
+  gap:13px;
+}
+
+.notes{
+  margin-top:14px;
+  padding:12px 13px;
+  border:1px solid rgba(212,187,131,.18);
+  border-left:3px solid var(--gold);
+  border-radius:12px;
+  background:var(--gold-soft);
+  color:#bdb398;
+  font-size:.77rem;
+  line-height:1.6;
+}
+
+.notes code{
+  color:#d8c996;
+  font:inherit;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+}
+
+/* =========================
+   ABOUT BUTTON
+========================= */
+
+.about-trigger{
+  position:fixed;
+  left:14px;
+  bottom:14px;
+  z-index:20;
+
+  width:40px;
+  height:40px;
+
+  display:grid;
+  place-items:center;
+
+  border:1px solid #2d3d39;
+  border-radius:50%;
+  background:rgba(13,22,21,.94);
+  color:#9eb1ad;
+  box-shadow:0 8px 24px rgba(0,0,0,.28);
+
+  font:700 17px/1 system-ui,sans-serif;
+  cursor:pointer;
+  backdrop-filter:blur(10px);
+}
+
+.about-trigger:hover{
+  border-color:rgba(121,198,195,.42);
+  color:var(--teal);
+}
+
+/* =========================
+   ABOUT PANEL
+========================= */
+
+.about-panel{
+  position:fixed;
+  left:14px;
+  bottom:64px;
+  z-index:19;
+
+  width:min(300px,calc(100vw - 28px));
+
+  padding:16px;
+
+  border:1px solid #2a3b37;
+  border-radius:16px;
+
+  background:rgba(14,24,23,.97);
+  box-shadow:0 18px 42px rgba(0,0,0,.35);
+  backdrop-filter:blur(16px);
+
+  opacity:0;
+  visibility:hidden;
+  transform:translateY(8px);
+  transition:.18s ease;
+}
+
+.about-panel.show{
+  opacity:1;
+  visibility:visible;
+  transform:translateY(0);
+}
+
+.about-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:13px;
+}
+
+.about-title{
+  margin:0;
+  font-size:.92rem;
+  letter-spacing:.05em;
+}
+
+.about-close{
+  width:28px;
+  height:28px;
+  border:0;
+  border-radius:50%;
+  background:#182522;
+  color:#8f9e9a;
+  cursor:pointer;
+}
+
+.about-body{
+  display:grid;
+  gap:9px;
+}
+
+.about-row{
+  padding:10px 11px;
+  border:1px solid #24332f;
+  border-radius:11px;
+  background:#101a19;
+}
+
+.about-label{
+  display:block;
+  margin-bottom:3px;
+  color:#758681;
+  font-size:.67rem;
+  font-weight:700;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+.about-value{
+  color:#cbd7d4;
+  font-size:.79rem;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+  margin-top:24px;
+  text-align:center;
+  color:#596864;
+  font-size:.68rem;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:430px){
+
+  body{
+    padding:18px 11px 72px;
+  }
+
+  .section{
+    padding:15px;
+  }
+
+  .tabs{
+    gap:5px;
+  }
+
+  .tab{
+    padding:9px 5px;
+    font-size:.66rem;
+  }
+
+  .actions{
+    flex-direction:column;
+  }
+
+  .btn{
+    width:100%;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<main class="container">
+
+  <!-- =========================
+       HEADER
+  ========================== -->
+
+  <header>
+
+    <h1 class="brand">
+      <span>⚡</span>GOJO RELAY
+    </h1>
+
+    <p class="brand-note">
+      ☄️This Relay is open to everyone who needs it.
+    </p>
+
+  </header>
+
+
+  <!-- =========================
+       NOTICE
+  ========================== -->
+
+  <div class="notice">
+    Lite experience via HTML viewer.<br>
+    Full experience via Chrome (other browser).
+  </div>
+
+
+  <!-- =========================
+       CLIENT RELAY
+  ========================== -->
+
+  <section class="section client">
+
+    <div class="section-head">
+
+      <span class="section-mark"></span>
+
+      <div>
+        <h2 class="section-title">Client Relay</h2>
+        <p class="section-sub">Available relay set</p>
+      </div>
+
+    </div>
+
+
+    <!-- Full-browser tabs -->
+    <div class="tabs" id="relayTabs"></div>
+
+
+    <div class="uri-wrap">
+
+      <button
+        class="uri-toggle"
+        id="clientToggle"
+        type="button"
+        onclick="toggleURI('clientURI','clientToggle')">
+        Show URI
+      </button>
+
+
+      <!--
+        STATIC HTML FALLBACK
+
+        This content exists BEFORE JavaScript runs.
+
+        HTML Viewer / no-JS:
+        - URI is visible
+        - Long press can select/copy
+        - No JavaScript required
+
+        Full browser:
+        - JS replaces this with the selected relay
+        - URI remains hidden until Show URI
+      -->
+
+      <div class="uri-box" id="clientURI">
+
+        <div class="code" id="clientCode">
+
+          <!-- Static fallback for Relay 1 -->
+          <div class="fallback-list">
+
+            <div class="fallback-item">
+              <span class="fallback-label">Relay 1</span>
+              <span>
+vless://00000000-0000-0000-0000-000000000000@firebaseremoteconfigrealtime.googleapis.com:443?encryption=none&amp;security=tls&amp;sni=firebaseremoteconfigrealtime.googleapis.com&amp;type=ws&amp;host=sample-123.run.app&amp;path=%2Fgojo%2Finfinity-limitless%2Fabcd1234%3Fed%3D2560&amp;fp=randomized&amp;alpn=h2%2Chttp%2F1.1#Gojo-Relay
+              </span>
+            </div>
+
+
+            <!-- Static fallback for Relay 2 -->
+            <div class="fallback-item">
+              <span class="fallback-label">Relay 2</span>
+              <span>
+vless://00000000-0000-0000-0000-000000000000@firebase-settings.crashlytics.com:443?encryption=none&amp;security=tls&amp;sni=firebase-settings.crashlytics.com&amp;type=ws&amp;host=sample-123.run.app&amp;path=%2Fgojo%2Finfinity-limitless%2Fabcd1234%3Fed%3D2560&amp;fp=randomized&amp;alpn=h2%2Chttp%2F1.1#Gojo-Relay
+              </span>
+            </div>
+
+
+            <!-- Static fallback for Relay 3 -->
+            <div class="fallback-item">
+              <span class="fallback-label">Relay 3</span>
+              <span>
+vless://00000000-0000-0000-0000-000000000000@fcmtoken.googleapis.com:443?encryption=none&amp;security=tls&amp;sni=fcmtoken.googleapis.com&amp;type=ws&amp;host=sample-123.run.app&amp;path=%2Fgojo%2Finfinity-limitless%2Fabcd1234%3Fed%3D2560&amp;fp=randomized&amp;alpn=h2%2Chttp%2F1.1#Gojo-Relay
+              </span>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="actions">
+
+        <button
+          class="btn btn-copy"
+          type="button"
+          onclick="copyAllRelay(this)">
+          Copy All Relay
+        </button>
+
+      </div>
+
+
+      <p class="hint">
+        ⚠️ Use it responsibly. No warranty or guarantee is provided.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       CUSTOM RELAY
+  ========================== -->
+
+  <section class="section custom">
+
+    <div class="section-head">
+
+      <span class="section-mark"></span>
+
+      <div>
+        <h2 class="section-title">Custom Relay</h2>
+        <p class="section-sub">Generate your custom relay setup</p>
+      </div>
+
+    </div>
+
+
+    <div class="custom-grid">
+
+      <!-- ADDRESS -->
+
+      <div>
+
+        <label class="field-label" for="address">
+          Address (Destination)
+        </label>
+
+        <select id="address"></select>
+
+      </div>
+
+
+      <!-- SNI -->
+
+      <div>
+
+        <label class="field-label" for="sni">
+          SNI (Server Name Indication)
+        </label>
+
+        <select id="sni"></select>
+
+      </div>
+
+    </div>
+
+
+    <!-- NOTES -->
+
+    <div class="notes">
+
+      📝 NOTES: When SNI is set to <b>None (Direct)</b>,
+      recommended only
+      <code>firebaseremoteconfigrealtime.googleapis.com</code>,
+      <code>firebase-settings.crashlytics.com</code>, or
+      <code>fcmtoken.googleapis.com</code>
+      will function as valid Addresses.
+      For other addresses, one of these three must be selected as the SNI.
+
+    </div>
+
+
+    <div class="uri-wrap">
+
+      <button
+        class="uri-toggle"
+        id="customToggle"
+        type="button"
+        onclick="toggleURI('customURI','customToggle')">
+        Show URI
+      </button>
+
+      <div class="uri-box" id="customURI">
+        <div class="code" id="customCode"></div>
+      </div>
+
+      <div class="actions">
+
+        <button
+          class="btn btn-copy custom"
+          type="button"
+          onclick="copyCustomRelay(this)">
+          Copy Custom Relay
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <footer>
+    GOJO RELAY
+  </footer>
+
+</main>
+
+
+<!-- =========================
+     ABOUT BUTTON
+========================= -->
+
+<button
+  class="about-trigger"
+  id="aboutTrigger"
+  type="button"
+  aria-label="About GOJO RELAY"
+  aria-expanded="false">
+  i
+</button>
+
+
+<!-- =========================
+     ABOUT PANEL
+========================= -->
+
+<aside class="about-panel" id="aboutPanel">
+
+  <div class="about-head">
+
+    <h2 class="about-title">About</h2>
+
+    <button
+      class="about-close"
+      id="aboutClose"
+      type="button"
+      aria-label="Close">
+      ×
+    </button>
+
+  </div>
+
+
+  <div class="about-body">
+
+    <div class="about-row">
+      <span class="about-label">Author</span>
+      <span class="about-value">GOJO</span>
+    </div>
+
+    <div class="about-row">
+      <span class="about-label">Project</span>
+      <span class="about-value">GOJO RELAY</span>
+    </div>
+
+    <div class="about-row">
+      <span class="about-label">Rights</span>
+      <span class="about-value">© 2026 GOJO Relay • All Rights Reserved.</span>
+    </div>
+
+    <div class="about-row">
+      <span class="about-label">Copyright</span>
+      <span class="about-value">No copyright claim</span>
+    </div>
+
+  </div>
+
+</aside>
+
+
+<script>
+/* =========================
+   DATA
+========================= */
+
+const C = {
+  u: "00000000-0000-0000-0000-000000000000",
+  h: "sample-123.run.app",
+  p: "/gojo/infinity-limitless/abcd1234?ed=2560"
+};
+
+const A = [
+  "firebaseremoteconfigrealtime.googleapis.com",
+  "firebase-settings.crashlytics.com",
+  "fcmtoken.googleapis.com",
+  "firebaseremoteconfig.googleapis.com",
+  "app-measurement.googleapis.com",
+  "ajax.googleapis.com",
+  "run.googleapis.com",
+  "www.gstatic.com",
+  "ssl.gstatic.com",
+  "connectivitycheck.gstatic.com"
+];
+
+const S = [
+  "",
+  A[0],
+  A[1],
+  A[2]
+];
+
+const relays = [
+  "firebaseremoteconfigrealtime.googleapis.com",
+  "firebase-settings.crashlytics.com",
+  "fcmtoken.googleapis.com"
+];
+
+let currentRelay = 0;
+
+
+/* =========================
+   URI GENERATION
+========================= */
+
+function makeURI(address,sni=address){
+
+  const params = new URLSearchParams();
+
+  params.set("encryption","none");
+  params.set("security","tls");
+  params.set("sni",sni);
+  params.set("type","ws");
+  params.set("host",C.h);
+  params.set("path",C.p);
+  params.set("fp","randomized");
+  params.set("alpn","h2,http/1.1");
+
+  return `vless://${C.u}@${address}:443?${params.toString()}#Gojo-Relay`;
+}
+
+
+/* =========================
+   ESCAPE
+========================= */
+
+function esc(value){
+
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+
+/* =========================
+   SYNTAX HIGHLIGHT
+========================= */
+
+function paint(uri){
+
+  const safe = esc(uri);
+
+  return safe
+    .replace(
+      /^vless:\/\//,
+      '<span class="scheme">vless://</span>'
+    )
+    .replace(
+      /([?&])(encryption|security|sni|type|host|path|fp|alpn)=/g,
+      '$1<span class="key">$2</span>='
+    );
+}
+
+
+/* =========================
+   CLIENT RELAYS
+========================= */
+
+function renderTabs(){
+
+  const tabs =
+    document.getElementById("relayTabs");
+
+  tabs.innerHTML =
+    relays.map((relay,index)=>`
+      <button
+        type="button"
+        class="tab ${index === currentRelay ? "active" : ""}"
+        onclick="selectRelay(${index})">
+        Relay ${index + 1}
+      </button>
+    `).join("");
+}
+
+
+function selectRelay(index){
+
+  currentRelay = index;
+
+  renderTabs();
+  renderClientURI();
+
+  const box =
+    document.getElementById("clientURI");
+
+  if(box.classList.contains("show")){
+
+    box.classList.remove("show");
+
+    document.getElementById("clientToggle").textContent =
+      "Show URI";
+  }
+}
+
+
+function renderClientURI(){
+
+  const uri =
+    makeURI(relays[currentRelay]);
+
+  document.getElementById("clientCode").innerHTML =
+    paint(uri);
+}
+
+
+/* =========================
+   ADDRESS
+========================= */
+
+function populateAddress(){
+
+  const select =
+    document.getElementById("address");
+
+  select.innerHTML =
+    A.map(address=>`
+      <option value="${esc(address)}">
+        ${esc(address)}
+      </option>
+    `).join("");
+}
+
+
+/* =========================
+   SNI
+========================= */
+
+function populateSNI(){
+
+  const select =
+    document.getElementById("sni");
+
+  select.innerHTML = `
+    <option value="">None (Direct)</option>
+  `;
+
+  select.innerHTML +=
+    S.slice(1).map(sni=>`
+      <option value="${esc(sni)}">
+        ${esc(sni)}
+      </option>
+    `).join("");
+}
+
+
+/* =========================
+   CUSTOM URI
+========================= */
+
+function renderCustomURI(){
+
+  const addressSelect =
+    document.getElementById("address");
+
+  const sniSelect =
+    document.getElementById("sni");
+
+
+  const address =
+    addressSelect.value;
+
+
+  const sni =
+    sniSelect.value || address;
+
+
+  if(!address){
+
+    document.getElementById("customCode").innerHTML =
+      "";
+
+    return;
+  }
+
+
+  const uri =
+    makeURI(address,sni);
+
+
+  document.getElementById("customCode").innerHTML =
+    paint(uri);
+}
+
+
+/* =========================
+   URI TOGGLE
+========================= */
+
+function toggleURI(boxId,buttonId){
+
+  const box =
+    document.getElementById(boxId);
+
+  const button =
+    document.getElementById(buttonId);
+
+  const visible =
+    box.classList.toggle("show");
+
+
+  button.textContent =
+    visible ? "Hide URI" : "Show URI";
+}
+
+
+/* =========================
+   CLIPBOARD
+========================= */
+
+async function copyText(text){
+
+  try{
+
+    if(
+      navigator.clipboard &&
+      window.isSecureContext
+    ){
+
+      await navigator.clipboard.writeText(text);
+
+      return true;
+    }
+
+  }catch(e){}
+
+
+  const textarea =
+    document.createElement("textarea");
+
+  textarea.value = text;
+  textarea.style.position = "fixed";
+  textarea.style.opacity = "0";
+
+  document.body.appendChild(textarea);
+
+  textarea.focus();
+  textarea.select();
+
+  let success = false;
+
+  try{
+
+    success =
+      document.execCommand("copy");
+
+  }catch(e){}
+
+  textarea.remove();
+
+  return success;
+}
+
+
+async function copyAllRelay(button){
+
+  const text =
+    relays
+      .map(relay=>makeURI(relay))
+      .join("\n");
+
+
+  const success =
+    await copyText(text);
+
+
+  if(success){
+
+    flashButton(button,"Copied");
+  }
+}
+
+
+async function copyCustomRelay(button){
+
+  const addressSelect =
+    document.getElementById("address");
+
+  const sniSelect =
+    document.getElementById("sni");
+
+
+  const address =
+    addressSelect.value;
+
+
+  const sni =
+    sniSelect.value || address;
+
+
+  if(!address){
+    return;
+  }
+
+
+  const uri =
+    makeURI(address,sni);
+
+
+  const success =
+    await copyText(uri);
+
+
+  if(success){
+
+    flashButton(button,"Copied");
+  }
+}
+
+
+function flashButton(button,text){
+
+  if(!button) return;
+
+  const original =
+    button.textContent;
+
+
+  button.textContent =
+    text;
+
+
+  setTimeout(()=>{
+    button.textContent =
+      original;
+  },1100);
+}
+
+
+/* =========================
+   ABOUT PANEL
+========================= */
+
+const aboutTrigger =
+  document.getElementById("aboutTrigger");
+
+const aboutPanel =
+  document.getElementById("aboutPanel");
+
+const aboutClose =
+  document.getElementById("aboutClose");
+
+
+function setAbout(open){
+
+  aboutPanel.classList.toggle(
+    "show",
+    open
+  );
+
+  aboutTrigger.setAttribute(
+    "aria-expanded",
+    String(open)
+  );
+}
+
+
+aboutTrigger.addEventListener("click",()=>{
+  setAbout(
+    !aboutPanel.classList.contains("show")
+  );
+});
+
+
+aboutClose.addEventListener("click",()=>{
+  setAbout(false);
+});
+
+
+document.addEventListener("click",(event)=>{
+
+  if(
+    aboutPanel.classList.contains("show") &&
+    !aboutPanel.contains(event.target) &&
+    !aboutTrigger.contains(event.target)
+  ){
+
+    setAbout(false);
+  }
+
+});
+
+
+/* =========================
+   EVENTS
+========================= */
+
+document
+  .getElementById("address")
+  .addEventListener("change",renderCustomURI);
+
+
+document
+  .getElementById("sni")
+  .addEventListener("change",renderCustomURI);
+
+
+/* =========================
+   INIT
+========================= */
+
+renderTabs();
+renderClientURI();
+
+populateAddress();
+populateSNI();
+
+renderCustomURI();
+</script>
+
+</body>
+</html>
