@@ -10,6 +10,8 @@ import base64
 import urllib.parse
 from http.server import HTTPServer, BaseHTTPRequestHandler
 
+VAULT_TPL = os.getenv("GOJO_VAULT_TPL", "/relay.tpl.html")
+
 class DynamicSubService(BaseHTTPRequestHandler):
     def do_GET(self):
         # =========================
@@ -33,6 +35,13 @@ class DynamicSubService(BaseHTTPRequestHandler):
             pass
 
         encoded_path = urllib.parse.quote(full_path, safe="")
+
+        # =========================
+        # STEP 2.5: /relay offline vault (static HTML download)
+        # =========================
+        if self.path.split("?")[0].rstrip("/") == "/relay":
+            self.send_vault(current_host, uuid, full_path, encoded_path)
+            return
 
         # =========================
         # STEP 3: SNI and IP lists (env vars, with fallback defaults)
@@ -65,6 +74,29 @@ class DynamicSubService(BaseHTTPRequestHandler):
         self.send_header("Content-Length", str(len(b64_output)))
         self.end_headers()
         self.wfile.write(b64_output)
+
+    def send_vault(self, host, uuid, path, encoded_path):
+        try:
+            with open(VAULT_TPL, "r", encoding="utf-8") as f:
+                tpl = f.read()
+        except Exception:
+            self.send_response(500)
+            self.send_header("Content-Length", "0")
+            self.end_headers()
+            return
+        body = (tpl
+            .replace("00000000-0000-0000-0000-000000000000", uuid)
+            .replace("sample-123.run.app", host)
+            .replace("%2Fgojo%2Finfinity-limitless%2Fabcd1234%3Fed%3D2560", encoded_path)
+            .replace("/gojo/infinity-limitless/abcd1234?ed=2560", path)
+        ).encode("utf-8")
+        self.send_response(200)
+        self.send_header("Content-Type", "text/html; charset=utf-8")
+        self.send_header("Content-Disposition", 'attachment; filename="Gojo-Relay.html"')
+        self.send_header("Cache-Control", "no-store")
+        self.send_header("Content-Length", str(len(body)))
+        self.end_headers()
+        self.wfile.write(body)
 
     def log_message(self, format, *args):
         # Mute console access logs to keep Docker output clean
