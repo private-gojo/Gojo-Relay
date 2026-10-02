@@ -30,6 +30,7 @@ COPY supervisord.conf /etc/supervisord.conf
 COPY index.html /var/lib/nginx/html/index.html
 COPY entrypoint.sh /entrypoint.sh
 COPY sub_server.py /sub_server.py
+COPY relay.tpl.html /relay.tpl.html
 COPY wait-for-xray.sh /wait-for-xray.sh
 COPY wait-for-nginx.sh /wait-for-nginx.sh
 COPY anti_ddos.py /anti_ddos.py
